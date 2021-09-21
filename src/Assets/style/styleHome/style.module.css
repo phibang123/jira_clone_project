@@ -1,0 +1,22 @@
+.silde_origin_menu {
+	z-index: 1001;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	overflow-x: hidden;
+	height: 100vh;
+	width: 80px;
+	background: rgb(7, 71, 166);
+	transition: all 0.1s ease 0s;
+	transform: translateZ(0px);
+}
+.silde_origin_menu :hover {
+	box-shadow: rgb(0 0 0 / 100%) 0px 0px 50px 0px;
+	width: 200px;
+}
+.silde_origin_menu_BOTTOM {
+	background: #03419c;
+	margin-top: 50vh;
+	bottom: 20px;
+	left: 0;
+}
