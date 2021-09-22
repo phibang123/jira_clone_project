@@ -251,6 +251,7 @@ function FromCreateTask(props) {
 			<div className="form-group">
 				<p>Description</p>
 				<Editor
+					name='description'
 					apiKey="fljctmgnb3bhnix02044qlbuxoyf1onlwfbirols7rgblf1z"
 					// onChange={handleChange}
 					// onBlur={handleBlur}

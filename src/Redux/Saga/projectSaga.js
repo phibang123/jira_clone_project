@@ -8,6 +8,7 @@ import {
 	GET_LIST_PROJECT_SAGA,
 	GET_PROJECT_DETAIL_API,
 	GET_PROJECT_DETAIL_API_SAGA,
+	GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
 	GET_USER_BY_PROJECT_ID_SAGA,
 	REMOVE_USER_PROJECT_API_SAGA,
 	UPDATE_PROJECT_SAGA,
@@ -250,7 +251,7 @@ function* getProjectDetail(action)
 			type: HIDE_LOADING,
 		});
 		Notification("warning", "Error 404 not found!")
-		history.push('/projectmanagement')
+	  history.push('/projectmanagement')
 	}
 	yield put({
 		type: HIDE_LOADING,
@@ -260,4 +261,34 @@ function* getProjectDetail(action)
 export function* theoDoiGetProjectDetail()
 {
 	yield takeLatest(GET_PROJECT_DETAIL_API_SAGA, getProjectDetail);
+}
+
+
+
+//get detail from project saga
+
+function* getProjectDetailNoLoading(action)
+{
+	
+	try {
+		const { data, status } = yield call(() =>
+			projectService.getProjectDetail(action.projectId)
+		);
+	
+		//lấy dử liệu thành công đưa dử liệu lên reducer
+		yield put({
+			type: GET_PROJECT_DETAIL_API,
+			projectDetail: data.content
+		})
+	   
+	} catch (error) {
+		
+	
+	}
+
+}
+
+export function* theoDoiGetProjectDetailNoLoading()
+{
+	yield takeLatest(GET_PROJECT_DETAIL_API_SAGA_NOLOADING, getProjectDetailNoLoading);
 }

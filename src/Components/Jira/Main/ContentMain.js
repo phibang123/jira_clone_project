@@ -1,18 +1,29 @@
+import { ArrowDownOutlined, ArrowUpOutlined, BugOutlined, FileTextOutlined, MinusOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
+
+import { GET_TASK_DETAIL_SAGA } from '../../../Redux/Constants/constants';
 import React from "react";
+import { useDispatch } from 'react-redux';
 
 export default function ContentMain(props) {
 	const { projectDetail } = props;
- 
-  console.log('task',projectDetail.lstTask)
+  const dispatch = useDispatch()
+  console.log('task',projectDetail)
 	const renderCardTaskList = () => {
 		return projectDetail.lstTask?.map((taskListDetail, index) => {
 			return (
-				<div key={index} className="card" style={{ width: "17rem", minHeight: "25rem" ,height: 'auto'}}>
+				<div  key={index} className="card" style={{ width: "17rem", minHeight: "25rem" ,height: 'auto'}}>
 					<div className="card-header">{taskListDetail.statusName}</div>
 					<ul className="list-group list-group-flush">
 						{taskListDetail.lstTaskDeTail.map((task, index) => {
 							return (
-                <li
+								<li
+								onClick={() =>
+									{
+										dispatch({
+											type: GET_TASK_DETAIL_SAGA,
+											taskId: task.taskId
+										})
+									}}
                   style={{height: 'auto',padding: '2px',    overflowAnchor: 'none'}}
                   key={index}
 									className="list-group-item"
@@ -22,9 +33,9 @@ export default function ContentMain(props) {
 								>
                   <p className='font-wieght-bold'>{task.taskName}</p>
 									<div className="block" style={{ display: "flex" }}>
-                    <div className="block-left">
-                    <p>{task.priorityTask.priority}</p>
-                    
+                    <div className="block-left d-flex">   
+											<p>{task.priorityTask.priority === 'High' ? <ArrowUpOutlined style={{color: 'red',fontSize:'16px' ,margin: '3px'}}/> : task.priorityTask.priority === 'Medium' ? <MinusOutlined /> :  task.priorityTask.priority === 'Low' ? <ArrowDownOutlined style={{color: 'yellow',fontSize:'16px',margin: '3px'}} /> : task.priorityTask.priority === 'Lowest' ?  <VerticalAlignBottomOutlined style={{color: 'green',fontSize:'16px',margin: '3px'}} /> : ''}</p>
+											<p>{task.taskTypeDetail.taskType === 'bug' ? <BugOutlined  style={{color: 'blue',fontSize:'16px',margin: '3px'}}/> :  <FileTextOutlined style={{color: '#146870',fontSize:'16px',margin: '3px'}}/>}</p>
 											{/* <i className="fa fa-bookmark" />
 											<i className="fa fa-arrow-up" /> */}
 										</div>
@@ -56,50 +67,5 @@ export default function ContentMain(props) {
 		</div>
 	);
 }
-{
-	/* <li className="list-group-item">
-          <p>
-            Each issue has a single reporter but can have multiple assignees
-          </p>
-          <div className="block" style={{ display: "flex" }}>
-            <div className="block-left">
-              <i className="fa fa-check-square" />
-              <i className="fa fa-arrow-up" />
-            </div>
-            <div className="block-right">
-              <div className="avatar-group" style={{ display: "flex" }}>
-                <div className="avatar">
-                  <img src="https://picsum.photos/50/50" alt="" />
-                </div>
-                <div className="avatar">
-                  <img src="https://picsum.photos/50/50" alt="" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </li> */
-}
-{
-	/* <div className="card" style={{ width: "17rem", height: "25rem" }}>
-<div className="card-header">SELECTED FOR DEVELOPMENT 2</div>
-<ul className="list-group list-group-flush">
-  <li className="list-group-item">Cras justo odio</li>
-  <li className="list-group-item">Dapibus ac facilisis in</li>
-</ul>
-</div>
-<div className="card" style={{ width: "17rem", height: "25rem" }}>
-<div className="card-header">IN PROGRESS 2</div>
-<ul className="list-group list-group-flush">
-  <li className="list-group-item">Cras justo odio</li>
-  <li className="list-group-item">Dapibus ac facilisis in</li>
-</ul>
-</div>
-<div className="card" style={{ width: "17rem", height: "25rem" }}>
-<div className="card-header">DONE 3</div>
-<ul className="list-group list-group-flush">
-  <li className="list-group-item">Cras justo odio</li>
-  <li className="list-group-item">Dapibus ac facilisis in</li>
-  <li className="list-group-item">Vestibulum at eros</li>
-</ul>
-</div> */
-}
+
+	

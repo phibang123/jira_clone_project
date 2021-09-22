@@ -91,10 +91,27 @@ export const GET_PROJECT_DETAIL_API = 'GET_PROJECT_DETAIL_API'
 
 
 
+//--------------------loading lại detail ko loading-----------------------------------
+//-//-Saga
+export const GET_PROJECT_DETAIL_API_SAGA_NOLOADING = 'GET_PROJECT_DETAIL_API_SAGA_NOLOADING'
+
+
+
 //------------------------Tạo 1 Task---------------------------------------------------------
 //-//-Saga
 export const CREATE_TASK_SAGA = 'CREATE_TASK_SAGA'
 
+
+//-----------------------Lấy Detail Task-----------------------------------------------
+//-//-Saga
+export const GET_TASK_DETAIL_SAGA = 'GET_TASK_DETAIL_SAGA'
+//-//-reducer
+export const GET_TASK_DETAIL = 'GET_TASK_DETAIL'
+
+
+//-----------------------update Task-----------------------------------------------
+//-//-Saga
+export const UPDATE_TASK_STATUS_SAGA_TEXT = 'UPDATE_TASK_STATUS_SAGA_TEXT'
 
 
 
@@ -103,3 +120,10 @@ export const CREATE_TASK_SAGA = 'CREATE_TASK_SAGA'
 export const GET_USER_BY_PROJECT_ID_SAGA = 'GET_USER_BY_PROJECT_ID_SAGA'
 //-//-Reducer
 export const GET_USER_BY_PROJECT_ID = 'GET_USER_BY_PROJECT_ID'
+
+
+
+//-----------------------cHANGE tASK Task-----------------------------------------------
+//-//-Saga
+export const CHANGE_TASK_MODAL_API_SAGA = 'CHANGE_TASK_MODAL_API_SAGA'
+

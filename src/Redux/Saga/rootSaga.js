@@ -37,6 +37,9 @@ export function* rootSaga() {
 		taskTypeSaga.theoDoiGetAllTaskTypeSaga(),
 		prioritySaga.theoDoigetAllPrioritySaga(),
 		taskSaga.theoDoiCreateTaskSaga(),
-		statusSaga.theoDoiGetAllStatusSaga()
+		statusSaga.theoDoiGetAllStatusSaga(),
+		taskSaga.theoDoiGetTaskDetailSaga(),
+		taskSaga.theoDoiUpdateTaskSaga(),
+		projectSaga.theoDoiGetProjectDetailNoLoading()
     ]);
 }

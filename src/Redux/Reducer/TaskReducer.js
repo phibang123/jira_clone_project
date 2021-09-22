@@ -1,3 +1,5 @@
+import { CHANGE_TASK_MODAL_API_SAGA, GET_TASK_DETAIL } from "../Constants/constants"
+
 const initialState = {
    taskDetailModal: {
  
@@ -23,7 +25,7 @@ const initialState = {
       "taskName": "task1",
       "alias": "task1",
       "description": "<p>Plan, track, and manage your agile and software development projects in Jira. Customize your workflow, collaborate, and release great software.</p>",
-      "statusId": "1",
+      "statusId": "2",
       "originalEstimate": 0,
       "timeTrackingSpent": 12,
       "timeTrackingRemaining": 12,
@@ -37,7 +39,15 @@ const initialState = {
 export const TaskReducer = (state = initialState, action) => {
   switch (action.type) {
 
-
+    case GET_TASK_DETAIL: {
+      
+      return {...state,taskDetailModal: action.taskDetailModal}
+    }
+    case CHANGE_TASK_MODAL_API_SAGA: {
+        console.log(state)
+        const {name,value} = action
+       return {...state,taskDetailModal: {...state.taskDetailModal,[name]:value}}
+      }
 
   default:
     return state

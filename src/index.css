@@ -3,6 +3,7 @@
 	font-family: "Roboto", sans-serif;
 	font-weight: 300;
 	display: flex;
+	height: auto;
 }
 
 /* Sider Bar */
@@ -87,9 +88,9 @@
 
 /* Menu */
 .menu {
-	height: 100vh;
-	width: 18%;
-
+	height: auto;
+	width: 300px;
+	min-height: 100vh;
 	background-color: #f4f5f7;
 }
 
@@ -175,6 +176,7 @@
 
 .main {
 	padding-left: 2%;
+	height: max-content;
 }
 .main .header .breadcrumb {
 	margin-bottom: 0;
@@ -413,7 +415,8 @@
 	background: #e9eaf0;
 	padding: 5px;
 	border-radius: 5px;
-	flex-basis: 50%;
+
+	min-width: fit-content;
 }
 
 .item .avatar img {
