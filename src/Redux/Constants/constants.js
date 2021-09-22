@@ -15,6 +15,14 @@ export const GET_ALL_PROJECT_CATEGORY_SAGA = 'GET_ALL_PROJECT_CATEGORY_SAGA'
 
 
 
+
+
+
+
+
+
+
+
 //--------------------POST Project-----------------------------------
 //-//-Saga
 export const CREATE_PROJECT_SAGA = 'CREATE_PROJECT_SAGA'
@@ -80,3 +88,18 @@ export const REMOVE_USER_PROJECT_API_SAGA = 'REMOVE_USER_PROJECT_API_SAGA'
 export const GET_PROJECT_DETAIL_API_SAGA = 'GET_PROJECT_DETAIL_API_SAGA'
 //-//Reducer
 export const GET_PROJECT_DETAIL_API = 'GET_PROJECT_DETAIL_API'
+
+
+
+//------------------------Tạo 1 Task---------------------------------------------------------
+//-//-Saga
+export const CREATE_TASK_SAGA = 'CREATE_TASK_SAGA'
+
+
+
+
+//--------------------Lấy user Từ id project-----------------------------------
+//-//-Saga
+export const GET_USER_BY_PROJECT_ID_SAGA = 'GET_USER_BY_PROJECT_ID_SAGA'
+//-//-Reducer
+export const GET_USER_BY_PROJECT_ID = 'GET_USER_BY_PROJECT_ID'

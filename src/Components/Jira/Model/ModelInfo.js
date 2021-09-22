@@ -1,6 +1,19 @@
-import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-export default function ModelInfo() {
+import React from 'react'
+import ReactHtmlParser from "react-html-parser";
+
+export default function ModelInfo()
+{
+  const dispatch = useDispatch()
+  const { taskDetailModal } = useSelector(state => state.TaskReducer)
+  console.log('new', taskDetailModal)
+  
+  const renderDescription = () =>
+  {
+    const jxsDescription = ReactHtmlParser(taskDetailModal.description)
+    return jxsDescription
+  }
   return (
    <div className="modal fade" id="infoModal" tabIndex={-1} role="dialog" aria-labelledby="infoModal" aria-hidden="true">
   <div className="modal-dialog modal-info">
@@ -8,7 +21,7 @@ export default function ModelInfo() {
       <div className="modal-header">
         <div className="task-title">
           <i className="fa fa-bookmark" />
-          <span>TASK-217871</span>
+              <span>{taskDetailModal.taskName}</span>
         </div>
         <div style={{display: 'flex'}} className="task-click">
           <div>
@@ -31,42 +44,8 @@ export default function ModelInfo() {
             <div className="col-8">
               <p className="issue">This is an issue of type: Task.</p>
               <div className="description">
-                <p>Description</p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Esse expedita quis vero tempora error sed reprehenderit
-                  sequi laborum, repellendus quod laudantium tenetur nobis
-                  modi reiciendis sint architecto. Autem libero quibusdam
-                  odit assumenda fugiat? Beatae aliquid labore vitae
-                  obcaecati sapiente asperiores quia amet id aut, natus quo
-                  molestiae quod voluptas, temporibus iusto laudantium sit
-                  tempora sequi. Rem, itaque id, fugit magnam asperiores
-                  voluptas consectetur aliquid vel error illum, delectus eum
-                  eveniet laudantium at repudiandae!
-                </p>
-              </div>
-              <div style={{fontWeight: 500, marginBottom: 10}}>
-                Jira Software (software projects) issue types:
-              </div>
-              <div className="title">
-                <div className="title-item">
-                  <h3>BUG <i className="fa fa-bug" /></h3>
-                  <p>
-                    A bug is a problem which impairs or prevents the
-                    function of a product.
-                  </p>
-                </div>
-                <div className="title-item">
-                  <h3>STORY <i className="fa fa-book-reader" /></h3>
-                  <p>
-                    A user story is the smallest unit of work that needs to
-                    be done.
-                  </p>
-                </div>
-                <div className="title-item">
-                  <h3>TASK <i className="fa fa-tasks" /></h3>
-                  <p>A task represents work that needs to be done</p>
-                </div>
+                    <h6 style={{ marginTop: '0', color: 'rgba(0, 0, 0, 0.85)',fontWeight: '500'}}>Description</h6>
+                {renderDescription()}
               </div>
               <div className="comment">
                 <h6>Comment</h6>

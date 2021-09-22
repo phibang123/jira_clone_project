@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import CreateProject from "./Pages/CreateProject/CreateProject";
 import DrawerComponent from "./HOC/Drawer/DrawerComponent";
-import Index from "./Pages/Index/Index";
+import Index from "./Pages/ProjectDetail/Index";
 import JiraTemplate from "./Templates/JiraTemplate/JiraTemplate";
 import LoadingComponent from "./Components/GlobalSetting/LoadingComponent";
 import Login from "./Pages/Login/Login";

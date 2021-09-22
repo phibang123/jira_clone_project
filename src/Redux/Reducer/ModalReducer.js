@@ -25,7 +25,9 @@ export const ModalReducer = (state = initialState, action) => {
       return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title };
       
     }
-	
+    case 'SET_SUBMIT_CREATE_TASK': {
+      return {...state,callBackSubmit: action.submitFunction}
+    }
 		default:
 			return state;
 	}

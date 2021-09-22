@@ -3,7 +3,7 @@ import { DOMAIN, TOKEN_CYBERSOFT, TOKEN_USER } from "../Utils/constants/settingS
 import axios from "axios"
 import { baseService } from "./BaseService"
 
-export class ProjectService extends baseService  {
+class ProjectService extends baseService  {
     
   constructor()
   {
@@ -49,6 +49,8 @@ export class ProjectService extends baseService  {
   {
     return this.get(`/Project/getProjectDetail?id=${projectId}`,)
   }
+
+
 }
 
 export const projectService = new ProjectService()

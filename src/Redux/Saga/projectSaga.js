@@ -8,6 +8,7 @@ import {
 	GET_LIST_PROJECT_SAGA,
 	GET_PROJECT_DETAIL_API,
 	GET_PROJECT_DETAIL_API_SAGA,
+	GET_USER_BY_PROJECT_ID_SAGA,
 	REMOVE_USER_PROJECT_API_SAGA,
 	UPDATE_PROJECT_SAGA,
 } from "../Constants/constants";
@@ -42,14 +43,14 @@ function* createProjectSaga(action) {
 		);
 
 		if (status === STATUS_CODE.SUCCESS) {
-			console.log(data);
+		
 			history.push("/projectmanagement");
 			Notification("success", "Add project is success");
 			yield put({
 				type: GET_LIST_PROJECT_SAGA,
 			});
 		}
-		console.log("data", data);
+	
 	} catch (err) {
 		console.log(err.response.data);
 		yield put({
@@ -77,6 +78,7 @@ function* getListProjectSaga(action) {
 				type: GET_LIST_PROJECT,
 				projectList: data.content,
 			});
+			yield put({type:GET_USER_BY_PROJECT_ID_SAGA,idProject: data.content[0]?.id})
 		}
 	} catch (error) {
 		console.log(error);
@@ -182,7 +184,8 @@ function* addUserProjectSaga(action) {
 
 	   
 	} catch (error) {
-		Notification("info", "User is unthorization!")
+		
+		Notification("error", error.response.data.content)
 	}
 }
 
@@ -195,7 +198,7 @@ export function* theoDoiAddUserProject()
 //delete user from project saga
 
 function* removeUserProject(action) {
-  console.log(action)
+
 	try {
 		const { data, status } = yield call(() =>
 			projectService.removeUserFromProject(action.userProject)

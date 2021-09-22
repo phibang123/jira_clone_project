@@ -2,6 +2,10 @@ import {applyMiddleware, combineReducers, compose, createStore} from 'redux'
 
 import { DrawerReducer } from './Reducer/DrawerReducer';
 import { ModalReducer } from './Reducer/ModalReducer';
+import { PriorityReducer } from './Reducer/PriorityReducer'
+import { StatusReducer } from './Reducer/StatusReducer';
+import { TaskReducer } from './Reducer/TaskReducer';
+import { TaskTypeReducer } from './Reducer/TaskTypeReducer';
 import createSagaMiddleware from '@redux-saga/core';
 import { loadingReducer } from './Reducer/loadingReducer';
 import { projectCategoryReducer } from './Reducer/projectCategoryReducer';
@@ -21,8 +25,11 @@ const rootReducer = combineReducers({
     projectManageReducer: projectManageReducer,
     DrawerReducer: DrawerReducer,
     projectReducer: projectReducer,
-    ModalReducer: ModalReducer
-
+    ModalReducer: ModalReducer,
+    TaskTypeReducer: TaskTypeReducer,
+    PriorityReducer: PriorityReducer,
+    StatusReducer: StatusReducer,
+    TaskReducer: TaskReducer
 })
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 export const store = createStore(

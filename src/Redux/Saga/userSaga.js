@@ -1,4 +1,4 @@
-import { ADD_USER_PROJECT_API_SAGA, GET_LIST_PROJECT_SAGA, GET_USER_SAGA_API, GET_USER_SEARCH, USER_SIGNIN_SAGA_API, USLOGIN } from "../Constants/constants";
+import { ADD_USER_PROJECT_API_SAGA, GET_LIST_PROJECT_SAGA, GET_USER_BY_PROJECT_ID, GET_USER_BY_PROJECT_ID_SAGA, GET_USER_SAGA_API, GET_USER_SEARCH, USER_SIGNIN_SAGA_API, USLOGIN } from "../Constants/constants";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../Constants/loading";
 import { STATUS_CODE, TOKEN_USER, USER_LOGIN } from "../../Utils/constants/settingSystem";
 import {
@@ -69,7 +69,7 @@ function* getUserSaga(action) {
 		const { data, status } = yield call(() =>
 			userService.getUser(action.keyWord)
 		);
-    console.log('data',data)
+ 
 		yield put({
 			type: GET_USER_SEARCH,
 			lstUserSearch: data.content
@@ -85,5 +85,47 @@ function* getUserSaga(action) {
 export function* theoDoiGetUser()
 {
 	yield takeLatest(GET_USER_SAGA_API, getUserSaga);
+}
+
+
+
+function* getUserByProjectIdSaga(action) {
+  const {idProject} =  action
+	try
+	{
+		const { data, status } = yield call(() =>
+			userService.getUserByProjectId(idProject)
+		);
+
+		yield put({
+			type: GET_USER_BY_PROJECT_ID,
+			arrUser: data.content
+		})
+	
+	}
+	catch (error)
+	{
+		console.log(error)
+		console.log(error.response?.data)
+		
+		if (error.response?.data.content)
+		{
+			Notification('info', error.response.data.content)
+			yield put({
+				type: GET_USER_BY_PROJECT_ID,
+				arrUser: []
+			})
+		}
+		else
+		{
+			Notification('error','error')
+		}
+	}
+}
+
+
+export function* theoDoiGetUserByProjectIdSaga()
+{
+	yield takeLatest(GET_USER_BY_PROJECT_ID_SAGA, getUserByProjectIdSaga);
 }
 
