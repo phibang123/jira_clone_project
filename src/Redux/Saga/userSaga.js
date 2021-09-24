@@ -89,8 +89,12 @@ export function* theoDoiGetUser()
 
 
 
-function* getUserByProjectIdSaga(action) {
-  const {idProject} =  action
+function* getUserByProjectIdSaga(action)
+{
+
+	const { idProject } = action
+	console.log('alo')
+	console.log('alo',idProject)
 	try
 	{
 		const { data, status } = yield call(() =>
@@ -101,16 +105,16 @@ function* getUserByProjectIdSaga(action) {
 			type: GET_USER_BY_PROJECT_ID,
 			arrUser: data.content
 		})
-	
+	  console.log('success')
 	}
 	catch (error)
 	{
 		console.log(error)
-		console.log(error.response?.data)
+		console.log('lỗi',error.response?.data)
 		
 		if (error.response?.data.content)
 		{
-			Notification('info', error.response.data.content)
+		
 			yield put({
 				type: GET_USER_BY_PROJECT_ID,
 				arrUser: []

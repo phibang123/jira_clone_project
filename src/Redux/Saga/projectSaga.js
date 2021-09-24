@@ -79,6 +79,7 @@ function* getListProjectSaga(action) {
 				type: GET_LIST_PROJECT,
 				projectList: data.content,
 			});
+			console.log(data.content[0]?.id)
 			yield put({type:GET_USER_BY_PROJECT_ID_SAGA,idProject: data.content[0]?.id})
 		}
 	} catch (error) {
