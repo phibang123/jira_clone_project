@@ -42,7 +42,7 @@ function FromCreateTask(props) {
 	const {arrStatus} = useSelector(state => state.StatusReducer)
 	const { arrUser } = useSelector((state) => state.userReducer);
 	// hàm biền dổi option trên thẻ select
-  console.log(arrStatus)
+
 	const userOption = arrUser?.map((item, index) => {
 		return { value: item.userId, label: item.name };
 	});
@@ -83,7 +83,7 @@ function FromCreateTask(props) {
 	// const handleSizeChange = (e) => {
 	// 	setSize(e.target.value);
 	// };
-	console.log(arrPriority)
+
 
 	return (
 		<form className="container" onSubmit={handleSubmit}>

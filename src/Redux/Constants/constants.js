@@ -124,6 +124,20 @@ export const GET_USER_BY_PROJECT_ID = 'GET_USER_BY_PROJECT_ID'
 
 
 //-----------------------cHANGE tASK Task-----------------------------------------------
-//-//-Saga
+//-//-Saga reducer
 export const CHANGE_TASK_MODAL_API_SAGA = 'CHANGE_TASK_MODAL_API_SAGA'
+export const CHANGE_TASK_MODAL_API = 'CHANGE_TASK_MODAL_API'
 
+
+
+//-//-Chang add user
+export const CHANGE_ASSIGNESS = 'CHANGE_ASSIGNESS'
+
+
+
+//-//-Chang remove user
+export const REMAVE_USER_ASSIGN = 'REMAVE_USER_ASSIGN'
+
+//-//-Chang remove user
+export const UPDATE_TASK_SAGA = 'UPDATE_TASK_SAGA'
+////////////

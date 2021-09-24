@@ -23,7 +23,7 @@ export default function SideBarJira()
 	const [state, setState] = useState({ collapsed: true });
 	const { collapsed } = state;
 	const onCollapse = (collapsed) => {
-		console.log(collapsed);
+
 		setState({ collapsed });
 	};
 	return (

@@ -10,7 +10,7 @@ export default function Index(props)
 {
   const { projectDetail } = useSelector(state => state.projectReducer)
 
-  console.log('data',projectDetail)
+
   //khi người dùng link vào trang này = navLink thì tao sẻ lấy tham số từ url.params 
   //gọi saga => call api => đưa vào reducer
   

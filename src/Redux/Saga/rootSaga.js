@@ -40,6 +40,9 @@ export function* rootSaga() {
 		statusSaga.theoDoiGetAllStatusSaga(),
 		taskSaga.theoDoiGetTaskDetailSaga(),
 		taskSaga.theoDoiUpdateTaskSaga(),
-		projectSaga.theoDoiGetProjectDetailNoLoading()
+		projectSaga.theoDoiGetProjectDetailNoLoading(),
+		taskSaga.theoDoiUpdateTaskStatusSaga(),
+		taskSaga.theoDoiHandleChangPostApi(),
+	
     ]);
 }

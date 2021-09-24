@@ -7,30 +7,44 @@ import {
 	VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
 import {
+	CHANGE_ASSIGNESS,
+	CHANGE_TASK_MODAL_API,
 	CHANGE_TASK_MODAL_API_SAGA,
+	REMAVE_USER_ASSIGN,
 	UPDATE_TASK_STATUS_SAGA_TEXT,
 } from "../../../Redux/Constants/constants";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Editor } from "@tinymce/tinymce-react";
-import { Formik } from "formik";
 import { GELL_ALL_TASK_TYPE_SAGA } from "../../../Redux/Constants/taskType";
 import { GET_ALL_PRIORITY_SAGA } from "../../../Redux/Constants/priority";
 import { GET_ALL_STATUS_API_SAGA } from "../../../Redux/Constants/status";
 import ReactHtmlParser from "react-html-parser";
+import { Select } from "antd";
 
 export default function ModelInfo() {
+	//distpath
 	const dispatch = useDispatch();
+	//useRef
 	const editorRef = useRef(null);
+
+	//useSelecet
 	const { taskDetailModal } = useSelector((state) => state.TaskReducer);
 	const { arrStatus } = useSelector((state) => state.StatusReducer);
 	const { arrPriority } = useSelector((state) => state.PriorityReducer);
 	const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
-  const [visibleEditor, setVisibleEditor] = useState(false);
-  const [historyContent, sethiStoryContent] = useState(taskDetailModal.description)
-  const [content, setContent] = useState(taskDetailModal.description)
-	console.log("new", taskDetailModal);
+	const { projectDetail } = useSelector((state) => state.projectReducer);
+
+	//useState
+	const [visibleEditor, setVisibleEditor] = useState(false);
+	const [historyContent, sethiStoryContent] = useState(
+		taskDetailModal.description
+	);
+	const [content, setContent] = useState(taskDetailModal.description);
+	const [size, setSize] = React.useState("default");
+	//function
+
 	useEffect(() => {
 		dispatch({
 			type: GET_ALL_STATUS_API_SAGA,
@@ -46,55 +60,69 @@ export default function ModelInfo() {
 	const renderDescription = () => {
 		const jxsDescription = ReactHtmlParser(taskDetailModal.description);
 		return (
-      <div >
-        {visibleEditor ? (
-          <div className='m-2'>
-					<Editor
-						apiKey="fljctmgnb3bhnix02044qlbuxoyf1onlwfbirols7rgblf1z"
-						// onChange={handleChange}
-						// onBlur={handleBlur}
-            name='description'
-            initialValue={taskDetailModal.description}
-						onInit={(evt, editor) => (editorRef.current = editor)}
-					
-						init={{
-							height: 300,
-							menubar: false,
-							plugins: [
-								"advlist autolink lists link image charmap print preview anchor",
-								"searchreplace visualblocks code fullscreen",
-								"insertdatetime media table paste code help wordcount",
-							],
-							toolbar:
-								"undo redo | formatselect | " +
-								"bold italic backcolor | alignleft aligncenter " +
-								"alignright alignjustify | bullist numlist outdent indent | " +
-								"removeformat | help",
-							content_style:
-								"body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+			<div>
+				{visibleEditor ? (
+					<div className="m-2">
+						<Editor
+							apiKey="fljctmgnb3bhnix02044qlbuxoyf1onlwfbirols7rgblf1z"
+							// onChange={handleChange}
+							// onBlur={handleBlur}
+							name="description"
+							initialValue={taskDetailModal.description}
+							onInit={(evt, editor) => (editorRef.current = editor)}
+							init={{
+								height: 300,
+								menubar: false,
+								plugins: [
+									"advlist autolink lists link image charmap print preview anchor",
+									"searchreplace visualblocks code fullscreen",
+									"insertdatetime media table paste code help wordcount",
+								],
+								toolbar:
+									"undo redo | formatselect | " +
+									"bold italic backcolor | alignleft aligncenter " +
+									"alignright alignjustify | bullist numlist outdent indent | " +
+									"removeformat | help",
+								content_style:
+									"body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+							}}
+							onEditorChange={(content, editor) => {
+								setContent(content);
+							}}
+						/>
+						<button
+							className="btn btn-primary m-2"
+							onClick={() => {
+								dispatch({
+									type: CHANGE_TASK_MODAL_API_SAGA,
+									actionType: CHANGE_TASK_MODAL_API,
+									name: "description",
+									value: content,
+								});
+								setVisibleEditor(false);
+							}}
+						>
+							Save
+						</button>
+						<button
+							className="btn btn-danger m-2"
+							onClick={() => {
+								setVisibleEditor(false);
+							}}
+						>
+							Close
+						</button>
+					</div>
+				) : (
+					<div
+						className="mt-3 mb-3"
+						onClick={() => {
+							setVisibleEditor(!visibleEditor);
 						}}
-						onEditorChange={(content, editor) => {
-							setContent(content)
-						}}
-            />
-            <button className='btn btn-primary m-2' onClick={() =>
-            {
-              dispatch({
-                type: CHANGE_TASK_MODAL_API_SAGA,
-                name: 'description',
-                value: content
-              })
-              setVisibleEditor(false)
-            }}>Save</button>
-            <button className='btn btn-danger m-2' onClick={() =>
-            {
-              setVisibleEditor(false)
-            }}>Close</button>
-				</div>) : (
-					  <div className='mt-3 mb-3' onClick={() =>
-              {
-                setVisibleEditor(!visibleEditor)
-              }}> {jxsDescription} </div>
+					>
+						{" "}
+						{jxsDescription}{" "}
+					</div>
 				)}
 			</div>
 		);
@@ -103,9 +131,15 @@ export default function ModelInfo() {
 		const { name, value } = e.target;
 		dispatch({
 			type: CHANGE_TASK_MODAL_API_SAGA,
+			actionType: CHANGE_TASK_MODAL_API,
 			name,
 			value,
 		});
+		// dispatch({
+		// 	type: CHANGE_TASK_MODAL_API,
+		// 	name,
+		// 	value,
+		// });
 	};
 
 	const renderTimeTracking = () => {
@@ -148,6 +182,7 @@ export default function ModelInfo() {
 						<input
 							className="form-control "
 							name="timeTrackingSpent"
+							value={Number(timeTrackingSpent)}
 							onChange={(e) => {
 								handleChanges(e);
 							}}
@@ -156,6 +191,7 @@ export default function ModelInfo() {
 					<div className="col-6">
 						<input
 							className="form-control"
+							value={Number(timeTrackingRemaining)}
 							onChange={(e) => {
 								handleChanges(e);
 							}}
@@ -180,7 +216,7 @@ export default function ModelInfo() {
 					<div className="modal-header">
 						<div className="task-title d-flex align-items-baseline">
 							<p>
-								{taskDetailModal.typeId === "1" ? (
+								{taskDetailModal.typeId === 1 ? (
 									<BugOutlined
 										style={{ color: "blue", fontSize: "16px", margin: "3px" }}
 									/>
@@ -348,43 +384,97 @@ export default function ModelInfo() {
 														<div className="avatar">
 															<img src={user.avatar} alt={user.avatar} />
 														</div>
-														<p className="name mt-1 ml-1">
+														<p
+															style={{
+																overflow: "hidden",
+																textOverflow: "ellipsis",
+																width: "50px",
+															}}
+															className="name mt-1 ml-1"
+														>
 															{user.name}
+														</p>
+														<button
+															className="btn	p-0"
+															onClick={() => {
+																dispatch({
+																	type: CHANGE_TASK_MODAL_API_SAGA,
+																	actionType: REMAVE_USER_ASSIGN,
+																	userId: user.id,
+																});
+															}}
+															// 	dispatch({
+															// 		type: REMAVE_USER_ASSIGN,
+															// 		userId: user.id,
+															// 	});
+															// }}
+														>
 															<i
 																className="fa fa-times"
-																style={{ marginLeft: 5 }}
+																style={{ marginLeft: 5, cursor: "pointer" }}
+																type="button"
 															/>
-														</p>
+														</button>
 													</div>
 												);
 											})}
 
-											<div style={{ display: "flex", alignItems: "center" }}>
-												<i className="fa fa-plus" style={{ marginRight: 5 }} />
-												<span>Add more</span>
+											<div className="col-6 mt-2 mb-2">
+												<Select
+													showSearch
+													options={projectDetail.members
+														?.filter((mem) => {
+															let index = taskDetailModal.assigness?.findIndex(
+																(us) => us.id === mem.userId
+															);
+															if (index !== -1) {
+																return false;
+															} else {
+																return true;
+															}
+														})
+														.map((mem, index) => {
+															return { value: mem.userId, label: mem.name };
+														})}
+													optionFilterProp="label"
+													style={{ width: "100%" }}
+													value="Select User"
+													name="lstUser"
+													onSelect={(value) => {
+														//nom nha là nó sẻ tìm thằng mà mình đã click vào
+														//và lấy ra đẩy đủ thông tin của nó
+														//rồi truyền vào reducer
+														//nhưng vấn đề là mình lấy thong tin của  projectDetail.members mà truyền vào taskDetailModal.assigness
+														//nên đâm ra 1 cái id 1 cái userId
+														//hướng giải quyết là thêm trường id khi thêm vào taskDetailModal.assigness => xong
+
+														let userSelected = projectDetail.members.find(
+															(mem) => mem.userId == value
+														);
+														userSelected = {
+															...userSelected,
+															id: userSelected.userId,
+														};
+														console.log("userSelect", userSelected);
+														dispatch({
+															type: CHANGE_TASK_MODAL_API_SAGA,
+															actionType: CHANGE_ASSIGNESS,
+															userSelected,
+														});
+													}}
+												></Select>
 											</div>
 										</div>
 									</div>
-									{/* <div className="reporter">
-										<h6>REPORTER</h6>
-										<div style={{ display: "flex" }} className="item">
-											<div className="avatar">
-												<img src="https://picsum.photos/50/50" alt="" />
-											</div>
-											<p className="name">
-												Pickle Rick
-												<i className="fa fa-times" style={{ marginLeft: 5 }} />
-											</p>
-										</div>
-									</div> */}
 									<div className="priority" style={{ marginBottom: 20 }}>
 										<h6>PRIORITY</h6>
 
 										{/* map select prioryti */}
 										<select
 											className="form-control"
-											value={taskDetailModal.priorityTask.priorityId}
-											onChange={(e) => {}}
+											name="priorityId"
+											value={taskDetailModal.priorityId}
+											onChange={handleChanges}
 										>
 											{arrPriority?.map((priority, index) => {
 												return (

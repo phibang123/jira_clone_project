@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 export default function ContentMain(props) {
 	const { projectDetail } = props;
   const dispatch = useDispatch()
-  console.log('task',projectDetail)
+
 	const renderCardTaskList = () => {
 		return projectDetail.lstTask?.map((taskListDetail, index) => {
 			return (

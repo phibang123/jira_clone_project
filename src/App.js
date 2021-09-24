@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import CreateProject from "./Pages/CreateProject/CreateProject";
+import DemoDragDrog from "./Pages/DemoDragDrog/DemoDragDrog";
 import DrawerComponent from "./HOC/Drawer/DrawerComponent";
 import Index from "./Pages/ProjectDetail/Index";
 import JiraTemplate from "./Templates/JiraTemplate/JiraTemplate";
@@ -40,6 +41,13 @@ function App() {
 					exact
 					path="/projectdetail/:projectId"
 					Component={Index}
+				></JiraTemplate>
+				
+
+					<JiraTemplate
+					exact
+					path="/dragdrop"
+					Component={DemoDragDrog}
 				></JiraTemplate>
 				<JiraTemplate exact path="/" Component={Index}></JiraTemplate>
 			</Switch>
