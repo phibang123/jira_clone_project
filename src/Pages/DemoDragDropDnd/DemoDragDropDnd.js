@@ -1,7 +1,6 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import React, { useState } from "react";
 
-import { Provider } from "react-redux";
 import _ from "lodash";
 
 export default function DemoDragDropDnd() {

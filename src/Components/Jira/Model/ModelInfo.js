@@ -255,7 +255,7 @@ export default function ModelInfo() {
 								<i className="fa fa-link" />
 								<span style={{ paddingRight: 20 }}>Copy link</span>
 							</div>
-							<i className="fa fa-trash-alt" style={{ cursor: "pointer" }} />
+							<i className="fa fa-trash-alt" />
 							<button
 								type="button"
 								className="close"

@@ -137,7 +137,6 @@
 .menu .control div {
 	margin-bottom: 10px;
 	padding: 2% 0;
-	cursor: pointer;
 }
 
 .menu .control div span:first-child {
@@ -250,13 +249,16 @@
 }
 
 .main .content .card .list-group .list-group-item {
-	margin: 5px;
+	margin: 8px;
 	border-radius: 3px;
-	background: rgb(255, 255, 255);
+	background: rgb(500, 255, 255);
 	box-shadow: rgb(9 30 66 / 25%) 0px 1px 2px 0px;
 	transition: background 0.1s ease 0s;
-	cursor: pointer;
+	padding: 10px;
 	user-select: none;
+	height: auto;
+
+	overflow-anchor: none;
 }
 .main .content .card .list-group .list-group-item:hover {
 	background: rgb(235, 236, 240);
