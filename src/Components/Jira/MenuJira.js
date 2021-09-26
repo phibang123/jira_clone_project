@@ -1,25 +1,33 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Button } from "antd";
 import { NavLink } from "react-router-dom";
-import React from "react";
 
 export default function MenuJira() {
+	const { userLogin } = useSelector((state) => state.userReducer);
+
 	return (
-		<div className="menu">
+		<div className="menu" style={{position: 'fixed',left: '80px'}}>
 			<div className="account">
 				<div className="avatar">
-					<img src="https://picsum.photos/50/50" alt='..' />
+					<NavLink to="/profile">
+						<img src={userLogin?.avatar} alt=".." />
+					</NavLink>
 				</div>
 				<div className="account-info">
-					<p>CyberLearn.vn</p>
-					<p>Report bugs</p>
+					<p>{userLogin?.email}</p>
+					<p>{userLogin?.name}</p>
 				</div>
 			</div>
+		
 			<div className="control">
 				<div>
 					<i className="fa fa-credit-card" />
 					<NavLink
 						className="text-dark"
 						exact
-						activeClassName="actice font-weight-bold"
+						activeClassName=" font-weight-bold"
 						to="/"
 					>
 						Cyber Board
@@ -30,14 +38,14 @@ export default function MenuJira() {
 					<NavLink
 						className="text-dark"
 						exact
-						activeClassName="actice font-weight-bold"
+						activeClassName=" font-weight-bold"
 						to="/createproject"
 					>
-						Create Project
+						Index
 					</NavLink>
 				</div>
 				<div>
-				<i className="fas fa-tasks"></i>
+					<i className="fas fa-tasks"></i>
 					<NavLink
 						className="text-dark"
 						exact

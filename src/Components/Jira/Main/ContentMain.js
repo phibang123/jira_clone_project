@@ -6,20 +6,21 @@ import {
 	MinusOutlined,
 	VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
+import { CHANGE_TASK_MODAL_API, GET_TASK_DETAIL_SAGA, UPDATE_TASK_STATUS_REDUCER_TEXT, UPDATE_TASK_STATUS_SAGA_TEXT } from "../../../Redux/Constants/constants";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { GET_TASK_DETAIL_SAGA, UPDATE_TASK_STATUS_SAGA_TEXT } from "../../../Redux/Constants/constants";
 
+import { GET_ALL_COMMENT_SAGA } from "../../../Redux/Constants/comment";
 import React from "react";
 import { useDispatch } from "react-redux";
 
 export default function ContentMain(props) {
 	const { projectDetail } = props;
 	const dispatch = useDispatch();
-
+  console.log('projectDetail',projectDetail)
 	const handleDragEnd = (result) =>
 	{
-		let{projectId,taskId} = JSON.parse(result.draggableId)  //vì ở dướ chỉ sổ ra chuỗi mà mình muốn đưa ra 1 object nên chúng ta phải làm vậy
-		console.log("result", result);
+		let{projectId,taskId,taskDetail} = JSON.parse(result.draggableId)  //vì ở dướ chỉ sổ ra chuỗi mà mình muốn đưa ra 1 object nên chúng ta phải làm vậy
+		
 
 		let {source,destination} = result
 		///gọi api cập nhập lại status
@@ -31,14 +32,16 @@ export default function ContentMain(props) {
 		{
 			return 
 		}
-		console.log(result.draggableId,'result.draggableId')
-		console.log(destination.droppableId,'destination.draggableId')
+	
 		dispatch({
 			type: UPDATE_TASK_STATUS_SAGA_TEXT,
+			actionType: CHANGE_TASK_MODAL_API,
 			taskUpdateStatus: {
 				"taskId": taskId,
 				"statusId": destination.droppableId,
-				"projectId": projectId
+				"projectId": projectId,
+				"statusOld": source.droppableId,
+				"taskDetail": taskDetail,
 			}
 		})
 	};
@@ -75,7 +78,7 @@ export default function ContentMain(props) {
 													<Draggable
 														key={task.taskId.toString()}
 														index={index}
-														draggableId={JSON.stringify({projectId: task.projectId,taskId: task.taskId})}
+														draggableId={JSON.stringify({projectId: task.projectId,taskId: task.taskId,taskDetail: task})}
 													>
 														{(provider) => {
 															return (
@@ -89,6 +92,11 @@ export default function ContentMain(props) {
 																			type: GET_TASK_DETAIL_SAGA,
 																			taskId: task.taskId,
 																		});
+																		dispatch({
+																			type: GET_ALL_COMMENT_SAGA,
+																			taskId: task.taskId
+																			
+																		})
 																	}}
 																	className="list-group-item"
 																	data-toggle="modal"
@@ -99,10 +107,10 @@ export default function ContentMain(props) {
 																	</p>
 																	<div
 																		className="block"
-																		style={{ display: "flex" }}
+																		style={{ display: "flex",alignItems:'flex-end' }}
 																	>
 																		<div className="block-left d-flex">
-																			<p>
+																			<span>
 																				{task.priorityTask.priority ===
 																				"High" ? (
 																					<ArrowUpOutlined
@@ -136,8 +144,8 @@ export default function ContentMain(props) {
 																				) : (
 																					""
 																				)}
-																			</p>
-																			<p>
+																			</span>
+																			<span>
 																				{task.taskTypeDetail.taskType ===
 																				"bug" ? (
 																					<BugOutlined
@@ -156,7 +164,7 @@ export default function ContentMain(props) {
 																						}}
 																					/>
 																				)}
-																			</p>
+																			</span>
 																			{/* <i className="fa fa-bookmark" />
 												<i className="fa fa-arrow-up" /> */}
 																		</div>
@@ -169,6 +177,7 @@ export default function ContentMain(props) {
 																					return (
 																						<div key={index} className="avatar">
 																							<img
+																								style={{width: '30px',height: '30px'}}
 																								src={mem.avatar}
 																								alt={mem.avatar}
 																							/>

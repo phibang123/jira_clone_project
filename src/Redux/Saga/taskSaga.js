@@ -3,6 +3,7 @@ import {
 	CHANGE_TASK_MODAL_API,
 	CHANGE_TASK_MODAL_API_SAGA,
 	CREATE_TASK_SAGA,
+	DELETE_TASK_API_SAGA,
 	GET_PROJECT_DETAIL_API,
 	GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
 	GET_TASK_DETAIL,
@@ -55,7 +56,7 @@ export function* theoDoiCreateTaskSaga() {
 
 function* getTaskDetail(action) {
 	const { taskId } = action;
-	console.log(taskId);
+	
 	try {
 		const { data, status } = yield call(() =>
 			TaskService.getTaskDetail(taskId)
@@ -74,19 +75,37 @@ export function* theoDoiGetTaskDetailSaga() {
 	yield takeLatest(GET_TASK_DETAIL_SAGA, getTaskDetail);
 }
 
-function* updateTaskStatusSaga(action) {
-	try {
+function* updateTaskStatusSaga(action)
+{
+	
+
+	switch (action.actionType)
+	{
+		 case CHANGE_TASK_MODAL_API: {
+			
+			yield put({
+				type: 'CHANGE_TASK_MODAL_API_TEXT',
+				statusId: action.taskUpdateStatus.statusId,
+				taskId: action.taskUpdateStatus.taskId,
+				statusOld: action.taskUpdateStatus.statusOld,
+				taskDetail: action.taskUpdateStatus.taskDetail
+			});
+		} break;
+	}
+	try
+	{
+		
 		const { data, status } = yield call(() =>
-			TaskService.updateStatusTask(action.taskUpdateStatus)
-		);
-		yield put({
-			type: GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
-			projectId: action.taskUpdateStatus.projectId,
-		});
-		yield put({
-			type: GET_TASK_DETAIL_SAGA,
-			taskId: action.taskUpdateStatus.taskId,
-		});
+		TaskService.updateStatusTask(action.taskUpdateStatus)
+	);
+	yield put({
+		type: GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
+		projectId: action.taskUpdateStatus.projectId,
+	});
+	yield put({
+		type: GET_TASK_DETAIL_SAGA,
+		taskId: action.taskUpdateStatus.taskId,
+	});
 	} catch (err) {
 		console.log(err);
 		console.log(err.response?.data);
@@ -95,6 +114,8 @@ function* updateTaskStatusSaga(action) {
 export function* theoDoiUpdateTaskStatusSaga() {
 	yield takeLatest(UPDATE_TASK_STATUS_SAGA_TEXT, updateTaskStatusSaga);
 }
+
+
 
 //thay đổi task dưa lên api
 function* updateTaskSaga(action) {}
@@ -168,4 +189,33 @@ function* handleChangPostApi(action) {
 }
 export function* theoDoiHandleChangPostApi() {
 	yield takeLatest(CHANGE_TASK_MODAL_API_SAGA, handleChangPostApi);
+}
+
+function* deleteTaskSaga(action)
+{
+	
+	try
+	{
+		const { data, status } = yield call(() => TaskService.deleteTask(action.taskId))
+		Notification("success", data.message);
+		yield put({
+			type: GET_PROJECT_DETAIL_API_SAGA,
+			projectId: action.projectId
+		})
+	}
+	catch (err)
+	{
+		if (err.response?.data)
+		{
+			Notification("error", err.response.data.content);
+		}
+		else
+		Notification("error", err.response.data.content);
+	}
+}
+
+
+export function* theoDoiDeleteTaskSaga()
+{
+	yield takeLatest(DELETE_TASK_API_SAGA,deleteTaskSaga)
 }

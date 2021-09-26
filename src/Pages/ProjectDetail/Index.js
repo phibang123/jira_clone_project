@@ -25,7 +25,7 @@ export default function Index(props)
     })
   }, [])
   return (
-    <div className='main'>
+    <div className='main mt-3'>
 						
     <HeaderMain projectDetail={projectDetail}></HeaderMain>
     <InfoMain projectDetail={projectDetail}></InfoMain>

@@ -34,7 +34,7 @@ export default function Login(props)
         {
           
             // const action = dangKyAsynAction(values);
-            dispatch(signin_action(values,props))
+            dispatch(signin_action(values))
             //thành công => chuyển hướng trang
       
         },

@@ -2,17 +2,32 @@ import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
 	BugOutlined,
+	DeleteOutlined,
 	FileTextOutlined,
 	MinusOutlined,
 	VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
 import {
+	Avatar,
+	Button,
+	Comment,
+	Form,
+	Input,
+	Popconfirm,
+	Tooltip,
+} from "antd";
+import {
 	CHANGE_ASSIGNESS,
 	CHANGE_TASK_MODAL_API,
 	CHANGE_TASK_MODAL_API_SAGA,
+	DELETE_TASK_API_SAGA,
 	REMAVE_USER_ASSIGN,
 	UPDATE_TASK_STATUS_SAGA_TEXT,
 } from "../../../Redux/Constants/constants";
+import {
+	DELETE_COMMENT_SAGA,
+	GET_ALL_COMMENT_SAGA,
+} from "../../../Redux/Constants/comment";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,12 +37,34 @@ import { GET_ALL_PRIORITY_SAGA } from "../../../Redux/Constants/priority";
 import { GET_ALL_STATUS_API_SAGA } from "../../../Redux/Constants/status";
 import ReactHtmlParser from "react-html-parser";
 import { Select } from "antd";
+import { USER_LOGIN } from "../../../Utils/constants/settingSystem";
 
+const { TextArea } = Input;
 export default function ModelInfo() {
+	const Editors = ({ onChange, onSubmit, submitting, value }) => (
+		<>
+			<Form.Item>
+				<TextArea rows={4} onChange={onChange} value={value} />
+			</Form.Item>
+			<Form.Item>
+				<Button
+					htmlType="submit"
+					loading={submitting}
+					onClick={onSubmit}
+					type="primary"
+				>
+					Add Comment
+				</Button>
+			</Form.Item>
+		</>
+	);
 	//distpath
 	const dispatch = useDispatch();
 	//useRef
 	const editorRef = useRef(null);
+	let usLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
+
+	let { avatar, id } = usLogin;
 
 	//useSelecet
 	const { taskDetailModal } = useSelector((state) => state.TaskReducer);
@@ -35,16 +72,18 @@ export default function ModelInfo() {
 	const { arrPriority } = useSelector((state) => state.PriorityReducer);
 	const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
 	const { projectDetail } = useSelector((state) => state.projectReducer);
+	const { CommentAll } = useSelector((state) => state.CommentReducer);
 
 	//useState
 	const [visibleEditor, setVisibleEditor] = useState(false);
+	const [visibleInput, setVisibleInput] = useState(false);
 	const [historyContent, sethiStoryContent] = useState(
 		taskDetailModal.description
 	);
 	const [content, setContent] = useState(taskDetailModal.description);
 	const [size, setSize] = React.useState("default");
 	//function
-
+	console.log(CommentAll, "CommentAll nè");
 	useEffect(() => {
 		dispatch({
 			type: GET_ALL_STATUS_API_SAGA,
@@ -57,6 +96,31 @@ export default function ModelInfo() {
 		});
 	}, []);
 
+	//comment
+	const actions = (com) => {
+		return [
+			<Tooltip key="comment-basic-like">
+				<span onClick={() => {}}>
+					<span className="comment-action">Edit</span>
+				</span>
+			</Tooltip>,
+			<Tooltip key="comment-basic-dislike">
+				<span
+					onClick={() => {
+						dispatch({
+							type: DELETE_COMMENT_SAGA,
+							id: com.id,
+							taskId: com.taskId,
+						});
+						console.log("com nè", com);
+					}}
+				>
+					<span className="comment-action">Delete</span>
+				</span>
+			</Tooltip>,
+			<span key="comment-basic-reply-to">Reply to</span>,
+		];
+	};
 	const renderDescription = () => {
 		const jxsDescription = ReactHtmlParser(taskDetailModal.description);
 		return (
@@ -247,17 +311,23 @@ export default function ModelInfo() {
 						</div>
 
 						<div style={{ display: "flex" }} className="task-click">
-							<div>
-								<i className="fab fa-telegram-plane" />
-								<span style={{ paddingRight: 20 }}>Give feedback</span>
-							</div>
-							<div>
-								<i className="fa fa-link" />
-								<span style={{ paddingRight: 20 }}>Copy link</span>
-							</div>
-							<i className="fa fa-trash-alt" />
+							<Button
+								onClick={() => {
+									dispatch({
+										type: DELETE_TASK_API_SAGA,
+										taskId: taskDetailModal.taskId,
+										projectId: taskDetailModal.projectId,
+									});
+								}}
+								data-toggle="modal"
+								data-target="#infoModal"
+								style={{ outline: "none", border: "none" }}
+								icon={<DeleteOutlined />}
+							></Button>
+
 							<button
 								type="button"
+								style={{outline: 'none'}}
 								className="close"
 								data-dismiss="modal"
 								aria-label="Close"
@@ -270,7 +340,8 @@ export default function ModelInfo() {
 						<div className="container-fluid">
 							<div className="row">
 								<div className="col-8">
-									<p className="issue">{taskDetailModal.taskName}</p>
+									
+									<h2 style={{fontWeight: '500',paddingLeft: '20px',marginBottom: '30px'}}>{taskDetailModal.taskName}</h2>
 									<div className="description">
 										<h6
 											style={{
@@ -283,60 +354,39 @@ export default function ModelInfo() {
 										</h6>
 										{renderDescription()}
 									</div>
-									<div className="comment">
+									<div className="comment mt-4 ">
 										<h6>Comment</h6>
-										<div className="block-comment" style={{ display: "flex" }}>
-											<div className="avatar">
-												<img src="https://picsum.photos/50/50" alt="" />
-											</div>
-											<div className="input-comment">
-												<input type="text" placeholder="Add a comment ..." />
-												<p>
-													<span style={{ fontWeight: 500, color: "gray" }}>
-														Protip:
-													</span>
-													<span>
-														press
-														<span
-															style={{
-																fontWeight: "bold",
-																background: "#ecedf0",
-																color: "#b4bac6",
-															}}
-														>
-															M
-														</span>
-														to comment
-													</span>
-												</p>
+										<div className="block-comment " style={{ display: "flex" }}>
+											<div className="input-comment mb-1 mt-2">
+												{visibleInput ? <Comment
+													avatar={<Avatar src={avatar} />}
+													content={
+														<Editors
+														// onChange={this.handleChange}
+														// onSubmit={this.handleSubmit}
+														/>
+													}
+												/> : <input  value='Click to Comment' onClick={() => {setVisibleInput(!visibleInput)}}></input>}
+											
 											</div>
 										</div>
 										<div className="lastest-comment">
-											<div className="comment-item">
-												<div
-													className="display-comment"
-													style={{ display: "flex" }}
-												>
-													<div className="avatar">
-														<img src="https://picsum.photos/50/50" alt="" />
-													</div>
-													<div>
-														<p style={{ marginBottom: 5 }}>
-															Lord Gaben <span>a month ago</span>
-														</p>
-														<p style={{ marginBottom: 5 }}>
-															Lorem ipsum dolor sit amet, consectetur
-															adipisicing elit. Repellendus tempora ex
-															voluptatum saepe ab officiis alias totam ad
-															accusamus molestiae?
-														</p>
-														<div>
-															<span style={{ color: "#929398" }}>Edit</span>•
-															<span style={{ color: "#929398" }}>Delete</span>
-														</div>
-													</div>
-												</div>
-											</div>
+											{CommentAll?.map((comment, index) => {
+												return (
+													<Comment
+														key={index}
+														actions={actions(comment)}
+														author={<span>{comment.user?.name}</span>}
+														avatar={
+															<Avatar
+																src={comment.user?.avatar}
+																alt="Han Solo"
+															/>
+														}
+														content={comment.contentComment}
+													/>
+												);
+											})}
 										</div>
 									</div>
 								</div>
@@ -455,7 +505,7 @@ export default function ModelInfo() {
 															...userSelected,
 															id: userSelected.userId,
 														};
-														console.log("userSelect", userSelected);
+
 														dispatch({
 															type: CHANGE_TASK_MODAL_API_SAGA,
 															actionType: CHANGE_ASSIGNESS,

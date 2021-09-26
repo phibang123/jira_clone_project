@@ -5,7 +5,7 @@ export default function InfoMain(props) {
 	const { projectDetail } = props;
 	const renderAvatar = () => {
 		return projectDetail.members?.map((user, index) => {
-			console.log(user);
+		
 			return (
 				<div key={index} className="avatar">
 					<img src={user.avatar} alt="" />

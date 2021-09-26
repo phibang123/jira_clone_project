@@ -1,4 +1,4 @@
-import { ADD_USER_PROJECT_API_SAGA, GET_LIST_PROJECT_SAGA, GET_USER_BY_PROJECT_ID, GET_USER_BY_PROJECT_ID_SAGA, GET_USER_SAGA_API, GET_USER_SEARCH, USER_SIGNIN_SAGA_API, USLOGIN } from "../Constants/constants";
+import { ADD_USER_PROJECT_API_SAGA, GET_LIST_PROJECT_SAGA, GET_USER_BY_PROJECT_ID, GET_USER_BY_PROJECT_ID_SAGA, GET_USER_SAGA_API, GET_USER_SEARCH, POST_AUTHOR, USER_SIGNIN_SAGA_API, USER_SIGNUP_SAGA_API, USLOGIN } from "../Constants/constants";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../Constants/loading";
 import { STATUS_CODE, TOKEN_USER, USER_LOGIN } from "../../Utils/constants/settingSystem";
 import {
@@ -21,6 +21,8 @@ import { string } from "yup/lib/locale";
 import { userService } from "../../Services/userService";
 
 //quan lý các acton saga
+
+//-------------------đăng nhập
 function* signinSaga(action) {
 	yield put({
 		type: DISPLAY_LOADING,
@@ -32,8 +34,8 @@ function* signinSaga(action) {
 		);
 
 		//lưu vào store  khi đang nhập thành công
-		localStorage.setItem(TOKEN_USER, data.content.accessToken);
-		localStorage.setItem(USER_LOGIN, JSON.stringify(data.content));
+		yield localStorage.setItem(TOKEN_USER, data.content.accessToken);
+		yield localStorage.setItem(USER_LOGIN, JSON.stringify(data.content));
 
 		yield put({
 			type: USLOGIN,
@@ -46,21 +48,85 @@ function* signinSaga(action) {
 
 		// let { history } = yield select((state) => state.historyReducer);
 
-		history.push("/jira");
+	
 		yield put({
 			type: HIDE_LOADING,
 		});
+		yield history.push("/projectmanagement");
+		console.log(data)
+		Notification('success',data.message)
 	} catch (error) {
 		yield put({
 			type: HIDE_LOADING,
 		});
-		console.log(error.response.data);
+
+		if (error.response.data.message)
+		{
+			Notification('error',error.response?.data.message)
+		}
+		else
+		{
+			Notification('error',error)
+		}
+		
 	}
 }
 
 export function* theoDoiSignIn() {
-	yield takeLatest(USER_SIGNIN_SAGA_API, signinSaga);
+	yield takeEvery(USER_SIGNIN_SAGA_API, signinSaga);
 }
+
+//-------------------đăng kí
+
+export function* signupSaga(action)
+{
+	yield put({
+		type: DISPLAY_LOADING,
+	});
+	let {email,password} =  action.userSignup
+	yield delay(700);
+	try
+	{
+		const { data, status } = yield call(() => userService.signupUser(action.userSignup))
+		
+    
+		yield put({
+			type: USER_SIGNIN_SAGA_API,
+			userLogin: {
+				email: email,
+				password: password
+			}
+		})
+		yield put({
+			type: HIDE_LOADING,
+		});
+
+		Notification('success',data.message)
+	}
+	catch (err)
+	{
+		yield put({
+			type: HIDE_LOADING,
+		});
+
+		if (err.response.data.message)
+		{
+			Notification('error',err.response?.data.message)
+		}
+		else
+		{
+			Notification('error',err)
+		}
+	
+	}
+}
+
+
+
+export function* theoDoiSignUp() {
+	yield takeLatest(USER_SIGNUP_SAGA_API, signupSaga);
+}
+
 
 //lấy danh sách user
 function* getUserSaga(action) {
@@ -132,4 +198,8 @@ export function* theoDoiGetUserByProjectIdSaga()
 {
 	yield takeLatest(GET_USER_BY_PROJECT_ID_SAGA, getUserByProjectIdSaga);
 }
+
+
+
+
 

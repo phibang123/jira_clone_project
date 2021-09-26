@@ -1,7 +1,6 @@
 .jira {
 	height: 100vh;
-	font-family: "Roboto", sans-serif;
-	font-weight: 300;
+
 	display: flex;
 	height: auto;
 }
@@ -97,7 +96,6 @@
 .menu .account {
 	display: flex;
 	padding: 5% 10%;
-	margin-bottom: 5%;
 }
 
 .menu .account .avatar {
@@ -249,6 +247,7 @@
 }
 
 .main .content .card .list-group .list-group-item {
+	outline: none;
 	margin: 8px;
 	border-radius: 3px;
 	background: rgb(500, 255, 255);
@@ -476,4 +475,12 @@
 .logged,
 .estimate-time {
 	font-size: 14px;
+}
+
+.ant-layout-sider-trigger {
+	background: #000000 !important;
+	color: #feca57 !important;
+}
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+	background-color: #578bfe !important;
 }

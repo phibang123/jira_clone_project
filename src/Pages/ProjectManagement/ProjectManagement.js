@@ -59,7 +59,7 @@ export default function ProjectManagement() {
 		});
 	};
 	const handleChange = (pagination, filters, sorter) => {
-		console.log("Various parameters", pagination, filters, sorter);
+
 		setState({
 			filteredInfo: filters,
 			sortedInfo: sorter,

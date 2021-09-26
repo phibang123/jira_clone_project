@@ -25,6 +25,17 @@ export class baseService
       }
      })
   }
+  postNotHeaders = (url, model) =>
+  {
+
+    return axios({
+      url: ` ${ DOMAIN }${url}`,
+      method: 'POST',
+      data: model,
+      
+     })
+  }
+
   get = (url) =>{
     return axios({
       url: ` ${ DOMAIN }${url}`,

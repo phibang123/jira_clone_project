@@ -1,5 +1,6 @@
 // import * as ToDoListSaga from "./ToDoListSaga";
 
+import * as commentSaga from './commentSaga'
 import * as prioritySaga from './prioritySaga'
 import * as projectCategorySaga from './projectCategorySaga'
 import * as projectSaga from './projectSaga'
@@ -24,6 +25,7 @@ import {
 export function* rootSaga() {
 	yield all([
 		userSaga.theoDoiSignIn(),
+		userSaga.theoDoiSignUp(),
 		projectCategorySaga.theoDoigetAllProjectCategory(),
 		projectSaga.theoDoiCreatePrjectSaga(),
 		projectSaga.theoDoiGetListProjectSaga(),
@@ -43,6 +45,9 @@ export function* rootSaga() {
 		projectSaga.theoDoiGetProjectDetailNoLoading(),
 		taskSaga.theoDoiUpdateTaskStatusSaga(),
 		taskSaga.theoDoiHandleChangPostApi(),
-	
+		taskSaga.theoDoiDeleteTaskSaga(),
+		commentSaga.theoDoiGetAllCommentSaga(),
+		commentSaga.theoDoiDeleteCommentSaga()
+	  
     ]);
 }

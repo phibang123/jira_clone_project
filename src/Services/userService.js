@@ -8,8 +8,13 @@ export class UserService extends baseService {
 		super();
 	}
 
-	signinUser = (userLogin) => {
+	signinUser = (userLogin) =>
+	{
+		
 		return this.post(`/Users/signin`, userLogin);
+	};
+	signupUser = (userSignup) => {
+		return this.post(`/Users/signup`, userSignup);
 	};
 	getUser = (keyWord) => {
 		return this.get(`/Users/getUser?keyword=${keyWord}`);
@@ -18,7 +23,11 @@ export class UserService extends baseService {
 	{
 		 return this.get(`/Users/getUserByProjectId?idProject=${idProject}`)
 	}
+	textUser = () =>
+	{
 	
+		return this.postNotAuthor(`/Users/TestToken`)
+	}
 }
 
 export const userService = new UserService();

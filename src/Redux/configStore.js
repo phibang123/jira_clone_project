@@ -1,5 +1,6 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux'
 
+import { CommentReducer } from './Reducer/CommentReducer';
 import { DrawerReducer } from './Reducer/DrawerReducer';
 import { ModalReducer } from './Reducer/ModalReducer';
 import { PriorityReducer } from './Reducer/PriorityReducer'
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
     TaskTypeReducer: TaskTypeReducer,
     PriorityReducer: PriorityReducer,
     StatusReducer: StatusReducer,
-    TaskReducer: TaskReducer
+    TaskReducer: TaskReducer,
+    CommentReducer: CommentReducer
 })
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 export const store = createStore(

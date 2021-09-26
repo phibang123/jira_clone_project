@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Layout } from "antd";
 import { Route } from "react-router";
+import { USER_LOGIN } from "../../Utils/constants/settingSystem";
 
 const { Header, Footer, Sider, Content } = Layout;
 export default function UserLoginTemplate(props) {
@@ -17,6 +18,7 @@ export default function UserLoginTemplate(props) {
 				height: Math.round(window.innerHeight),
 			});
 		};
+		
 	}, []);
 
 	let { Component, ...resRoute } = props;

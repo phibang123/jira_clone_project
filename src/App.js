@@ -10,7 +10,9 @@ import JiraTemplate from "./Templates/JiraTemplate/JiraTemplate";
 import LoadingComponent from "./Components/GlobalSetting/LoadingComponent";
 import Login from "./Pages/Login/Login";
 import ModalComponent from "./HOC/Modal/ModalComponent";
+import ProfileUser from "./Pages/ProfileUser.js/ProfileUser";
 import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement";
+import SignUp from "./Pages/SignUp/SignUp";
 import UserLoginTemplate from "./Templates/LoginTemplate/UserLoginTemplate";
 import { useDispatch } from "react-redux";
 
@@ -33,6 +35,11 @@ function App() {
 					path="/login"
 					Component={Login}
 				></UserLoginTemplate>
+				<UserLoginTemplate
+					exact
+					path="/signup"
+					Component={SignUp}
+				></UserLoginTemplate>
 				<JiraTemplate
 					exact
 					path="/projectmanagement"
@@ -54,6 +61,11 @@ function App() {
 					exact
 					path="/dragdropdnd"
 					Component={DemoDragDropDnd}
+				></JiraTemplate>
+					<JiraTemplate
+					exact
+					path="/profile"
+					Component={ProfileUser}
 				></JiraTemplate>
 				<JiraTemplate exact path="/" Component={Index}></JiraTemplate>
 			</Switch>

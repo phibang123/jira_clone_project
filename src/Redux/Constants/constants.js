@@ -6,14 +6,19 @@ export const USLOGIN = 'USLOGIN'
 //-//-Sara
 export const USER_SIGNIN_SAGA_API = 'USER_SIGNIN_SAGA_API'
 
+//--------------------POST Logup-----------------------------------
+//-//-Sara
+export const USER_SIGNUP_SAGA_API = 'USER_SIGNUP_SAGA_API'
+
 //--------------------GET Category Project-----------------------------------
 //-//-Reducer
 export const GET_ALL_PROJECT_CATEGORY = 'GET_ALL_PROJECT_CATEGORY'
 //-//-Saga
 export const GET_ALL_PROJECT_CATEGORY_SAGA = 'GET_ALL_PROJECT_CATEGORY_SAGA'
 
-
-
+//--------------------POST Logup-----------------------------------
+//-//-Sara
+export const POST_AUTHOR = 'POST_AUTHOR'
 
 
 
@@ -112,7 +117,8 @@ export const GET_TASK_DETAIL = 'GET_TASK_DETAIL'
 //-----------------------update Task-----------------------------------------------
 //-//-Saga
 export const UPDATE_TASK_STATUS_SAGA_TEXT = 'UPDATE_TASK_STATUS_SAGA_TEXT'
-
+//-//-Reducer
+export const UPDATE_TASK_STATUS_REDUCER_TEXT = 'UPDATE_TASK_STATUS_REDUCER_TEXT'
 
 
 //--------------------Lấy user Từ id project-----------------------------------
@@ -128,6 +134,11 @@ export const GET_USER_BY_PROJECT_ID = 'GET_USER_BY_PROJECT_ID'
 export const CHANGE_TASK_MODAL_API_SAGA = 'CHANGE_TASK_MODAL_API_SAGA'
 export const CHANGE_TASK_MODAL_API = 'CHANGE_TASK_MODAL_API'
 
+//-----------------------delete Task-----------------------------------------------
+//-//-Saga
+export const DELETE_TASK_API_SAGA = 'DELETE_TASK_API_SAGA'
+//-//-Reducer
+  
 
 
 //-//-Chang add user

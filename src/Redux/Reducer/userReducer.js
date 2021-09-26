@@ -14,7 +14,9 @@ const stateDefault = {
 
 };
 const userReduer = (state = stateDefault, action) => {
-	switch (action.type) {
+	switch (action.type)
+	{
+	
 		case USLOGIN: {
 			state.userLogin = action.userLogin;
 			return { ...state };
