@@ -40,7 +40,7 @@ export default function DrawerComponent(props)
             <Space>
               <Button onClick={onClose}>Cancel</Button>
               <Button onClick={callBackSubmit} type="primary">
-                Submit
+                Edit Project
               </Button>
             </Space>
           }

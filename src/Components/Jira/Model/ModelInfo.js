@@ -1,3 +1,5 @@
+import * as Yup from "yup";
+
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -27,6 +29,7 @@ import {
 import {
 	DELETE_COMMENT_SAGA,
 	GET_ALL_COMMENT_SAGA,
+	INSERT_COMMENT_SAGA,
 } from "../../../Redux/Constants/comment";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,33 +41,28 @@ import { GET_ALL_STATUS_API_SAGA } from "../../../Redux/Constants/status";
 import ReactHtmlParser from "react-html-parser";
 import { Select } from "antd";
 import { USER_LOGIN } from "../../../Utils/constants/settingSystem";
+import { useFormik } from "formik";
 
 const { TextArea } = Input;
+const Editors = ({ onChange, onSubmit, submitting, value }) => (
+  <>
+    <Form.Item>
+      <TextArea rows={4} onChange={onChange} value={value} />
+    </Form.Item>
+    <Form.Item>
+      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+        Add Comment
+      </Button>
+    </Form.Item>
+  </>
+);
 export default function ModelInfo() {
-	const Editors = ({ onChange, onSubmit, submitting, value }) => (
-		<>
-			<Form.Item>
-				<TextArea rows={4} onChange={onChange} value={value} />
-			</Form.Item>
-			<Form.Item>
-				<Button
-					htmlType="submit"
-					loading={submitting}
-					onClick={onSubmit}
-					type="primary"
-				>
-					Add Comment
-				</Button>
-			</Form.Item>
-		</>
-	);
+
 	//distpath
 	const dispatch = useDispatch();
 	//useRef
 	const editorRef = useRef(null);
 	let usLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
-
-	let { avatar, id } = usLogin;
 
 	//useSelecet
 	const { taskDetailModal } = useSelector((state) => state.TaskReducer);
@@ -81,9 +79,14 @@ export default function ModelInfo() {
 		taskDetailModal.description
 	);
 	const [content, setContent] = useState(taskDetailModal.description);
-	const [size, setSize] = React.useState("default");
+	const [comment, setComment] = React.useState({
+		submitting: false,
+		value: "",
+
+	});
+ 
 	//function
-	console.log(CommentAll, "CommentAll nè");
+
 	useEffect(() => {
 		dispatch({
 			type: GET_ALL_STATUS_API_SAGA,
@@ -99,11 +102,6 @@ export default function ModelInfo() {
 	//comment
 	const actions = (com) => {
 		return [
-			<Tooltip key="comment-basic-like">
-				<span onClick={() => {}}>
-					<span className="comment-action">Edit</span>
-				</span>
-			</Tooltip>,
 			<Tooltip key="comment-basic-dislike">
 				<span
 					onClick={() => {
@@ -112,13 +110,11 @@ export default function ModelInfo() {
 							id: com.id,
 							taskId: com.taskId,
 						});
-						console.log("com nè", com);
 					}}
 				>
 					<span className="comment-action">Delete</span>
 				</span>
 			</Tooltip>,
-			<span key="comment-basic-reply-to">Reply to</span>,
 		];
 	};
 	const renderDescription = () => {
@@ -266,6 +262,43 @@ export default function ModelInfo() {
 			</div>
 		);
 	};
+
+	//formik cho comment
+	 const handleSubmit = () => {
+    if (!comment.value) {
+      return;
+    }
+
+    setComment({
+      submitting: true,
+    });
+		 dispatch({
+			 type: INSERT_COMMENT_SAGA,
+			 comment: {
+				 taskId: taskDetailModal.taskId,
+				 contentComment: comment.value
+			 }
+		})
+    setTimeout(() => {
+      setComment({
+        submitting: false,
+        value: '',
+        
+			});
+			
+		}, 1000);
+		 
+	};
+	const handleChangeInput = (e) =>
+	{
+		let { value, name } = e.target;
+	
+	  
+    setComment({
+      value: value,
+    });
+  };
+
 	return (
 		<div
 			className="modal fade"
@@ -327,7 +360,7 @@ export default function ModelInfo() {
 
 							<button
 								type="button"
-								style={{outline: 'none'}}
+								style={{ outline: "none" }}
 								className="close"
 								data-dismiss="modal"
 								aria-label="Close"
@@ -340,8 +373,15 @@ export default function ModelInfo() {
 						<div className="container-fluid">
 							<div className="row">
 								<div className="col-8">
-									
-									<h2 style={{fontWeight: '500',paddingLeft: '20px',marginBottom: '30px'}}>{taskDetailModal.taskName}</h2>
+									<h2
+										style={{
+											fontWeight: "500",
+											paddingLeft: "20px",
+											marginBottom: "30px",
+										}}
+									>
+										{taskDetailModal.taskName}
+									</h2>
 									<div className="description">
 										<h6
 											style={{
@@ -358,16 +398,29 @@ export default function ModelInfo() {
 										<h6>Comment</h6>
 										<div className="block-comment " style={{ display: "flex" }}>
 											<div className="input-comment mb-1 mt-2">
-												{visibleInput ? <Comment
-													avatar={<Avatar src={avatar} />}
-													content={
-														<Editors
-														// onChange={this.handleChange}
-														// onSubmit={this.handleSubmit}
-														/>
-													}
-												/> : <input  value='Click to Comment' onClick={() => {setVisibleInput(!visibleInput)}}></input>}
 											
+													{visibleInput ? (
+														<Comment
+															avatar={<Avatar src={usLogin?.avatar} />}
+															content={
+																<Editors
+																onChange={handleChangeInput}
+																onSubmit={handleSubmit}
+																submitting={comment.submitting}
+																value={comment.value}
+															/>
+															}
+														/>
+													) : (
+														<input
+															className="form-control"
+															value="Click to Comment"
+															onClick={() => {
+																setVisibleInput(!visibleInput);
+															}}
+														></input>
+													)}
+										
 											</div>
 										</div>
 										<div className="lastest-comment">
@@ -380,7 +433,7 @@ export default function ModelInfo() {
 														avatar={
 															<Avatar
 																src={comment.user?.avatar}
-																alt="Han Solo"
+																alt={comment.user?.name}
 															/>
 														}
 														content={comment.contentComment}

@@ -1,5 +1,5 @@
 import { CommentService, commentService } from "../../Services/Comment/CommentService";
-import { DELETE_COMMENT_SAGA, GET_ALL_COMMENT, GET_ALL_COMMENT_SAGA } from "../Constants/comment";
+import { DELETE_COMMENT_SAGA, GET_ALL_COMMENT, GET_ALL_COMMENT_SAGA, INSERT_COMMENT_SAGA } from "../Constants/comment";
 import {
 	all,
 	call,
@@ -57,4 +57,25 @@ function* deleteCommentSaga(action) {
 
 export function * theoDoiDeleteCommentSaga(){
   yield takeLatest(DELETE_COMMENT_SAGA,deleteCommentSaga)
+}
+
+function* insertCommentSaga(action)
+{
+  try
+  {
+    let { comment } = action
+    const { data, status } = yield call(() => CommentService.insertComment(comment))
+    yield put({
+      type: GET_ALL_COMMENT_SAGA,
+      taskId: comment.taskId
+    })
+  } catch (err)
+  { 
+     console.log(err)
+  }
+}
+
+
+export function * theoDoiInsertCommentSaga(){
+  yield takeLatest(INSERT_COMMENT_SAGA,insertCommentSaga)
 }

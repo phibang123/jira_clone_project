@@ -1,6 +1,7 @@
 import "../../index.css";
 
 import React, { useEffect, useState } from "react";
+import { Redirect, Route } from "react-router";
 import { TOKEN_USER, USER_LOGIN } from "../../Utils/constants/settingSystem";
 
 import ContentMain from '../../Components/Jira/Main/ContentMain'
@@ -11,25 +12,21 @@ import MenuJira from "../../Components/Jira/MenuJira";
 import ModelInfo from "../../Components/Jira/Model/ModelInfo";
 import ModelSearch from "../../Components/Jira/Model/ModelSearch";
 import { POST_AUTHOR } from "../../Redux/Constants/constants";
-import { Route } from "react-router";
 import SideBarJira from "../../Components/Jira/SideBarJira";
 import {history} from '../../Utils/history'
 import { useDispatch } from "react-redux";
 
-export default function JiraTemplate(props) {
-	let { Component, ...resRoute } = props;
+export default function JiraTemplate(props)
+{
 	const dispatch = useDispatch()
-	useEffect(() => {
-		let usLogin = JSON.parse(localStorage.getItem(USER_LOGIN,TOKEN_USER));
-		
-		if (!usLogin)
-		{
-			history.push("/login");
-			localStorage.removeItem(TOKEN_USER);
-	   	localStorage.removeItem(USER_LOGIN);
-		}
-		
-	}, [])
+
+	if (!localStorage.getItem(TOKEN_USER))
+	{
+		alert('You need Login')
+		return <Redirect to='/login'></Redirect>
+	}
+	let { Component, ...resRoute } = props;
+	
 	return (
 		<Route
 			{...resRoute}

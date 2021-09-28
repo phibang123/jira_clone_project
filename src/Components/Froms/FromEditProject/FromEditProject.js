@@ -108,7 +108,7 @@ function FromEditProject(props) {
 						
 							name="description"
 							onInit={(evt, editor) => (editorRef.current = editor)}
-							initialValue="Plan, track, and manage your agile and software development projects in Jira. Customize your workflow, collaborate, and release great software."
+							initialValue={values.description}
 							init={{
 								height: 300,
 								menubar: false,

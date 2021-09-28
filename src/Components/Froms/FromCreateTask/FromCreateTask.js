@@ -23,7 +23,8 @@ const children = [];
 for (let i = 10; i < 36; i++) {
 	children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
 }
-function FromCreateTask(props) {
+function FromCreateTask(props)
+{
 	const {
 		values,
 		touched,
@@ -32,6 +33,7 @@ function FromCreateTask(props) {
 		handleBlur,
 		handleSubmit,
 		setFieldValue,
+		resetForm
 	} = props;
 
 	const dispatch = useDispatch();
@@ -39,11 +41,12 @@ function FromCreateTask(props) {
 	const { projectList } = useSelector((state) => state.projectManageReducer);
 	const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
 	const { arrPriority } = useSelector((state) => state.PriorityReducer);
-	const {arrStatus} = useSelector(state => state.StatusReducer)
+	const { arrStatus } = useSelector(state => state.StatusReducer)
 	const { arrUser } = useSelector((state) => state.userReducer);
 	// hàm biền dổi option trên thẻ select
 
-	const userOption = arrUser?.map((item, index) => {
+	const userOption = arrUser?.map((item, index) =>
+	{
 		return { value: item.userId, label: item.name };
 	});
 
@@ -55,7 +58,8 @@ function FromCreateTask(props) {
 		timeTrackingRemaining: 0,
 	});
 
-	useEffect(() => {
+	useEffect(() =>
+	{
 		dispatch({
 			type: GET_LIST_PROJECT_SAGA,
 		});
@@ -76,7 +80,8 @@ function FromCreateTask(props) {
 		// đưa hàm handle submit lên modal reducer để cập nhật lại sự kiện cho nút submit
 		dispatch({
 			type: 'SET_SUBMIT_CREATE_TASK',
-			submitFunction: handleSubmit
+			submitFunction: handleSubmit,
+			resetForm: resetForm
 		})
 	}, []);
 
@@ -84,9 +89,9 @@ function FromCreateTask(props) {
 	// 	setSize(e.target.value);
 	// };
 
-
+	
 	return (
-		<form className="container" onSubmit={handleSubmit}>
+		<form className="container" onSubmit={handleSubmit} >
 			<div className="form-group">
 				<p>Project</p>
 				<select
@@ -305,8 +310,12 @@ const FrmCreateTask = withFormik({
 	validationSchema: Yup.object({
 	
 	}),
-	handleSubmit: (values, { props, setSubmitting }) => {
-		props.dispatch({type: CREATE_TASK_SAGA,taskObject: values})
+
+	handleSubmit: (values, { props, setSubmitting, },) =>
+	{
+		
+		props.dispatch({ type: CREATE_TASK_SAGA, taskObject: values })
+	
 
 	},
 })(FromCreateTask);

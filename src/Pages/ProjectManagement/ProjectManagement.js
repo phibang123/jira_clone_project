@@ -90,6 +90,7 @@ export default function ProjectManagement() {
 		},
 		{
 			title: "Project Name",
+			
 			dataIndex: "projectName",
 			render: (text,recond,index) =>
 			{
@@ -129,6 +130,7 @@ export default function ProjectManagement() {
 
 		{
 			title: "Category",
+			width: 150,
 			dataIndex: "categoryName",
 			key: "categoryName",
 			sorter: (item1, item2) => {
@@ -143,6 +145,7 @@ export default function ProjectManagement() {
 		{
 			title: "Creator",
 			key: "creator",
+			width: 200,
 			render: (text, record, index) => {
 				return <Tag color="green"> {record.creator?.name}</Tag>;
 			},
@@ -158,6 +161,7 @@ export default function ProjectManagement() {
 		{
 			title: "members",
 			key: "members",
+			width: 250,
 			render: (text, record, index) => {
 				return (
 					<div>
@@ -259,6 +263,7 @@ export default function ProjectManagement() {
 		},
 		{
 			title: "Action",
+			width: 150,
 			key: "action",
 			render: (text, record, index) => (
 				<div size="middle">
@@ -326,6 +331,7 @@ export default function ProjectManagement() {
 				<Button onClick={clearAll}>Clear filters and sorters</Button>
 			</Space>
 			<Table
+				
 				columns={columns}
 				rowKey={"id"}
 				dataSource={projectList}
