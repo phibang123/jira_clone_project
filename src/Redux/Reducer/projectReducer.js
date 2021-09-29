@@ -167,7 +167,7 @@ const initialState = {
 
 export const projectReducer = (state = initialState, action) => {
   switch (action.type) {
-
+    
     case EDIT_PROJECT: {
       state.projectEdit = action.projectEditDrawer
       return {...state}
@@ -177,19 +177,18 @@ export const projectReducer = (state = initialState, action) => {
       return {...state}
       }
     case 'CHANGE_TASK_MODAL_API_TEXT': {
-      console.log('reducer taskDetail',state.projectDetail)
-      console.log(action)
+    
 
       //điểm đang ở
       let statusFindOld = state.projectDetail?.lstTask?.findIndex(statusId => statusId.statusId === action.statusOld)
       let taskDelete = state.projectDetail.lstTask[statusFindOld].lstTaskDeTail.findIndex(dele => dele.taskId === action.taskId)
       state.projectDetail.lstTask[statusFindOld].lstTaskDeTail.splice(taskDelete,1)
-      console.log(state.projectDetail.lstTask[statusFindOld].lstTaskDeTail[taskDelete],'taskDelete')
+     
 
       //điểm tới [mảng]
       let statusFindNew = state.projectDetail?.lstTask?.findIndex(statusId => statusId.statusId === action.statusId)
       //điểm đến xóa thành đóa
-      console.log('alo',state.projectDetail.lstTask[statusFindNew])
+     
       state.projectDetail.lstTask[statusFindNew].lstTaskDeTail.push(action.taskDetail)
       
       

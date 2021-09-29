@@ -23,7 +23,7 @@ export default function Index(props)
       type: GET_PROJECT_DETAIL_API_SAGA,
       projectId
     })
-  }, [])
+  }, [props])
   return (
     <div className='main mt-3'>
 						

@@ -20,7 +20,7 @@ function* getAllCommentSaga(action) {
     let { data, status } = yield call(() => CommentService.getAllComment(action.taskId))
    
     yield put({
-      type: GET_ALL_COMMENT,
+      type: 'INSERT_COMMENT',
       CommentAll: data.content
     })
   } catch (err)

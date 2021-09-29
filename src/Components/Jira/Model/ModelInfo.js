@@ -70,8 +70,8 @@ export default function ModelInfo() {
 	const { arrPriority } = useSelector((state) => state.PriorityReducer);
 	const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
 	const { projectDetail } = useSelector((state) => state.projectReducer);
-	const { CommentAll } = useSelector((state) => state.CommentReducer);
 
+	
 	//useState
 	const [visibleEditor, setVisibleEditor] = useState(false);
 	const [visibleInput, setVisibleInput] = useState(false);
@@ -104,6 +104,7 @@ export default function ModelInfo() {
 		return [
 			<Tooltip key="comment-basic-dislike">
 				<span
+				style={{color: 'red'}}
 					onClick={() => {
 						dispatch({
 							type: DELETE_COMMENT_SAGA,
@@ -273,6 +274,7 @@ export default function ModelInfo() {
       submitting: true,
     });
 		 dispatch({
+			 
 			 type: INSERT_COMMENT_SAGA,
 			 comment: {
 				 taskId: taskDetailModal.taskId,
@@ -376,8 +378,9 @@ export default function ModelInfo() {
 									<h2
 										style={{
 											fontWeight: "500",
-											paddingLeft: "20px",
-											marginBottom: "30px",
+											padding: "20px",
+										  borderRadius: '10px',
+											background: 'rgb(235, 236, 240)'
 										}}
 									>
 										{taskDetailModal.taskName}
@@ -424,7 +427,7 @@ export default function ModelInfo() {
 											</div>
 										</div>
 										<div className="lastest-comment">
-											{CommentAll?.map((comment, index) => {
+											{taskDetailModal.lstComment?.map((comment, index) => {
 												return (
 													<Comment
 														key={index}

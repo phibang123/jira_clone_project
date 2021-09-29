@@ -8,7 +8,7 @@ export default function MenuJira() {
 	const { userLogin } = useSelector((state) => state.userReducer);
 
 	return (
-		<div className="menu" style={{position: 'fixed',left: '80px'}}>
+		<div className="menu" style={{position: 'fixed',left: '80px', fontSize: '15px'}}>
 			<div className="account">
 				<div className="avatar">
 					<NavLink to="/profile">
@@ -17,7 +17,7 @@ export default function MenuJira() {
 				</div>
 				<div className="account-info">
 					<p>{userLogin?.email}</p>
-					<p>{userLogin?.name}</p>
+					<div className='d-flex justify-content-between  align-items-center'><span>{userLogin?.name}</span> <NavLink to='/profile' className='btn p-0 btn-dark'><span>View Profile</span></NavLink></div>
 				</div>
 			</div>
 		
@@ -30,7 +30,7 @@ export default function MenuJira() {
 						activeClassName=" font-weight-bold"
 						to="/"
 					>
-						Cyber Board
+						Index
 					</NavLink>
 				</div>
 				<div>
@@ -41,7 +41,7 @@ export default function MenuJira() {
 						activeClassName=" font-weight-bold"
 						to="/createproject"
 					>
-						Index
+						Create Project
 					</NavLink>
 				</div>
 				<div>

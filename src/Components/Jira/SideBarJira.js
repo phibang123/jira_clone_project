@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Popconfirm, Popover, message } from "antd";
 import { Layout, Menu } from "antd";
+import { Link, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { TOKEN_USER, USER_LOGIN } from "../../Utils/constants/settingSystem";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import FromCreateTask from "../Froms/FromCreateTask/FromCreateTask";
 import { GET_ALL_PRIORITY_SAGA } from "../../Redux/Constants/priority";
 import { GET_LIST_PROJECT_SAGA } from "../../Redux/Constants/constants";
-import { NavLink } from "react-router-dom";
 import { OPEN_DRAWER } from "../../Redux/Constants/drawer";
 import { Select } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
@@ -27,13 +27,16 @@ const { Header, Content, Footer, Sider } = Layout;
 const text = "Are you sure log out web?";
 
 const searchPop = (projectList) => {
-	console.log(projectList, "alo");
+
 	return (
 		<Select
 			showSearch
 			style={{ width: 200 }}
 			placeholder="Search to Select"
 			optionFilterProp="children"
+			onSelect={(valueSelect, option) => {
+				history.push(`/projectdetail/${option.id}`)			
+			}}
 			filterOption={(inputValue, option) =>
 				option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
 			
@@ -41,8 +44,8 @@ const searchPop = (projectList) => {
 		>
 			{projectList?.map((project, index) => {
 				return (
-					<Option value={project.projectName} key={index}>
-						<a style={{color: 'black'}} href={`/projectdetail/${project.id}`}>{project.projectName}</a>
+					<Option  value={project.projectName} id={project.id} key={index}>
+						<NavLink activeClassName="active" style={{color: 'black',width: '100%'}} to={`/projectdetail/${project.id}`}>{project.projectName}</NavLink>
 					</Option>
 				);
 			})}

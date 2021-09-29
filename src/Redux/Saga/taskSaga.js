@@ -25,6 +25,7 @@ import {
 	takeLatest,
 } from "redux-saga/effects";
 
+import { GET_ALL_COMMENT_SAGA } from "../Constants/comment";
 import { GET_PROJECT_DETAIL_API_SAGA } from "../../Redux/Constants/constants";
 import { Notification } from "../../Utils/Notification/Notification";
 import { STATUS_CODE } from "../../Utils/constants/settingSystem";
@@ -64,6 +65,10 @@ function* getTaskDetail(action) {
 		yield put({
 			type: GET_TASK_DETAIL,
 			taskDetailModal: data.content,
+		});
+		yield put({
+			type: GET_ALL_COMMENT_SAGA,
+			taskId
 		});
 	} catch (err) {
 		console.log(err);
@@ -175,6 +180,10 @@ function* handleChangPostApi(action) {
       });
       yield put({
         type: GET_TASK_DETAIL_SAGA,
+        taskId: taskUpdateApi.taskId,
+			});
+			yield put({
+        type: GET_ALL_COMMENT_SAGA,
         taskId: taskUpdateApi.taskId,
       });
     }

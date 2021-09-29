@@ -91,12 +91,7 @@ export default function ContentMain(props) {
 																		dispatch({
 																			type: GET_TASK_DETAIL_SAGA,
 																			taskId: task.taskId,
-																		});
-																		dispatch({
-																			type: GET_ALL_COMMENT_SAGA,
-																			taskId: task.taskId
-																			
-																		})
+																		});													
 																	}}
 																	className="list-group-item"
 																	data-toggle="modal"

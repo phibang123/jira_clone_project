@@ -24,7 +24,7 @@ export default function DemoDragDrog(props) {
 	}));
 
 	const handleDragStart = (e, task, index) => {
-		console.log("start", e.target, task);
+	
 		tagDrag.current = task;
 	};
 	const handleDragEnter = (e, taskDragEnter, index) => {

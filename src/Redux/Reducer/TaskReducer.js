@@ -35,14 +35,18 @@ export const TaskReducer = (state = initialState, action) => {
   switch (action.type)
   {
   
-
+    case 'INSERT_COMMENT': {
+      
+      state.taskDetailModal.lstComment = action.CommentAll
+      return {...state}
+    }
     case GET_TASK_DETAIL: {
     
       return {...state,taskDetailModal: action.taskDetailModal}
     }
     case CHANGE_TASK_MODAL_API: {
-      console.log('asdasd',action)
-      const { name, value } = action
+  
+       const { name, value } = action
        
        return {...state,taskDetailModal: {...state.taskDetailModal,[name]:value}}
     }
