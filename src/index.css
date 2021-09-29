@@ -482,5 +482,6 @@
 	color: #feca57 !important;
 }
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
-	background-color: #578bfe !important;
+	background-color: #343a40 !important;
+	color: rgb(223, 225, 230);
 }

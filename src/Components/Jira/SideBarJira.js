@@ -143,15 +143,16 @@ export default function SideBarJira() {
 						About
 					</Menu.Item>
 					<Popconfirm
-						key="4"
+						key="5"
 						placement="rightTop"
 						title={text}
 						onConfirm={handleLogOut}
 						okText="Yes"
 						cancelText="No"
+						
 					>
 						<Menu.Item
-							key="4"
+							key="5"
 							style={{ top: "63%" }}
 							icon={
 								<LogoutOutlined

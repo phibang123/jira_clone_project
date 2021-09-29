@@ -81,6 +81,15 @@ export const ADD_USER_PROJECT_API_SAGA = 'ADD_USER_PROJECT_API_SAGA'
 //
 
 
+
+//--------------------nhấn nút edit chổ profile  vào Project-----------------------------------
+//-//-Saga
+export const EDIT_USER_API_SAGA = 'EDIT_USER_API_SAGA'
+//
+
+
+
+
 //--------------------nhấn nút xóa user trong project chổ table Project-----------------------------------
 //-//-Saga
 export const REMOVE_USER_PROJECT_API_SAGA = 'REMOVE_USER_PROJECT_API_SAGA'

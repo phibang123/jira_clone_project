@@ -25,7 +25,7 @@ export default function MenuJira() {
 				<div>
 					<i className="fa fa-credit-card" />
 					<NavLink
-						className="text-dark"
+						className="text-dark ml-2"
 						exact
 						activeClassName=" font-weight-bold"
 						to="/"
@@ -36,7 +36,7 @@ export default function MenuJira() {
 				<div>
 					<i className="fa fa-cog" />
 					<NavLink
-						className="text-dark"
+						className="text-dark  ml-2"
 						exact
 						activeClassName=" font-weight-bold"
 						to="/createproject"
@@ -47,7 +47,7 @@ export default function MenuJira() {
 				<div>
 					<i className="fas fa-tasks"></i>
 					<NavLink
-						className="text-dark"
+						className="text-dark  ml-2"
 						exact
 						activeClassName="actice font-weight-bold"
 						to="/projectmanagement"
@@ -57,25 +57,25 @@ export default function MenuJira() {
 				</div>
 			</div>
 			<div className="feature">
-				<div>
+				<div style={{cursor: 'not-allowed'}}>
 					<i className="fa fa-truck" />
-					<span>Releases</span>
+					<span className='ml-2'>Releases</span>
 				</div>
-				<div>
+				<div  style={{cursor: 'not-allowed'}}>
 					<i className="fa fa-equals" />
-					<span>Issues and filters</span>
+					<span className='ml-2'>Issues and filters</span>
 				</div>
-				<div>
+				<div  style={{cursor: 'not-allowed'}}>
 					<i className="fa fa-paste" />
-					<span>Pages</span>
+					<span className='ml-2'>Pages</span>
 				</div>
-				<div>
+				<div  style={{cursor: 'not-allowed'}}>
 					<i className="fa fa-location-arrow" />
-					<span>Reports</span>
+					<span className='ml-2'>Reports</span>
 				</div>
-				<div>
+				<div style={{cursor: 'not-allowed'}}>
 					<i className="fa fa-box" />
-					<span>Components</span>
+					<span className='ml-2'>Components</span>
 				</div>
 			</div>
 		</div>

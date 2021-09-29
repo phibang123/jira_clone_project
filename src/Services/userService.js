@@ -23,6 +23,10 @@ export class UserService extends baseService {
 	{
 		 return this.get(`/Users/getUserByProjectId?idProject=${idProject}`)
 	}
+	editUser = (editUser) =>
+	{
+		return this.put(`/Users/editUser`,editUser)
+	}
 	textUser = () =>
 	{
 	

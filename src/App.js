@@ -5,6 +5,7 @@ import CreateProject from "./Pages/CreateProject/CreateProject";
 import DemoDragDrog from "./Pages/DemoDragDrog/DemoDragDrog";
 import DemoDragDropDnd from "./Pages/DemoDragDropDnd/DemoDragDropDnd";
 import DrawerComponent from "./HOC/Drawer/DrawerComponent";
+import HomeIndex from "./Pages/Home/HomeIndex";
 import Index from "./Pages/ProjectDetail/Index";
 import JiraTemplate from "./Templates/JiraTemplate/JiraTemplate";
 import LoadingComponent from "./Components/GlobalSetting/LoadingComponent";
@@ -67,7 +68,7 @@ function App() {
 					path="/profile"
 					Component={ProfileUser}
 				></JiraTemplate>
-				<JiraTemplate exact path="/" Component={Index}></JiraTemplate>
+			  	<JiraTemplate exact path="/" Component={HomeIndex}></JiraTemplate>
 			</Switch>
 		</>
 	);
