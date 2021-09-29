@@ -4,7 +4,8 @@ import { a, useTrail } from "@react-spring/web";
 import { NavLink } from "react-router-dom";
 import StyleHome from "./StyleHome.module.css";
 
-const Trail: React.FC<{ open: boolean }> = ({ open, children }) => {
+//const Trail: React.FC<{ open: boolean }> = ({ open, children }) => {
+const Trail = ({ open, children }) => {
 	const items = React.Children.toArray(children);
 	const trail = useTrail(items.length, {
 		config: { mass: 5, tension: 2000, friction: 200 },
