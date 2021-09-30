@@ -9,6 +9,7 @@
     "@tinymce/tinymce-react": "^3.12.6",
     "antd": "^4.16.13",
     "axios": "^0.21.4",
+    "firebase": "^9.1.0",
     "formik": "^2.2.9",
     "history": "^4.10.0",
     "lodash": "^4.17.21",
@@ -35,7 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deloy" : "npm run build && cd build && copy index.html 200.html && surge"
   },
   "eslintConfig": {
     "extends": [

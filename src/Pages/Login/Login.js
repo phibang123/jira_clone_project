@@ -8,6 +8,7 @@ import { connect, useDispatch } from 'react-redux';
 import React from "react";
 import { USER_SIGNIN_SAGA_API } from '../../Redux/Constants/constants';
 import { createFromIconfontCN } from '@ant-design/icons';
+import {history} from '../../Utils/history'
 import { signin_action } from '../../Redux/Actions/userAction';
 import { useState } from "react";
 
@@ -63,15 +64,24 @@ export default function Login(props)
                 </div>
                 <div className='text-danger'>
                     {formik.errors.password  && formik.touched.password ? (<>{formik.errors.password}</>):null}
+                </div >
+                <div className='d-flex justify-content-between w-50'>
+                <Button htmlType="submit" size='large' style={{ color: '#ffffff', width: '45%', backgroundColor: 'rgb(102,117,223)' }} className='mt-5' type='Submit'>Login</Button>
+                
+                <Button htmlType="submit" size='large' style={{ color: '#ffffff', width: '45%', backgroundColor: 'red', marginTop: '50px' }} onClick={() =>
+                {
+                    history.push('/signup')
+                }} className='mt-5'  type='button'>Sign up</Button>
                 </div>
-                <Button htmlType="submit" size='large' style={{ color: '#ffffff', width: '50%', backgroundColor: 'rgb(102,117,223)' }} className='mt-5'  type='Submit'>Login</Button>
                 <div className='social mt-2 d-flex'>
 
              
                     <Button icon={ <IconFont type="icon-facebook" /> }size='large' type='primary' style={{ backgroundColor: 'rgb(147,106,99)' }} shape="circle" className='ml-2 '></Button>
-                    <Button icon={ <IconFont type="icon-twitter" /> }size='large' type='primary' shape="circle" className='ml-5'></Button>
+                    <Button icon={<IconFont type="icon-twitter" />} size='large' type='primary' shape="circle" className='ml-5'></Button>
+                  
 
                 </div>
+                
 			</div>
 		</form>
 	);

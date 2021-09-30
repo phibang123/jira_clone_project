@@ -27,7 +27,7 @@ const Trail = ({ open, children }) => {
 export default function HomeIndex() {
 	const [open, set] = useState(true);
 	return (
-		<div className={StyleHome.masthead}>
+		<div  className={StyleHome.masthead}>
 			<div className="container px-4 px-lg-5 text-center">
 				<Trail open={open}>
 					<h1 className="mb-1">Stylish Portfolio</h1>
