@@ -17,8 +17,9 @@ export default function ModalComponent()
     setTimeout(() => {
       callBackSubmit()
       setConfirmLoading(false);
+    
     }, 2000);
-
+   
   };
   const handleCancel = () => {
     
@@ -31,8 +32,8 @@ export default function ModalComponent()
        <>
  
       <Modal
-          title={title}
-          style={{top: '30px'}}
+        title={title}
+        style={{top: '30px'}}
         visible={visible}
         width={900}
         onOk={handleOk}

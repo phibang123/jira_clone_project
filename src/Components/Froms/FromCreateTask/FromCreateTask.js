@@ -80,7 +80,7 @@ function FromCreateTask(props)
 		// đưa hàm handle submit lên modal reducer để cập nhật lại sự kiện cho nút submit
 		dispatch({
 			type: 'SET_SUBMIT_CREATE_TASK',
-			submitFunction: handleSubmit,
+			submitFunction:  handleSubmit,
 			resetForm: resetForm
 		})
 	}, []);
@@ -256,8 +256,9 @@ function FromCreateTask(props)
 			<div className="form-group">
 				<p>Description</p>
 				<Editor
-					name='description'
-					apiKey="fljctmgnb3bhnix02044qlbuxoyf1onlwfbirols7rgblf1z"
+					name='description2'
+					
+		
 					// onChange={handleChange}
 					// onBlur={handleBlur}
 
@@ -265,19 +266,15 @@ function FromCreateTask(props)
 					initialValue="Plan, track, and manage your agile and software development projects in Jira. Customize your workflow, collaborate, and release great software."
 					init={{
 						height: 300,
-						menubar: false,
-						plugins: [
-							"advlist autolink lists link image charmap print preview anchor",
-							"searchreplace visualblocks code fullscreen",
-							"insertdatetime media table paste code help wordcount",
-						],
+						selector: "textarea",
+						document_base_url: "https://jiraclonebonlang.herokuapp.com",
+						plugins:
+							"a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
 						toolbar:
-							"undo redo | formatselect | " +
-							"bold italic backcolor | alignleft aligncenter " +
-							"alignright alignjustify | bullist numlist outdent indent | " +
-							"removeformat | help",
-						content_style:
-							"body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+							"a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
+						toolbar_mode: "floating",
+						tinycomments_mode: "embedded",
+						tinycomments_author: "Author name",
 					}}
 					onEditorChange={(content, editor) =>
 					{

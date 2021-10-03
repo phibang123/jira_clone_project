@@ -104,26 +104,20 @@ function FromEditProject(props) {
 					<div className="form-group">
 						<p>Description</p>
 						<Editor
-							apiKey="fljctmgnb3bhnix02044qlbuxoyf1onlwfbirols7rgblf1z"
-						
 							name="description"
 							onInit={(evt, editor) => (editorRef.current = editor)}
 							initialValue={values.description}
 							init={{
 								height: 300,
-								menubar: false,
-								plugins: [
-									"advlist autolink lists link image charmap print preview anchor",
-									"searchreplace visualblocks code fullscreen",
-									"insertdatetime media table paste code help wordcount",
-								],
+								selector: "textarea",
+								document_base_url: "https://jiraclonebonlang.herokuapp.com",
+								plugins:
+									"a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
 								toolbar:
-									"undo redo | formatselect | " +
-									"bold italic backcolor | alignleft aligncenter " +
-									"alignright alignjustify | bullist numlist outdent indent | " +
-									"removeformat | help",
-								content_style:
-									"body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+									"a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
+								toolbar_mode: "floating",
+								tinycomments_mode: "embedded",
+								tinycomments_author: "Author name",
 							}}
 							onEditorChange={hadnleEditorChange}
 						/>

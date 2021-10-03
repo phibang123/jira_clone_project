@@ -1,4 +1,4 @@
-import { DOMAIN, TOKEN_USER } from "../Utils/constants/settingSystem"
+import { DOMAIN, TOKEN_CYBERSOFT, TOKEN_USER } from "../Utils/constants/settingSystem"
 
 import axios from "axios"
 
@@ -11,7 +11,8 @@ export class baseService
       method: 'PUT',
       data: model,
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem(TOKEN_USER) //JWT
+        'Authorization': 'Bearer ' + localStorage.getItem(TOKEN_USER), //JWT
+        'TokenCybersoft': TOKEN_CYBERSOFT
       }
      })
   }
@@ -21,7 +22,8 @@ export class baseService
       method: 'POST',
       data: model,
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem(TOKEN_USER)//JWT
+        'Authorization': 'Bearer ' + localStorage.getItem(TOKEN_USER),//JWT
+        'TokenCybersoft': TOKEN_CYBERSOFT
       }
      })
   }
@@ -32,6 +34,9 @@ export class baseService
       url: ` ${ DOMAIN }${url}`,
       method: 'POST',
       data: model,
+      headers: {
+        'TokenCybersoft': TOKEN_CYBERSOFT
+      }
       
      })
   }
@@ -41,7 +46,8 @@ export class baseService
       url: ` ${ DOMAIN }${url}`,
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem(TOKEN_USER)//JWT
+        'Authorization': 'Bearer ' + localStorage.getItem(TOKEN_USER),//JWT
+        'TokenCybersoft': TOKEN_CYBERSOFT
       }
      })
   }
@@ -50,7 +56,9 @@ export class baseService
       url: ` ${ DOMAIN }${url}`,
       method: 'DELETE',
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem(TOKEN_USER)//JWT
+        'Authorization': 'Bearer ' + localStorage.getItem(TOKEN_USER),//JWT
+        'TokenCybersoft': TOKEN_CYBERSOFT
+        
       }
      })
    }
