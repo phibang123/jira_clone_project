@@ -28,7 +28,7 @@ export default function ContentMain(props) {
 		{
 			return
 		}
-		else if (source.index === destination.index && source.droppableId === destination.droppableId)
+		else if (destination.index === source.index && destination.droppableId === source.droppableId)
 		{
 			return 
 		}

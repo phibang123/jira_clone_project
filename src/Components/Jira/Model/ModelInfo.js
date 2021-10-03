@@ -45,19 +45,23 @@ import { useFormik } from "formik";
 
 const { TextArea } = Input;
 const Editors = ({ onChange, onSubmit, submitting, value }) => (
-  <>
-    <Form.Item>
-      <TextArea rows={4} onChange={onChange} value={value} />
-    </Form.Item>
-    <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-        Add Comment
-      </Button>
-    </Form.Item>
-  </>
+	<>
+		<Form.Item>
+			<TextArea rows={4} onChange={onChange} value={value} />
+		</Form.Item>
+		<Form.Item>
+			<Button
+				htmlType="submit"
+				loading={submitting}
+				onClick={onSubmit}
+				type="primary"
+			>
+				Add Comment
+			</Button>
+		</Form.Item>
+	</>
 );
 export default function ModelInfo() {
-
 	//distpath
 	const dispatch = useDispatch();
 	//useRef
@@ -71,7 +75,6 @@ export default function ModelInfo() {
 	const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
 	const { projectDetail } = useSelector((state) => state.projectReducer);
 
-	
 	//useState
 	const [visibleEditor, setVisibleEditor] = useState(false);
 	const [visibleInput, setVisibleInput] = useState(false);
@@ -82,9 +85,8 @@ export default function ModelInfo() {
 	const [comment, setComment] = React.useState({
 		submitting: false,
 		value: "",
-
 	});
- 
+
 	//function
 
 	useEffect(() => {
@@ -104,7 +106,7 @@ export default function ModelInfo() {
 		return [
 			<Tooltip key="comment-basic-dislike">
 				<span
-				style={{color: 'red'}}
+					style={{ color: "red" }}
 					onClick={() => {
 						dispatch({
 							type: DELETE_COMMENT_SAGA,
@@ -133,19 +135,15 @@ export default function ModelInfo() {
 							onInit={(evt, editor) => (editorRef.current = editor)}
 							init={{
 								height: 300,
-								menubar: false,
-								plugins: [
-									"advlist autolink lists link image charmap print preview anchor",
-									"searchreplace visualblocks code fullscreen",
-									"insertdatetime media table paste code help wordcount",
-								],
+								selector: "textarea",
+								document_base_url: "https://jiraclonebonlang.herokuapp.com",
+								plugins:
+									"a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
 								toolbar:
-									"undo redo | formatselect | " +
-									"bold italic backcolor | alignleft aligncenter " +
-									"alignright alignjustify | bullist numlist outdent indent | " +
-									"removeformat | help",
-								content_style:
-									"body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+									"a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
+								toolbar_mode: "floating",
+								tinycomments_mode: "embedded",
+								tinycomments_author: "Author name",
 							}}
 							onEditorChange={(content, editor) => {
 								setContent(content);
@@ -265,41 +263,35 @@ export default function ModelInfo() {
 	};
 
 	//formik cho comment
-	 const handleSubmit = () => {
-    if (!comment.value) {
-      return;
-    }
+	const handleSubmit = () => {
+		if (!comment.value) {
+			return;
+		}
 
-    setComment({
-      submitting: true,
-    });
-		 dispatch({
-			 
-			 type: INSERT_COMMENT_SAGA,
-			 comment: {
-				 taskId: taskDetailModal.taskId,
-				 contentComment: comment.value
-			 }
-		})
-    setTimeout(() => {
-      setComment({
-        submitting: false,
-        value: '',
-        
+		setComment({
+			submitting: true,
+		});
+		dispatch({
+			type: INSERT_COMMENT_SAGA,
+			comment: {
+				taskId: taskDetailModal.taskId,
+				contentComment: comment.value,
+			},
+		});
+		setTimeout(() => {
+			setComment({
+				submitting: false,
+				value: "",
 			});
-			
 		}, 1000);
-		 
 	};
-	const handleChangeInput = (e) =>
-	{
+	const handleChangeInput = (e) => {
 		let { value, name } = e.target;
-	
-	  
-    setComment({
-      value: value,
-    });
-  };
+
+		setComment({
+			value: value,
+		});
+	};
 
 	return (
 		<div
@@ -379,8 +371,8 @@ export default function ModelInfo() {
 										style={{
 											fontWeight: "500",
 											padding: "20px",
-										  borderRadius: '10px',
-											background: 'rgb(235, 236, 240)'
+											borderRadius: "10px",
+											background: "rgb(235, 236, 240)",
 										}}
 									>
 										{taskDetailModal.taskName}
@@ -401,29 +393,27 @@ export default function ModelInfo() {
 										<h6>Comment</h6>
 										<div className="block-comment " style={{ display: "flex" }}>
 											<div className="input-comment mb-1 mt-2">
-											
-													{visibleInput ? (
-														<Comment
-															avatar={<Avatar src={usLogin?.avatar} />}
-															content={
-																<Editors
+												{visibleInput ? (
+													<Comment
+														avatar={<Avatar src={usLogin?.avatar} />}
+														content={
+															<Editors
 																onChange={handleChangeInput}
 																onSubmit={handleSubmit}
 																submitting={comment.submitting}
 																value={comment.value}
 															/>
-															}
-														/>
-													) : (
-														<input
-															className="form-control"
-															value="Click to Comment"
-															onClick={() => {
-																setVisibleInput(!visibleInput);
-															}}
-														></input>
-													)}
-										
+														}
+													/>
+												) : (
+													<input
+														className="form-control"
+														value="Click to Comment"
+														onClick={() => {
+															setVisibleInput(!visibleInput);
+														}}
+													></input>
+												)}
 											</div>
 										</div>
 										<div className="lastest-comment">
