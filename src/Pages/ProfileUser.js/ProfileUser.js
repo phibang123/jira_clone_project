@@ -6,13 +6,19 @@ import { EDIT_USER_API_SAGA } from "../../Redux/Constants/constants";
 import { Formik } from "formik";
 import ProfileCss from "./Profile.module.css";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 
 export default function ProfileUser(props) {
-	const { userLogin } = useSelector((state) => state.userReducer);
+	const { userLogin, editUser } = useSelector((state) => state.userReducer);
+	useEffect(() => {
+		
+	}, [])
+
+	console.log(editUser)
 	const dispatch = useDispatch()
 	console.log(userLogin)
-	const [edit, setEdit] = useState(false);
+
 
 	return (
 		<>
@@ -37,7 +43,7 @@ export default function ProfileUser(props) {
 					}}
 				>
 					<div className=" image d-flex flex-column justify-content-center align-items-center">
-						{!edit ? (
+						{!editUser ? (
 							<button className="btn btn-secondary rounded-circle">
 								<img
 									className={ProfileCss.img}
@@ -51,7 +57,7 @@ export default function ProfileUser(props) {
 							<h3>Edit Profile</h3>
 						)}
 						<div className=" px-2 rounded mt-4 date ">
-							{!edit ? (
+							{!editUser ? (
 								<>
 									<h2 className="text-center">{userLogin.name}</h2>
 									<p className="text-center mb-0">Id: {userLogin.id}</p>
@@ -64,7 +70,10 @@ export default function ProfileUser(props) {
 										<button
 											className="btn1 btn-dark btn mt-5"
 											onClick={() => {
-												setEdit(true);
+												dispatch({
+													type: 'SET_EDIT_USER',
+													editUser: true
+												});
 											}}
 										>
 											Edit Profile
@@ -212,11 +221,7 @@ export default function ProfileUser(props) {
 												<button
 													type="submit"
 													disabled={isSubmitting}
-													onClick={() => {
-														setTimeout(() => {
-															setEdit(false);
-														}, 600);
-													}}
+													
 													className="btn btn-dark text-center"
 												>
 													Submit

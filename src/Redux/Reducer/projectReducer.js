@@ -195,6 +195,12 @@ export const projectReducer = (state = initialState, action) => {
       
       return {...state}
     }
+    case 'ONLY_MY_TASK': {
+
+
+      console.log('222',state.projectDetail?.lstTask.forEach(e => e.statusName ))
+      return {...state}
+      }
   default:
     return state
   }

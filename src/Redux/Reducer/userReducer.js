@@ -10,7 +10,8 @@ if (localStorage.getItem(USER_LOGIN)) {
 const stateDefault = {
 	userLogin: usLogin,
 	userSearch: [],
-	arrUser: []
+	arrUser: [],
+	editUser: false,
 
 };
 const userReduer = (state = stateDefault, action) => {
@@ -29,6 +30,10 @@ const userReduer = (state = stateDefault, action) => {
 			{
 	
 				return {...state,arrUser: action.arrUser}
+			}
+		case 'SET_EDIT_USER': {
+	    state.editUser =action.editUser
+			return {...state}
 			}
 		default:
 			return { ...state };

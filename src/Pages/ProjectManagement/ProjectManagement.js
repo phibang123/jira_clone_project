@@ -93,7 +93,7 @@ export default function ProjectManagement() {
       width: 300,
 			dataIndex: "projectName",
 			render: (text, recond, index) => {
-				return <NavLink to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
+				return <NavLink to={`/projectdetail/${recond.id}`}>{text.length > 14 ? <span>{text.slice(0 , 14)}...</span> : text}</NavLink>;
 			},
 			key: "projectName",
 			sorter: (item1, item2) => {

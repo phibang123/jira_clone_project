@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from "react-redux";
+
 import { DownCircleOutlined } from "@ant-design/icons";
 import { GET_ALL_COMMENT_SAGA } from "../../../Redux/Constants/comment";
 import { GET_TASK_DETAIL_SAGA } from "../../../Redux/Constants/constants";
@@ -5,13 +7,13 @@ import React from "react";
 import ReactHtmlParser from "react-html-parser";
 import { Select } from "antd";
 import { TreeSelect } from "antd";
-import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 const { TreeNode } = TreeSelect;
 
 export default function InfoMain(props) {
 	const dispatch = useDispatch();
+	const {id} = useSelector(state => state.userReducer?.userLogin)
 	const { projectDetail } = props;
 
 	const renderAvatar = () => {
@@ -112,12 +114,16 @@ export default function InfoMain(props) {
 				<div className="avatar-group" style={{ display: "flex" }}>
 					{renderAvatar()}
 				</div>
-				<div style={{ marginLeft: 20 }} className="text">
+				<button onClick={() =>
+				{
+					dispatch({
+						type: 'ONLY_MY_TASK',
+						id: id
+					})
+				}} style={{ marginLeft: 20 }} className="mr-5 text btn btn-dark text-white rounded">
 					Only My Issues
-				</div>
-				<div style={{ marginLeft: 20 }} className="text">
-					Recently Updated
-				</div>
+				</button>
+			
 			</div>
 		</div>
 	);

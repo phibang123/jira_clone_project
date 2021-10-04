@@ -62,9 +62,9 @@ export default function ContentMain(props) {
 											height: "auto",
 										}}
 									>
-										<div className="card-header">
-											{taskListDetail.statusName} (
-											{taskListDetail.lstTaskDeTail.length})
+										<div className="card-header ">
+										<p>	{taskListDetail.statusName} (
+											{taskListDetail.lstTaskDeTail.length})</p>
 										</div>
 										<div
 												ref={provider.innerRef}

@@ -110,7 +110,7 @@ function FromEditProject(props) {
 							init={{
 								height: 300,
 								selector: "textarea",
-								document_base_url: "https://jiraclonebonlang.herokuapp.com",
+								document_base_url: "https://jiraclonebonlang.herokuapp.com/projectmanagement",
 								plugins:
 									"a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
 								toolbar:

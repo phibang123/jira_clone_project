@@ -181,11 +181,10 @@ function* editUserSaga(action) {
 		const { editUser } = action;
 		const { data, status } = yield call(() => userService.editUser(editUser));
 		const { email, passWord } = editUser;
-		const userLogin = { email, passWord }
-		console.log('userLogin', userLogin)
+		const userLogin = { email, passWord };
+		console.log("userLogin", userLogin);
 		Notification("success", data.message);
 		if (status === STATUS_CODE.SUCCESS) {
-			 
 			const { data, status } = yield call(() =>
 				userService.signinUser(userLogin)
 			);
@@ -198,8 +197,11 @@ function* editUserSaga(action) {
 				type: USLOGIN,
 				userLogin: data.content,
 			});
+			yield put({
+				type: "SET_EDIT_USER",
+				editUser: false,
+			});
 		}
-		
 	} catch (err) {
 		console.log(err);
 	}
