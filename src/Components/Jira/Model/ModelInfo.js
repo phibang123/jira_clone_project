@@ -222,6 +222,7 @@ export default function ModelInfo() {
 					</div>
 				) : (
 					<div
+					style={{background: 'rgb(235, 236, 240)' ,padding: '20px',transform: 'translate 2s all'}}
 						className="mt-3 mb-3"
 						onClick={() => {
 							setVisibleEditor(!visibleEditor);

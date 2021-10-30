@@ -44,14 +44,12 @@ function* createProjectSaga(action) {
 		);
 
 		if (status === STATUS_CODE.SUCCESS) {
-		
 			history.push("/projectmanagement");
 			Notification("success", "Add project is success");
 			yield put({
 				type: GET_LIST_PROJECT_SAGA,
 			});
 		}
-	
 	} catch (err) {
 		console.log(err.response.data);
 		yield put({
@@ -80,7 +78,10 @@ function* getListProjectSaga(action) {
 				projectList: data.content,
 			});
 			//console.log(data.content[0]?.id)
-			yield put({type:GET_USER_BY_PROJECT_ID_SAGA,idProject: data.content[0]?.id})
+			yield put({
+				type: GET_USER_BY_PROJECT_ID_SAGA,
+				idProject: data.content[0]?.id,
+			});
 		}
 	} catch (error) {
 		console.log(error);
@@ -98,6 +99,20 @@ function* updateProjectSaga(action) {
 		type: DISPLAY_LOADING,
 	});
 	yield delay(700);
+	console.log(action);
+	const { data, status } = yield call(() =>
+		projectService.getProjectDetail(action.projectUpdate?.id)
+	);
+	let user = JSON.parse(localStorage.getItem("userlogin"));
+
+	if (data.content?.creator.id !== user) {
+
+		Notification("error", "You not authorized ");
+		yield put({
+			type: HIDE_LOADING,
+		});
+		return;
+	}
 	try {
 		const { data, status } = yield call(() =>
 			projectService.updateProject(action.projectUpdate)
@@ -133,6 +148,20 @@ function* deleteProjectSaga(action) {
 		type: DISPLAY_LOADING,
 	});
 	yield delay(700);
+
+	const { data, status } = yield call(() =>
+		projectService.getProjectDetail(action.idProject)
+	);
+	let user = JSON.parse(localStorage.getItem("userlogin"));
+
+	if (data.content?.creator.id !== user) {
+
+		Notification("error", "You not authorized ");
+		yield put({
+			type: HIDE_LOADING,
+		});
+		return;
+	}
 	try {
 		const { data, status } = yield call(() =>
 			projectService.deleteProject(action.idProject)
@@ -165,131 +194,103 @@ export function* theoDoiDeleteProject() {
 	yield takeLatest(DELETE_PROJECT_SAGA, deleteProjectSaga);
 }
 
-
-
 //thêm người dùng vào dự án
 function* addUserProjectSaga(action) {
-
 	try {
 		const { data, status } = yield call(() =>
 			projectService.assignUserProject(action.userProject)
 		);
 
-		if (status === STATUS_CODE.SUCCESS)
-		{
-	    Notification("success", "Add user into Project success")
+		if (status === STATUS_CODE.SUCCESS) {
+			Notification("success", "Add user into Project success");
 			yield put({
-				type: GET_LIST_PROJECT_SAGA
-			})
+				type: GET_LIST_PROJECT_SAGA,
+			});
 		}
-		
-
-	   
 	} catch (error) {
-		
-		Notification("error", error.response.data.content)
+		Notification("error", error.response.data.content);
 	}
 }
 
-
-export function* theoDoiAddUserProject()
-{
+export function* theoDoiAddUserProject() {
 	yield takeLatest(ADD_USER_PROJECT_API_SAGA, addUserProjectSaga);
 }
 
 //delete user from project saga
 
 function* removeUserProject(action) {
-
 	try {
 		const { data, status } = yield call(() =>
 			projectService.removeUserFromProject(action.userProject)
 		);
-		console.log('sss',status)
-		if (status === STATUS_CODE.SUCCESS)
-		{
-	    Notification("success", "Remove user from Project success")
+		console.log("sss", status);
+		if (status === STATUS_CODE.SUCCESS) {
+			Notification("success", "Remove user from Project success");
 			yield put({
-				type: GET_LIST_PROJECT_SAGA
-			})
+				type: GET_LIST_PROJECT_SAGA,
+			});
 		}
-		
-
-	   
 	} catch (error) {
-		Notification("warning", "Remove user from Project failt!")
+		Notification("warning", "Remove user from Project failt!");
 	}
 }
 
-export function* theoDoiRemoveUserProject()
-{
+export function* theoDoiRemoveUserProject() {
 	yield takeLatest(REMOVE_USER_PROJECT_API_SAGA, removeUserProject);
 }
 
-
 //get detail from project saga
 
-function* getProjectDetail(action)
-{
+function* getProjectDetail(action) {
 	yield put({
 		type: DISPLAY_LOADING,
 	});
-  yield delay(700)
+	yield delay(700);
 	try {
 		const { data, status } = yield call(() =>
 			projectService.getProjectDetail(action.projectId)
 		);
-	
+
 		//lấy dử liệu thành công đưa dử liệu lên reducer
 		yield put({
 			type: GET_PROJECT_DETAIL_API,
-			projectDetail: data.content
-		})
-	   
+			projectDetail: data.content,
+		});
 	} catch (error) {
-		
 		yield put({
 			type: HIDE_LOADING,
 		});
-		Notification("warning", "Error 404 not found!")
-	  history.push('/projectmanagement')
+		Notification("warning", "Error 404 not found!");
+		history.push("/projectmanagement");
 	}
 	yield put({
 		type: HIDE_LOADING,
 	});
 }
 
-export function* theoDoiGetProjectDetail()
-{
+export function* theoDoiGetProjectDetail() {
 	yield takeLatest(GET_PROJECT_DETAIL_API_SAGA, getProjectDetail);
 }
 
-
-
 //get detail from project saga
 
-function* getProjectDetailNoLoading(action)
-{
-	
+function* getProjectDetailNoLoading(action) {
 	try {
 		const { data, status } = yield call(() =>
 			projectService.getProjectDetail(action.projectId)
 		);
-	
+
 		//lấy dử liệu thành công đưa dử liệu lên reducer
 		yield put({
 			type: GET_PROJECT_DETAIL_API,
-			projectDetail: data.content
-		})
-	   
-	} catch (error) {
-		
-	
-	}
-
+			projectDetail: data.content,
+		});
+	} catch (error) {}
 }
 
-export function* theoDoiGetProjectDetailNoLoading()
-{
-	yield takeLatest(GET_PROJECT_DETAIL_API_SAGA_NOLOADING, getProjectDetailNoLoading);
+export function* theoDoiGetProjectDetailNoLoading() {
+	yield takeLatest(
+		GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
+		getProjectDetailNoLoading
+	);
 }

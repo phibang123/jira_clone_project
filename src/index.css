@@ -489,3 +489,6 @@
 .ant-notification {
 	z-index: 1050 !important;
 }
+.modal-content {
+	background-color: #fcf3f0 !important;
+}
