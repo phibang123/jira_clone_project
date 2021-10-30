@@ -39,7 +39,7 @@ export default function JiraTemplate(props)
 							<MenuJira></MenuJira>
 							<div style={{padding: '0px 32px 10px 420px',width: '100%'}}> <Component  {...propsRoute}/></div>
 							
-							<ModelSearch></ModelSearch>
+							{/* <ModelSearch></ModelSearch> */}
 							<ModelInfo></ModelInfo>
 				 </div>
 					</>

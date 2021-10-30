@@ -11,7 +11,7 @@ import { useState } from "react";
 export default function ProfileUser(props) {
 	const { userLogin } = useSelector((state) => state.userReducer);
 	const dispatch = useDispatch()
-	console.log(userLogin)
+	//console.log(userLogin)
 	const [edit, setEdit] = useState(false);
 
 	return (
@@ -108,7 +108,7 @@ export default function ProfileUser(props) {
 													phoneNumber: values.phoneNumber
 												}
 											})
-											console.log("values", values);
+								
 											setSubmitting(false);
 										}, 400);
 									}}

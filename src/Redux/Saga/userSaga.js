@@ -63,7 +63,7 @@ function* signinSaga(action) {
 			type: HIDE_LOADING,
 		});
 		yield history.push("/");
-		console.log(data);
+	
 		Notification("success", data.message);
 	} catch (error) {
 		yield put({
@@ -144,8 +144,7 @@ export function* theoDoiGetUser() {
 
 function* getUserByProjectIdSaga(action) {
 	const { idProject } = action;
-	console.log("alo");
-	console.log("alo", idProject);
+
 	try {
 		const { data, status } = yield call(() =>
 			userService.getUserByProjectId(idProject)
@@ -182,7 +181,7 @@ function* editUserSaga(action) {
 		const { data, status } = yield call(() => userService.editUser(editUser));
 		const { email, passWord } = editUser;
 		const userLogin = { email, passWord }
-		console.log('userLogin', userLogin)
+
 		Notification("success", data.message);
 		if (status === STATUS_CODE.SUCCESS) {
 			 

@@ -79,7 +79,7 @@ function* getListProjectSaga(action) {
 				type: GET_LIST_PROJECT,
 				projectList: data.content,
 			});
-			console.log(data.content[0]?.id)
+			//console.log(data.content[0]?.id)
 			yield put({type:GET_USER_BY_PROJECT_ID_SAGA,idProject: data.content[0]?.id})
 		}
 	} catch (error) {
@@ -169,12 +169,12 @@ export function* theoDoiDeleteProject() {
 
 //thêm người dùng vào dự án
 function* addUserProjectSaga(action) {
-  console.log(action)
+
 	try {
 		const { data, status } = yield call(() =>
 			projectService.assignUserProject(action.userProject)
 		);
-		console.log('sss',status)
+
 		if (status === STATUS_CODE.SUCCESS)
 		{
 	    Notification("success", "Add user into Project success")

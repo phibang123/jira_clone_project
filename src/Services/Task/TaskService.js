@@ -24,7 +24,7 @@ class taskService extends baseService {
   }
   deleteTask = (taskId) =>
   {
-    console.log(taskId)
+
     return this.delete(`/Project/removeTask?taskId=${taskId}`,)
   }
 }

@@ -160,7 +160,7 @@ function* handleChangPostApi(action) {
 	//Save lại rồi chạy qua UPDATE_TASK_SAGA
 	//lấy dử liệu từ taskDetailModal
 	let { taskDetailModal } = yield select((state) => state.TaskReducer);
-	console.log("taskDetailModal sau khi thay đổi", taskDetailModal);
+
 	//biến đổi dử liệu state.taskDetailModal thành dử liệu api cần
   const listUserAsign = taskDetailModal.assigness?.map((user, index) =>
   {

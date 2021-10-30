@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 export default function ContentMain(props) {
 	const { projectDetail } = props;
 	const dispatch = useDispatch();
-  console.log('projectDetail',projectDetail)
+ 
 	const handleDragEnd = (result) =>
 	{
 		let{projectId,taskId,taskDetail} = JSON.parse(result.draggableId)  //vì ở dướ chỉ sổ ra chuỗi mà mình muốn đưa ra 1 object nên chúng ta phải làm vậy
