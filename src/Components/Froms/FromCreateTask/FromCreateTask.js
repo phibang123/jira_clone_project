@@ -121,7 +121,12 @@ function FromCreateTask(props)
 			</div>
 			<div className="form-group">
 				<p>Task Name</p>
-			  <input className='form-control' name='taskName' onChange={handleChange}></input>
+				<input className='form-control' name='taskName' onBlur={handleBlur}	 onChange={handleChange}></input>
+				<div className="text-danger">
+						{errors.taskName && touched.taskName ? (
+							<>{errors.taskName}</>
+						) : null}
+					</div>
 			</div>
 			<div className="form-group">
 				<p>Status Id</p>
@@ -131,6 +136,7 @@ function FromCreateTask(props)
 						return <option key={index} value={statusItem.statusId}>{statusItem.statusName}</option>
 						 })}
 				</select>
+				
 			</div>
 			<div className="form-group">
 				<div className="row">
@@ -167,6 +173,7 @@ function FromCreateTask(props)
 						<Select
 							mode="multiple"
 							size={size}
+							onBlur={handleBlur}
 							optionFilterProp="label"
 							options={userOption}
 							placeholder="Please select"
@@ -183,6 +190,7 @@ function FromCreateTask(props)
 						>
 							{children}
 						</Select>
+					
 						<div className="row mt-3">
 							<div className="col-12">
 								<p>Original Estimate</p>
@@ -305,7 +313,8 @@ const FrmCreateTask = withFormik({
 		};
 	},
 	validationSchema: Yup.object({
-	
+		taskName: Yup.string().required("Task Name project not required"),
+
 	}),
 
 	handleSubmit: (values, { props, setSubmitting, },) =>

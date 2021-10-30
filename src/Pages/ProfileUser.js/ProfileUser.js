@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export default function ProfileUser(props) {
 	const { userLogin } = useSelector((state) => state.userReducer);
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	//console.log(userLogin)
 	const [edit, setEdit] = useState(false);
 
@@ -80,7 +80,9 @@ export default function ProfileUser(props) {
 										phoneNumber: userLogin.phoneNumber,
 									}}
 									validationSchema={Yup.object({
-										password: Yup.string().required("Password is required").min(6,'Paswword must than 6 letter'),
+										password: Yup.string()
+											.required("Password is required")
+											.min(6, "Paswword must than 6 letter"),
 										email: Yup.string()
 											.email("Invalid email address")
 											.required("Required"),
@@ -95,20 +97,18 @@ export default function ProfileUser(props) {
 										),
 									})}
 									onSubmit={(values, { setSubmitting }) => {
-										setTimeout(() =>
-										{
+										setTimeout(() => {
 											dispatch({
-												
 												type: EDIT_USER_API_SAGA,
 												editUser: {
-												  id: userLogin.id,
+													id: userLogin.id,
 													passWord: values.password,
 													email: values.email,
 													name: values.name,
-													phoneNumber: values.phoneNumber
-												}
-											})
-								
+													phoneNumber: values.phoneNumber,
+												},
+											});
+
 											setSubmitting(false);
 										}, 400);
 									}}

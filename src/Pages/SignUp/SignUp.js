@@ -125,6 +125,7 @@ export default function SignUp(props) {
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							name="phoneNumber"
+							type="number"
 							size="large"
 							placeholder="Phone Number"
 							prefix={<PhoneOutlined />}

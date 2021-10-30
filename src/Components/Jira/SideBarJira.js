@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import { TOKEN_USER, USER_LOGIN } from "../../Utils/constants/settingSystem";
 import { useDispatch, useSelector } from "react-redux";
 
+import FromAboutJira from "../Froms/FromAboutJira/FromAboutJira";
 import FromCreateTask from "../Froms/FromCreateTask/FromCreateTask";
 import { GET_ALL_PRIORITY_SAGA } from "../../Redux/Constants/priority";
 import { GET_LIST_PROJECT_SAGA } from "../../Redux/Constants/constants";
@@ -133,12 +134,22 @@ export default function SideBarJira() {
 					<Menu.Item
 						style={{ top: "63%" }}
 						key="3"
+						
 						icon={
 							<QuestionOutlined
 								twoToneColor={"#578bfe"}
 								style={{ color: "#000000", fontSize: "18px" }}
 							/>
+							
 						}
+						onClick={() => {
+							dispatch({
+								type: "OPEN_MODAL_ABOUT_JIRA",
+								callBackSubmit: () => {dispatch({type:'CLOSE_MODAL'})},
+								ComponentContentModal: <FromAboutJira></FromAboutJira>,
+								title: "About Website",
+							});
+						}}
 					>
 						About
 					</Menu.Item>

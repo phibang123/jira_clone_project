@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 const initialState = {
   visible: false,
@@ -8,7 +9,7 @@ const initialState = {
   //   return <p>Defail content</p> 
   // }
   //dạng funxtion
-	callBackSubmit: () => { alert('click demo') },
+	callBackSubmit: () => {  },
 	title:''
 };
 
@@ -26,6 +27,11 @@ export const ModalReducer = (state = initialState, action) => {
     case 'OPEN_MODAL_CREATE_TASK': {
     
       return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title };
+      
+    }
+    case 'OPEN_MODAL_ABOUT_JIRA': {
+    
+      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title,callBackSubmit: action.callBackSubmit };
       
     }
   

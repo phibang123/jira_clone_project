@@ -83,7 +83,14 @@ export function* theoDoiGetTaskDetailSaga() {
 function* updateTaskStatusSaga(action)
 {
 	
-
+	let { projectDetail } = yield select((state) => state.projectReducer)
+	let user = JSON.parse(localStorage.getItem('userlogin'))
+	if (projectDetail.creator.id !== user?.id )
+	{
+		console.log(12343);
+		Notification("error", "You not authorized ");
+		return
+	}
 	switch (action.actionType)
 	{
 		 case CHANGE_TASK_MODAL_API: {
@@ -131,8 +138,26 @@ export function* theoDoiUpdateTaskSaga() {
 
 //thay đổi task dưa lên reducer
 function* handleChangPostApi(action) {
-	//gọi action làm thay đổi detail modal
+  
+	let { projectDetail } = yield select((state) => state.projectReducer)
+	
 
+	let user = JSON.parse(localStorage.getItem('userlogin'))
+
+
+
+	if (projectDetail.creator.id !== user?.id )
+	{
+		console.log(12343);
+		Notification("error", "You not authorized ");
+		return
+	}
+	// else if ()
+	// {
+	// 	console.log(1234);
+	// 	Notification("error", "You not authorized ");
+	// 	return
+	// }
 	switch (action.actionType) {
 		case CHANGE_TASK_MODAL_API: {
 			const { value, name } = action;
@@ -142,21 +167,27 @@ function* handleChangPostApi(action) {
 				value,
 			});
 		}break;
-    case CHANGE_ASSIGNESS: {
-      const { userSelected } = action;
-      yield put({
-        type: CHANGE_ASSIGNESS,
-        userSelected,
-      });
-    } break;
+		case CHANGE_ASSIGNESS: {
+			const { userSelected } = action;
+			yield put({
+				type: CHANGE_ASSIGNESS,
+				userSelected,
+			});
+		} break;
 		case REMAVE_USER_ASSIGN: {
 			const { userId } = action;
-      yield put({
-        type: REMAVE_USER_ASSIGN,
-        userId,
-      })
+			yield put({
+				type: REMAVE_USER_ASSIGN,
+				userId,
+			})
 		}break;
 	}
+  try
+	{
+			//gọi action làm thay đổi detail modal
+	 
+
+		
 	//Save lại rồi chạy qua UPDATE_TASK_SAGA
 	//lấy dử liệu từ taskDetailModal
 	let { taskDetailModal } = yield select((state) => state.TaskReducer);
@@ -169,8 +200,6 @@ function* handleChangPostApi(action) {
   const taskUpdateApi = {...taskDetailModal,listUserAsign}
 	//èo
   //tại vì bình thường không có lstUserAsign nên phải thêm chuối như vầy
-  try
-  {
     const { data, status } = yield call(() => TaskService.updateTask(taskUpdateApi))
     if (status === STATUS_CODE.SUCCESS)
     {
@@ -185,13 +214,23 @@ function* handleChangPostApi(action) {
 			yield put({
         type: GET_ALL_COMMENT_SAGA,
         taskId: taskUpdateApi.taskId,
-      });
+			});
+			
+			
     }
   }
   catch (err)
   {
-    console.log(err)
-    console.log(err.response?.data)
+    console.log(err.response?.data.statusCode)
+    if (err.response?.data.statusCode == STATUS_CODE.AUTHORIZATION)
+    {
+
+      Notification("error", "You not authorized ");
+    }
+    else
+    {
+      Notification("error", err.response?.data);
+    }
   }
   
   
@@ -216,10 +255,10 @@ function* deleteTaskSaga(action)
 	{
 		if (err.response?.data)
 		{
-			Notification("error", err.response.data.content);
+			Notification("error", err.response?.data.content);
 		}
 		else
-		Notification("error", err.response.data.content);
+		Notification("error", err.response?.data.content);
 	}
 }
 

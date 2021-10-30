@@ -9,7 +9,6 @@ import {
 import { CHANGE_TASK_MODAL_API, GET_TASK_DETAIL_SAGA, UPDATE_TASK_STATUS_REDUCER_TEXT, UPDATE_TASK_STATUS_SAGA_TEXT } from "../../../Redux/Constants/constants";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-import { GET_ALL_COMMENT_SAGA } from "../../../Redux/Constants/comment";
 import React from "react";
 import { useDispatch } from "react-redux";
 

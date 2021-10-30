@@ -74,8 +74,15 @@ function FromEditProject(props) {
 							type="text"
 							value={values.projectName}
 							onChange={handleChange}
+							onBlur={handleBlur}
 							name="projectName"
 						/>
+						
+					</div>
+					<div className="text-danger">
+						{errors.projectName && touched.projectName ? (
+							<>{errors.projectName}</>
+						) : null}
 					</div>
 				</div>
 				<div className="col-4">

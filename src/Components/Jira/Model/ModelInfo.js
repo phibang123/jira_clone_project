@@ -28,6 +28,8 @@ import {
 } from "../../../Redux/Constants/constants";
 import {
 	DELETE_COMMENT_SAGA,
+	EDIT_COMMENT_REDUCER,
+	EDIT_COMMENT_SAGA,
 	GET_ALL_COMMENT_SAGA,
 	INSERT_COMMENT_SAGA,
 } from "../../../Redux/Constants/comment";
@@ -35,6 +37,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Editor } from "@tinymce/tinymce-react";
+import FromEditComment from "../../Froms/FromEditComment/FromEditComment";
 import { GELL_ALL_TASK_TYPE_SAGA } from "../../../Redux/Constants/taskType";
 import { GET_ALL_PRIORITY_SAGA } from "../../../Redux/Constants/priority";
 import { GET_ALL_STATUS_API_SAGA } from "../../../Redux/Constants/status";
@@ -81,14 +84,16 @@ export default function ModelInfo() {
 	const [historyContent, sethiStoryContent] = useState(
 		taskDetailModal.description
 	);
+
 	const [content, setContent] = useState(taskDetailModal.description);
+	const [originalEstimate, setOriginalEstimate] = useState({number: 0});
 	const [comment, setComment] = React.useState({
 		submitting: false,
 		value: "",
 	});
 
 	//function
-
+  
 	useEffect(() => {
 		dispatch({
 			type: GET_ALL_STATUS_API_SAGA,
@@ -99,14 +104,14 @@ export default function ModelInfo() {
 		dispatch({
 			type: GELL_ALL_TASK_TYPE_SAGA,
 		});
-	}, []);
-
+	}, [taskDetailModal]);
+  console.log(taskDetailModal)
 	//comment
 	const actions = (com) => {
 		return [
 			<Tooltip key="comment-basic-dislike">
 				<span
-					style={{ color: "red" }}
+					style={{ color: "red" ,marginRight: '20px'}}
 					onClick={() => {
 						dispatch({
 							type: DELETE_COMMENT_SAGA,
@@ -117,6 +122,48 @@ export default function ModelInfo() {
 				>
 					<span className="comment-action">Delete</span>
 				</span>
+				<span
+					style={{ color: "blue" }}
+					// onClick={() => {
+					// 	dispatch({
+					// 		type: DELETE_COMMENT_SAGA,
+					// 		id: com.id,
+					// 		taskId: com.taskId,
+					// 	});
+					// }}
+				>
+					
+					{/* <span className="comment-action"
+					// 	onClick={() =>
+					// 	{
+					// 	dispatch({
+					// 		type: EDIT_COMMENT_SAGA,
+					// 		id: com.id,
+					// 		comment : com.contentComment
+					// 	});
+					// }}
+					
+					
+					onClick={() => {
+						const action = {
+							type: "OPEN_MODAL_CREATE_TASK",
+							ComponentContentModal: <FromEditComment></FromEditComment>,
+					
+							title: "Edit Comment",
+						};
+						dispatch(action);
+						//dispatch dử liệu dòng hiện tại lên reducer
+						const actionEditComment = {
+							type: EDIT_COMMENT_REDUCER,
+							comment: {
+								id: com.id,
+								comment : com.contentComment
+							},
+						};
+						dispatch(actionEditComment);
+						}}
+					>Edit Comment</span>*/}
+				</span> 
 			</Tooltip>,
 		];
 	};
@@ -251,12 +298,15 @@ export default function ModelInfo() {
 					<div className="col-6">
 						<input
 							className="form-control"
-							value={Number(timeTrackingRemaining)}
+							value={Number(timeTrackingRemaining) + Number(originalEstimate.number)}
 							onChange={(e) => {
+								console.log(e);
 								handleChanges(e);
 							}}
+						
 							name="timeTrackingRemaining"
 						></input>
+					
 					</div>
 				</div>
 			</div>
@@ -582,17 +632,7 @@ export default function ModelInfo() {
 											})}
 										</select>
 									</div>
-									<div className="estimate">
-										<h6>ORIGINAL ESTIMATE (HOURS)</h6>
-										<input
-											name="originalEstimate"
-											onChange={(e) => {
-												handleChanges(e);
-											}}
-											type="text"
-											className="estimate-hours"
-										/>
-									</div>
+								
 									<div className="time-tracking">
 										<h6>TIME TRACKING</h6>
 										{renderTimeTracking()}

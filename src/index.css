@@ -485,3 +485,7 @@
 	background-color: #343a40 !important;
 	color: rgb(223, 225, 230);
 }
+
+.ant-notification {
+	z-index: 1050 !important;
+}

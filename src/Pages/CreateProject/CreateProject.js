@@ -48,6 +48,7 @@ export default function CreateProject() {
 		},
 		validationSchema: Yup.object({
 			projectName: Yup.string().required("Name project not required"),
+			description: Yup.string().required("Description project not required"),
 		}),
 		onSubmit: (values) => {
 			//const action = dangKyAsynAction(values);
@@ -96,7 +97,7 @@ export default function CreateProject() {
 							init={{
 								height: 300,
 								selector: "textarea",
-								document_base_url: "https://jiraclonebonlang.herokuapp.com",
+							
 								plugins:
 									"a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
 								toolbar:
@@ -107,12 +108,9 @@ export default function CreateProject() {
 							}}
 							onEditorChange={hadnleEditorChange}
 						/>
+					
 					</div>
-					<div className="text-danger">
-						{formik.errors.description && formik.touched.description ? (
-							<>{formik.errors.description}</>
-						) : null}
-					</div>
+			
 					<div className="form-group">
 						<p>Project Category</p>
 						<select

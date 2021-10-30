@@ -5,5 +5,8 @@ export const Notification = (type, title, description = '') => {
 		//action.TypeNotification success \ warning \ info \ error
 		message: title,
 		description: description,
+		style: {
+			zIndex: 1060,
+		}
 	});
 };

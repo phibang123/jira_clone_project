@@ -1,5 +1,5 @@
 import { CommentService, commentService } from "../../Services/Comment/CommentService";
-import { DELETE_COMMENT_SAGA, GET_ALL_COMMENT, GET_ALL_COMMENT_SAGA, INSERT_COMMENT_SAGA } from "../Constants/comment";
+import { DELETE_COMMENT_SAGA, EDIT_COMMENT_SAGA, GET_ALL_COMMENT, GET_ALL_COMMENT_SAGA, INSERT_COMMENT_SAGA } from "../Constants/comment";
 import {
 	all,
 	call,
@@ -11,6 +11,9 @@ import {
 	takeEvery,
 	takeLatest,
 } from "redux-saga/effects";
+
+import { Notification } from "../../Utils/Notification/Notification";
+import { STATUS_CODE } from "../../Utils/constants/settingSystem";
 
 function* getAllCommentSaga(action) {
   yield delay(700)
@@ -48,9 +51,19 @@ function* deleteCommentSaga(action) {
       type: GET_ALL_COMMENT_SAGA,
       taskId: action.taskId
     })
+    Notification("success", "Delete comment success");
   } catch (err)
   {
-    console.log(err)
+    //console.log(err.response?.data.statusCode)
+    if (err.response?.data.statusCode == STATUS_CODE.AUTHORIZATION)
+    {
+  
+      Notification("error", "You not authorized to delete this comment");
+    }
+    else
+    {
+      Notification("error", "You not authorized to delete this comment");
+    }
   }
 }
 
@@ -59,23 +72,38 @@ export function * theoDoiDeleteCommentSaga(){
   yield takeLatest(DELETE_COMMENT_SAGA,deleteCommentSaga)
 }
 
-function* insertCommentSaga(action)
+function*  insertCommentSaga  (action) 
 {
   try
   {
     let { comment } = action
-    const { data, status } = yield call(() => CommentService.insertComment(comment))
+    const { data, status } = yield  call(() => CommentService.insertComment(comment))
     yield put({
       type: GET_ALL_COMMENT_SAGA,
       taskId: comment.taskId
     })
+    Notification("Success", "Success");
   } catch (err)
   { 
-     console.log(err)
+     console.log(err.statusCode)
   }
 }
 
 
 export function * theoDoiInsertCommentSaga(){
   yield takeLatest(INSERT_COMMENT_SAGA,insertCommentSaga)
+}
+
+function*  editCommentSaga()
+{
+   try {
+      
+   } catch (error) {
+     
+   }
+}
+
+
+export function * theoDoiEditCommentSaga(){
+  yield takeLatest(EDIT_COMMENT_SAGA,editCommentSaga)
 }
