@@ -12,6 +12,7 @@ import { Button, Input } from "antd";
 
 import React from "react";
 import { createFromIconfontCN } from "@ant-design/icons";
+import { history } from "../../Utils/history";
 import { signup_action } from "../../Redux/Actions/userAction";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
@@ -136,21 +137,21 @@ export default function SignUp(props) {
 							<>{formik.errors.phoneNumber}</>
 						) : null}
 					</div>
+           
+          <div className='d-flex justify-content-between w-50'>
+                <Button htmlType="submit" size='large' style={{ color: '#ffffff', width: '45%', backgroundColor: 'rgb(102,117,223)' }} className='mt-5' type='Submit'>Sign Up</Button>
+                
+                <Button htmlType="submit" size='large' style={{ color: '#ffffff', width: '45%', backgroundColor: 'red', marginTop: '50px' }} onClick={() =>
+                {
+                    history.push('/login')
+                }} className='mt-5'  type='button'>Login</Button>
+                </div>
 
-					<Button
-						htmlType="submit"
-						size="large"
-						style={{
-							color: "#ffffff",
-							width: "50%",
-							backgroundColor: "rgb(102,117,223)",
-						}}
-						className="mt-5"
-						type="Submit"
-					>
-						Sign Up
-					</Button>
-					<div className="social mt-2 d-flex">
+				
+						
+			
+					
+					{/* <div className="social mt-2 d-flex">
 						<Button
 							icon={<IconFont type="icon-facebook" />}
 							size="large"
@@ -166,7 +167,7 @@ export default function SignUp(props) {
 							shape="circle"
 							className="ml-5"
 						></Button>
-					</div>
+					</div> */}
 				</div>
 			</form>
 		</div>

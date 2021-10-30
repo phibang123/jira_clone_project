@@ -73,7 +73,7 @@ export default function Login(props)
                     history.push('/signup')
                 }} className='mt-5'  type='button'>Sign up</Button>
                 </div>
-                <div className='social mt-2 d-flex'>
+                <div className='social mt-5 d-flex'>
 
              
                     <Button icon={ <IconFont type="icon-facebook" /> }size='large' type='primary' style={{ backgroundColor: 'rgb(147,106,99)' }} shape="circle" className='ml-2 '></Button>

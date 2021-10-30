@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { BarChartOutlined } from '@ant-design/icons';
 import { Button } from "antd";
 import { NavLink } from "react-router-dom";
 
@@ -53,6 +54,17 @@ export default function MenuJira() {
 						to="/projectmanagement"
 					>
 						Project Manage
+					</NavLink>
+				</div>
+				<div>
+				<i class="fa fa-server"></i>
+					<NavLink
+						className="text-dark  ml-2"
+						exact
+						activeClassName="actice font-weight-bold"
+						to="/projectmyissues"
+					>
+						Project My Issues
 					</NavLink>
 				</div>
 			</div>

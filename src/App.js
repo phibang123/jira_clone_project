@@ -11,6 +11,7 @@ import JiraTemplate from "./Templates/JiraTemplate/JiraTemplate";
 import LoadingComponent from "./Components/GlobalSetting/LoadingComponent";
 import Login from "./Pages/Login/Login";
 import ModalComponent from "./HOC/Modal/ModalComponent";
+import NotFound from "./Pages/404/NotFound";
 import ProfileUser from "./Pages/ProfileUser.js/ProfileUser";
 import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement";
 import SignUp from "./Pages/SignUp/SignUp";
@@ -57,18 +58,19 @@ function App() {
 					path="/dragdrop"
 					Component={DemoDragDrog}
 				></JiraTemplate>
-
+			
 				<JiraTemplate
 					exact
 					path="/dragdropdnd"
 					Component={DemoDragDropDnd}
 				></JiraTemplate>
-					<JiraTemplate
+				<JiraTemplate
 					exact
 					path="/profile"
 					Component={ProfileUser}
 				></JiraTemplate>
-			  	<JiraTemplate exact path="/" Component={HomeIndex}></JiraTemplate>
+				<JiraTemplate exact path="/" Component={HomeIndex}></JiraTemplate>
+				<NotFound exact path="*"></NotFound>
 			</Switch>
 		</>
 	);

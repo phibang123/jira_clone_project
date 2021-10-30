@@ -33,7 +33,7 @@ export default function UserLoginTemplate(props) {
 								width={Math.round(width / 2)}
 								style={{
 									height: height,
-									backgroundImage: `url(https://picsum.photos/${Math.round(width)}/${Math.round(height)})`,
+									backgroundImage: `url(https://picsum.photos/${Math.round(width)}/${Math.round(height*2)})`,
 									backgroundSize: "100%",
 								}}
 							></Sider>

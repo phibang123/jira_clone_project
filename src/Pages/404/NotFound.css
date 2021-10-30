@@ -1,0 +1,62 @@
+.error-box {
+	height: 100%;
+	position: fixed;
+	top: 20%;
+	background-color: #fff;
+	width: 100%;
+}
+.error-box .error-body {
+	padding-top: 5%;
+}
+.error-box .h3,
+.error-box h3 {
+	line-height: 30px;
+	font-size: 21px;
+	margin: 10 px 0;
+	font-weight: 300;
+	color: rgb(254, 202, 87);
+}
+.error-box .error-body .error-title {
+	font-size: 210px !important;
+	font-weight: 900 !important;
+	line-height: 210px !important;
+	color: rgb(254, 202, 87);
+}
+.lds-ripple .lds-pos {
+	position: absolute;
+	border: 2 px solid #2962ff;
+	opacity: 1;
+	border-radius: 50%;
+	-webkit-animation: lds-ripple 1s cubic-bezier(0, 0.1, 0.5, 1) infinite;
+	animation: lds-ripple 1s cubic-bezier(0, 0.1, 0.5, 1) infinite;
+}
+.lds-ripple .lds-pos:nth-child(2) {
+	-webkit-animation-delay: -0.5s;
+	animation-delay: -0.5s;
+}
+.lds-ripple {
+	display: inline-block;
+	position: relative;
+	width: 64 px;
+	height: 64 px;
+	position: absolute;
+	top: calc(50% - 3.5 px);
+	left: calc(50% - 3.5 px);
+}
+.waves-effect {
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	overflow: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	vertical-align: middle;
+	z-index: 1;
+	will-change: opacity, transform;
+	-webkit-transition: all 0.1s ease-out;
+	-o-transition: all 0.1s ease-out;
+	transition: all 0.1s ease-out;
+}
