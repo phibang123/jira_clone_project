@@ -40,8 +40,8 @@
 	width: 64 px;
 	height: 64 px;
 	position: absolute;
-	top: calc(50% - 3.5 px);
-	left: calc(50% - 3.5 px);
+	top: calc(50% - 3.5px);
+	left: calc(50% - 3.5px);
 }
 .waves-effect {
 	position: relative;
