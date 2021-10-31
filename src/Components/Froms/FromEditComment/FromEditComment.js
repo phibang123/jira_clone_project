@@ -8,7 +8,7 @@ import { Input } from "antd";
 
 export default function FromEditComment() {
 	const { commentUser } = useSelector((state) => state.CommentReducer);
-	console.log(commentUser);
+	//console.log(commentUser);
 	useEffect(() => {}, []);
 
 	return (

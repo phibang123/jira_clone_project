@@ -8,12 +8,13 @@ import {
 } from "@ant-design/icons";
 import { CHANGE_TASK_MODAL_API, GET_TASK_DETAIL_SAGA, UPDATE_TASK_STATUS_REDUCER_TEXT, UPDATE_TASK_STATUS_SAGA_TEXT } from "../../../Redux/Constants/constants";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useDispatch, useSelector } from "react-redux";
 
 import React from "react";
-import { useDispatch } from "react-redux";
 
 export default function ContentMain(props) {
 	const { projectDetail } = props;
+	//const {projectDetail} = useSelector(state => state.projectReducer)
 	const dispatch = useDispatch();
  
 	const handleDragEnd = (result) =>

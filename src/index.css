@@ -90,7 +90,7 @@
 	height: auto;
 	width: 300px;
 	min-height: 100vh;
-	background-color: #f4f5f7;
+	background-color: #f6eabe;
 }
 
 .menu .account {
@@ -229,6 +229,7 @@
 
 .main .content {
 	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .main .content .card {
@@ -240,6 +241,7 @@
 	border: none;
 	background-color: transparent;
 	color: #ffffff;
+	font-size: 13px;
 }
 
 .main .content .card .list-group {
@@ -250,7 +252,7 @@
 	outline: none;
 	margin: 8px;
 	border-radius: 3px;
-	background: rgb(231, 194, 113);
+	background: rgb(246, 215, 167);
 	box-shadow: rgb(9 30 66 / 25%) 0px 1px 2px 0px;
 	transition: background 0.1s ease 0s;
 	padding: 10px;
@@ -260,7 +262,7 @@
 	overflow-anchor: none;
 }
 .main .content .card .list-group .list-group-item:hover {
-	background: rgb(254, 202, 87);
+	background: rgb(246, 234, 190);
 }
 .list-group-item p {
 	font-size: 14px;
@@ -479,7 +481,7 @@
 
 .ant-layout-sider-trigger {
 	background: #000000 !important;
-	color: #feca57 !important;
+	color: #87aaaa !important;
 }
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
 	background-color: #343a40 !important;
@@ -490,5 +492,5 @@
 	z-index: 1050 !important;
 }
 .modal-content {
-	background-color: #fcf3f0 !important;
+	background-color: #f6d7a7 !important;
 }

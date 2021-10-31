@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { BarChartOutlined } from '@ant-design/icons';
+import { BarChartOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { NavLink } from "react-router-dom";
 
@@ -9,19 +9,26 @@ export default function MenuJira() {
 	const { userLogin } = useSelector((state) => state.userReducer);
 
 	return (
-		<div className="menu" style={{position: 'fixed',left: '80px', fontSize: '15px'}}>
+		<div
+			className="menu"
+			style={{ position: "fixed", left: "80px", fontSize: "15px" }}
+		>
 			<div className="account">
 				<div className="avatar">
 					<NavLink to="/profile">
 						<img src={userLogin?.avatar} alt=".." />
 					</NavLink>
 				</div>
-				<div className="account-info">
+				<div className="account-info w-100">
+					<div className="ml-2">
 					<p>{userLogin?.email}</p>
-					<div className='d-flex justify-content-between  align-items-center'><span>{userLogin?.name}</span> <NavLink to='/profile' className='btn p-0 btn-dark'><span>View Profile</span></NavLink></div>
+					<div className="d-flex justify-content-between  align-items-center">
+						<span>{userLogin?.name}</span>
+					</div>
+					</div>
 				</div>
 			</div>
-		
+
 			<div className="control">
 				<div>
 					<i className="fa fa-credit-card" />
@@ -34,6 +41,19 @@ export default function MenuJira() {
 						Index
 					</NavLink>
 				</div>
+
+				<div>
+					<i class="fa fa-user-cog"></i>
+					<NavLink
+						className="text-dark ml-2"
+						exact
+						activeClassName=" font-weight-bold"
+						to="/profile"
+					>
+						View Profile
+					</NavLink>
+				</div>
+
 				<div>
 					<i className="fa fa-cog" />
 					<NavLink
@@ -57,7 +77,7 @@ export default function MenuJira() {
 					</NavLink>
 				</div>
 				<div>
-				<i class="fa fa-server"></i>
+					<i className="fa fa-server"></i>
 					<NavLink
 						className="text-dark  ml-2"
 						exact
@@ -69,25 +89,25 @@ export default function MenuJira() {
 				</div>
 			</div>
 			<div className="feature">
-				<div style={{cursor: 'not-allowed'}}>
+				<div style={{ cursor: "not-allowed" }}>
 					<i className="fa fa-truck" />
-					<span className='ml-2'>Releases</span>
+					<span className="ml-2">Releases</span>
 				</div>
-				<div  style={{cursor: 'not-allowed'}}>
+				<div style={{ cursor: "not-allowed" }}>
 					<i className="fa fa-equals" />
-					<span className='ml-2'>Issues and filters</span>
+					<span className="ml-2">Issues and filters</span>
 				</div>
-				<div  style={{cursor: 'not-allowed'}}>
+				<div style={{ cursor: "not-allowed" }}>
 					<i className="fa fa-paste" />
-					<span className='ml-2'>Pages</span>
+					<span className="ml-2">Pages</span>
 				</div>
-				<div  style={{cursor: 'not-allowed'}}>
+				<div style={{ cursor: "not-allowed" }}>
 					<i className="fa fa-location-arrow" />
-					<span className='ml-2'>Reports</span>
+					<span className="ml-2">Reports</span>
 				</div>
-				<div style={{cursor: 'not-allowed'}}>
+				<div style={{ cursor: "not-allowed" }}>
 					<i className="fa fa-box" />
-					<span className='ml-2'>Components</span>
+					<span className="ml-2">Components</span>
 				</div>
 			</div>
 		</div>

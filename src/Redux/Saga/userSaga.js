@@ -154,9 +154,9 @@ function* getUserByProjectIdSaga(action) {
 			type: GET_USER_BY_PROJECT_ID,
 			arrUser: data.content,
 		});
-		console.log("success");
+		//console.log("success");
 	} catch (error) {
-		console.log(error);
+		//console.log(error);
 		console.log("lỗi", error.response?.data);
 
 		if (error.response?.data.content) {

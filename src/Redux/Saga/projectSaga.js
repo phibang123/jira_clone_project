@@ -55,7 +55,8 @@ function* createProjectSaga(action) {
 		yield put({
 			type: HIDE_LOADING,
 		});
-		Notification("error", "Add project is fail!");
+		Notification("error", err.response?.data.content);
+		//Notification("error", "Add project is fail!");
 	}
 	yield put({
 		type: HIDE_LOADING,

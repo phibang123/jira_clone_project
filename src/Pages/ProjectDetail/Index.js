@@ -8,8 +8,9 @@ import InfoMain from '../../Components/Jira/Main/InfoMain'
 
 export default function Index(props)
 {
-  const { projectDetail } = useSelector(state => state.projectReducer)
+  const { projectDetail, TaskMyIssues } = useSelector(state => state.projectReducer)
 
+  const {projectId} = props.match.params;
 
   //khi người dùng link vào trang này = navLink thì tao sẻ lấy tham số từ url.params 
   //gọi saga => call api => đưa vào reducer
@@ -18,7 +19,7 @@ export default function Index(props)
   //useSelect là lấy tham số từ Reducer ra truyền vào Container
   const dispatch = useDispatch()
   useEffect(() => {
-    const {projectId} = props.match.params;
+    
     dispatch({
       type: GET_PROJECT_DETAIL_API_SAGA,
       projectId
@@ -28,8 +29,8 @@ export default function Index(props)
     <div className='main mt-3'>
 						
     <HeaderMain projectDetail={projectDetail}></HeaderMain>
-    <InfoMain projectDetail={projectDetail}></InfoMain>
-    <ContentMain projectDetail={projectDetail}></ContentMain>
+    <InfoMain projectDetail={projectDetail} projectId={projectId} TaskMyIssues={TaskMyIssues}></InfoMain>
+    <ContentMain projectDetail={projectDetail} ></ContentMain>
   
   </div>
   )

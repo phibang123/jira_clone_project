@@ -1,8 +1,10 @@
 import { EDIT_PROJECT, GET_PROJECT_DETAIL_API } from "../Constants/constants"
 
+import { Notification } from "../../Utils/Notification/Notification";
 import _ from "lodash";
 
 const initialState = {
+  TaskMyIssues: false,
   projectEdit: {
     id: 0,
     projectName: "L",
@@ -163,6 +165,7 @@ const initialState = {
     },
     "dateTime": "2021-09-26T09:26:02.4108552+07:00"
   }
+ 
 
 
 export const projectReducer = (state = initialState, action) => {
@@ -174,6 +177,7 @@ export const projectReducer = (state = initialState, action) => {
     }
     case GET_PROJECT_DETAIL_API: {
       state.projectDetail = action.projectDetail;
+      state.TaskMyIssues  = false
       return {...state}
       }
     case 'CHANGE_TASK_MODAL_API_TEXT': {
@@ -195,6 +199,34 @@ export const projectReducer = (state = initialState, action) => {
       
       return {...state}
     }
+    case 'TASK_MY_ISSUES': {
+      const useNotJoin = state.projectDetail.members?.findIndex(id => id.userId === action.myId)
+      if (state.projectDetail.creator.id === action.myId)
+      {
+        Notification("warning", "You are Creator");
+        return {...state}
+      }
+      
+      else if (useNotJoin === -1)
+      {
+        Notification("error", "You not Join Project");
+        return {...state}
+      }
+      //console.log(action.myId)
+      console.log(action);
+    
+     // state.taskDetailModal.assigness = [...state.taskDetailModal.assigness.filter(us => us.id !== action.userId)]
+      state.projectDetail.lstTask[0].lstTaskDeTail = [...state.projectDetail.lstTask[0]?.lstTaskDeTail?.filter(task => task.assigness.find(idUser => idUser.id === action.myId)?.id === action.myId)]
+      //console.log(state.projectDetail.lstTask[0]?.lstTaskDeTail,'0');
+      state.projectDetail.lstTask[1].lstTaskDeTail = [...state.projectDetail.lstTask[1]?.lstTaskDeTail?.filter(task => task.assigness.find(idUser => idUser.id === action.myId)?.id === action.myId)]
+      //console.log(state.projectDetail.lstTask[1]?.lstTaskDeTail,'1');
+      state.projectDetail.lstTask[2].lstTaskDeTail = [...state.projectDetail.lstTask[2]?.lstTaskDeTail?.filter(task => task.assigness.find(idUser => idUser.id === action.myId)?.id === action.myId)]
+      //console.log(state.projectDetail.lstTask[2]?.lstTaskDeTail,'2');
+      state.projectDetail.lstTask[3].lstTaskDeTail = [...state.projectDetail.lstTask[3]?.lstTaskDeTail?.filter(task => task.assigness.find(idUser => idUser.id === action.myId)?.id === action.myId)]
+      //console.log(state.projectDetail.lstTask[3]?.lstTaskDeTail,'3');
+      state.TaskMyIssues = true
+      return {...state}
+      }
   default:
     return state
   }

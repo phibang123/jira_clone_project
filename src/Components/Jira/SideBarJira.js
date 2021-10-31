@@ -76,7 +76,7 @@ export default function SideBarJira() {
 	return (
 		<>
 			<Sider
-				style={{ background: "#feca57", position: "fixed", height: "100%" }}
+				style={{ backgroundColor: "#87AAAA", position: "fixed", height: "100%" }}
 				collapsed={collapsed}
 				onCollapse={onCollapse}
 			>
@@ -93,7 +93,7 @@ export default function SideBarJira() {
 					></img>
 				</div>
 				<Menu
-					style={{ background: "#feca57", height: "100vh" }}
+					style={{ backgroundColor: "#87AAAA", height: "100vh" }}
 					theme="dark"
 					mode="inline"
 				>

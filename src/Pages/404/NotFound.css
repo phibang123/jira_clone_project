@@ -14,13 +14,13 @@
 	font-size: 21px;
 	margin: 10 px 0;
 	font-weight: 300;
-	color: rgb(254, 202, 87);
+	color: rgb(135, 170, 170);
 }
 .error-box .error-body .error-title {
 	font-size: 210px !important;
 	font-weight: 900 !important;
 	line-height: 210px !important;
-	color: rgb(254, 202, 87);
+	color: rgb(135, 170, 170);
 }
 .lds-ripple .lds-pos {
 	position: absolute;

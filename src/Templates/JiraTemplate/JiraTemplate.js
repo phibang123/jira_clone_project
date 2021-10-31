@@ -37,7 +37,7 @@ export default function JiraTemplate(props)
 						<div className='jira' style={{width: '100%',position: 'relative'}}>
 							<SideBarJira></SideBarJira>
 							<MenuJira></MenuJira>
-							<div style={{padding: '0px 32px 10px 420px',width: '100%'}}> <Component  {...propsRoute}/></div>
+							<div style={{padding: '0px 32px 10px 420px',width: '100%',backgroundColor: '#fffff'}}> <Component  {...propsRoute}/></div>
 							
 							{/* <ModelSearch></ModelSearch> */}
 							<ModelInfo></ModelInfo>

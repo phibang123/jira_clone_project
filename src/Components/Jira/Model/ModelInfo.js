@@ -104,8 +104,8 @@ export default function ModelInfo() {
 		dispatch({
 			type: GELL_ALL_TASK_TYPE_SAGA,
 		});
-	}, [taskDetailModal]);
-  console.log(taskDetailModal)
+	}, []);
+  //console.log(taskDetailModal)
 	//comment
 	const actions = (com) => {
 		return [

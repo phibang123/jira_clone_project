@@ -65,7 +65,7 @@ export default function CreateProject() {
 		formik.setFieldValue("description", content);
 	};
 	return (
-		<div className="main container mt-5  d-flex justify-content-center">
+		<div className="main mb-5 container mt-5  d-flex justify-content-center">
 			<div className="w-75">
 				<h3>Create Project</h3>
 				<form onSubmit={formik.handleSubmit}>

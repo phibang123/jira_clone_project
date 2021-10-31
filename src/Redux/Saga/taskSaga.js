@@ -87,7 +87,7 @@ function* updateTaskStatusSaga(action)
 	let user = JSON.parse(localStorage.getItem('userlogin'))
 	if (projectDetail.creator.id !== user?.id )
 	{
-		console.log(12343);
+	
 		Notification("error", "You not authorized ");
 		return
 	}
@@ -148,7 +148,7 @@ function* handleChangPostApi(action) {
 
 	if (projectDetail.creator.id !== user?.id )
 	{
-		console.log(12343);
+	
 		Notification("error", "You not authorized ");
 		return
 	}
@@ -229,7 +229,7 @@ function* handleChangPostApi(action) {
     }
     else
     {
-      Notification("error", err.response?.data);
+      Notification("error", err.response?.data.content);
     }
   }
   
