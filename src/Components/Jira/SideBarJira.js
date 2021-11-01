@@ -118,6 +118,7 @@ export default function SideBarJira() {
 						key="2"
 						icon={
 							<AppstoreAddOutlined
+								id="createTask"
 								style={{ color: "#000000", fontSize: "18px" }}
 							/>
 						}
