@@ -104,9 +104,10 @@ function* updateProjectSaga(action) {
 	const { data, status } = yield call(() =>
 		projectService.getProjectDetail(action.projectUpdate?.id)
 	);
+	
 	let user = JSON.parse(localStorage.getItem("userlogin"));
 
-	if (data.content?.creator.id !== user) {
+	if (data.content?.creator.id !== user?.id) {
 
 		Notification("error", "You not authorized ");
 		yield put({
@@ -126,16 +127,19 @@ function* updateProjectSaga(action) {
 			yield put({
 				type: CLOSE_DRAWER,
 			});
+			Notification("success", "Add project is success");
 		}
 	} catch (error) {
 		console.log(error);
 		yield put({
 			type: HIDE_LOADING,
 		});
+		Notification("error", error.response?.data.content);
 	}
 	yield put({
 		type: HIDE_LOADING,
 	});
+	
 }
 
 export function* theoDoiUpdateProjectSaga() {
