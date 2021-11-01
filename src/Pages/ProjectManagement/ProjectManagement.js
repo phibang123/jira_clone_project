@@ -310,8 +310,22 @@ export default function ProjectManagement() {
 					>
 						<EditOutlined style={{ fontSize: "12px" }} />
 					</button>
-
-					<Popconfirm
+           
+					<button
+							testDeleteF={record.projectName}
+						style={{ lineHeight: "50%" }}
+						onClick={() =>
+						{
+							dispatch({
+								type: DELETE_PROJECT_SAGA,
+								idProject: record.id,
+							});
+						 }}
+							className="btn mr-2 btn-outline-danger"
+						>
+							<DeleteOutlined style={{ fontSize: "12px" }} />
+						</button>
+					{/* <Popconfirm
 						title="Are you sure to delete this project?"
 						
 						onConfirm={() => {
@@ -330,7 +344,7 @@ export default function ProjectManagement() {
 						>
 							<DeleteOutlined style={{ fontSize: "12px" }} />
 						</button>
-					</Popconfirm>
+					</Popconfirm> */}
 				</div>
 			),
 		},
