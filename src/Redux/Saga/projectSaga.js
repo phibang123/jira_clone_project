@@ -44,7 +44,7 @@ function* createProjectSaga(action) {
 		);
 
 		if (status === STATUS_CODE.SUCCESS) {
-			history.push("/projectmanagement");
+			//history.push("/projectmanagement");
 			Notification("success", "Add project is success");
 			yield put({
 				type: GET_LIST_PROJECT_SAGA,
