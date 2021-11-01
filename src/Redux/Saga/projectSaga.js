@@ -127,7 +127,7 @@ function* updateProjectSaga(action) {
 			yield put({
 				type: CLOSE_DRAWER,
 			});
-			Notification("success", "Add project is success");
+			Notification("success", "Update project is success");
 		}
 	} catch (error) {
 		console.log(error);
