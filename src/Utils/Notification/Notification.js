@@ -7,6 +7,7 @@ export const Notification = (type, title, description = '') => {
 		description: description,
 		style: {
 			zIndex: 1060,
-		}
+		},
+
 	});
 };

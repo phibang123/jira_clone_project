@@ -93,7 +93,7 @@ export default function ProjectManagement() {
       width: 300,
 			dataIndex: "projectName",
 			render: (text, recond, index) => {
-				return <NavLink to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
+				return <NavLink  to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
 			},
 			key: "projectName",
 			sorter: (item1, item2) => {
@@ -197,6 +197,7 @@ export default function ProjectManagement() {
 															<td>{item.name}</td>
 															<td>
 																<button
+																	testDeleteU={item.userId}
 																	onClick={() => {
 																		dispatch({
 																			type: REMOVE_USER_PROJECT_API_SAGA,
@@ -222,12 +223,13 @@ export default function ProjectManagement() {
 										);
 									}}
 								>
-									<Avatar className="m-1" key={index} src={member.avatar} />
+									<Avatar className="m-1" key={index} testHoverUser={member.userId} src={member.avatar} />
 								</Popover>
 							);
 						})}
 						{record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
 						<Popover
+							
 							placement="right"
 							title={"Add User"}
 							content={() => {
@@ -241,10 +243,12 @@ export default function ProjectManagement() {
 												value: user.userId.toString(),
 											};
 										})}
+										testInputAddU={record.id}
 										value={value}
 										onChange={(text) => {
 											setValue(text);
 										}}
+									  
 										onSearch={(value) => {
 											if (searchRef.current) {
 												clearTimeout(searchRef.current);
@@ -273,7 +277,7 @@ export default function ProjectManagement() {
 							}}
 							trigger="click"
 						>
-							<Button className="m-1" icon={<UserAddOutlined />}></Button>
+							<Button testClickAddU={record.id} className="m-1" icon={<UserAddOutlined />}></Button>
 						</Popover>
 					</div>
 				);
@@ -286,6 +290,7 @@ export default function ProjectManagement() {
 			render: (text, record, index) => (
 				<div size="middle">
 					<button
+						testEdit={record?.projectName}
 						style={{ lineHeight: "50%" }}
 						className="btn mr-2 btn-outline-primary"
 						onClick={() => {
@@ -308,6 +313,7 @@ export default function ProjectManagement() {
 
 					<Popconfirm
 						title="Are you sure to delete this project?"
+						
 						onConfirm={() => {
 							dispatch({
 								type: DELETE_PROJECT_SAGA,
@@ -318,6 +324,7 @@ export default function ProjectManagement() {
 						cancelText="No"
 					>
 						<button
+							testDeleteF={record.projectName}
 							style={{ lineHeight: "50%" }}
 							className="btn mr-2 btn-outline-danger"
 						>
