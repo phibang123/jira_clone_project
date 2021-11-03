@@ -46,6 +46,7 @@ function* createTaskSaga(action) {
 		//   type: GET_PROJECT_DETAIL_API_SAGA,
 		//   projectId: action.taskObject.projectId
 		// })
+		yield delay(1200)
 		window.location.reload();
 	} catch (error) {
 		Notification("error", error.response.data.content);

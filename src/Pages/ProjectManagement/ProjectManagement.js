@@ -290,7 +290,7 @@ export default function ProjectManagement() {
 			render: (text, record, index) => (
 				<div size="middle">
 					<button
-						testEdit={record?.projectName}
+						testEdit={record?.id}
 						style={{ lineHeight: "50%" }}
 						className="btn mr-2 btn-outline-primary"
 						onClick={() => {
@@ -312,7 +312,7 @@ export default function ProjectManagement() {
 					</button>
            
 					<button
-							testDeleteF={record.projectName}
+							testDeleteF={record?.id}
 						style={{ lineHeight: "50%" }}
 						onClick={() =>
 						{
