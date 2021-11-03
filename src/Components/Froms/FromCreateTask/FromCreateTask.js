@@ -129,9 +129,9 @@ function FromCreateTask(props)
 					</div>
 			</div>
 			<div className="form-group">
-				<p>Status Id</p>
+				<p>Status</p>
 				<select className='form-control' name='statusID' onChange={handleChange}>
-					{arrStatus?.map((statusItem, index) =>
+					{arrStatus?.slice(0,3).map((statusItem, index) =>
 					{
 						return <option key={index} value={statusItem.statusId}>{statusItem.statusName}</option>
 						 })}

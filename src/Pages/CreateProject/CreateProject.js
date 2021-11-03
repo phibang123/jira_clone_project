@@ -118,7 +118,7 @@ export default function CreateProject() {
 							className="form-control"
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
-							value=""
+
 							style={{ width: "100%" }}
 							name="categoryId"
 						>
