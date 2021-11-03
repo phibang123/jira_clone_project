@@ -5,6 +5,7 @@ import { Redirect, Route } from "react-router";
 import { TOKEN_USER, USER_LOGIN } from "../../Utils/constants/settingSystem";
 
 import ContentMain from '../../Components/Jira/Main/ContentMain'
+import { EyeInvisibleOutlined } from '@ant-design/icons';
 import HeaderMain from "../../Components/Jira/Main/HeaderMain";
 import InfoMain from "../../Components/Jira/Main/InfoMain";
 import { Layout } from "antd";
@@ -14,6 +15,7 @@ import ModelSearch from "../../Components/Jira/Model/ModelSearch";
 import { POST_AUTHOR } from "../../Redux/Constants/constants";
 import SideBarJira from "../../Components/Jira/SideBarJira";
 import {history} from '../../Utils/history'
+import { openNotification } from "../../Utils/Notification/NotificationBox";
 import { useDispatch } from "react-redux";
 
 export default function JiraTemplate(props)
@@ -22,7 +24,8 @@ export default function JiraTemplate(props)
 
 	if (!localStorage.getItem(TOKEN_USER))
 	{
-		alert('You need Login')
+		openNotification(<EyeInvisibleOutlined twoToneColor="#eb2f96"/>,'Fages Status','You need Log in')
+
 		return <Redirect to='/login'></Redirect>
 	}
 	let { Component, ...resRoute } = props;

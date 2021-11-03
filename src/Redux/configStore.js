@@ -31,7 +31,8 @@ const rootReducer = combineReducers({
     PriorityReducer: PriorityReducer,
     StatusReducer: StatusReducer,
     TaskReducer: TaskReducer,
-    CommentReducer: CommentReducer
+    CommentReducer: CommentReducer,
+
 
 })
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

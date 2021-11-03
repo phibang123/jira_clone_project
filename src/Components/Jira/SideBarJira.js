@@ -28,7 +28,6 @@ const { Header, Content, Footer, Sider } = Layout;
 const text = "Are you sure log out web?";
 
 const searchPop = (projectList) => {
-
 	return (
 		<Select
 			showSearch
@@ -36,17 +35,22 @@ const searchPop = (projectList) => {
 			placeholder="Search to Select"
 			optionFilterProp="children"
 			onSelect={(valueSelect, option) => {
-				history.push(`/projectdetail/${option.id}`)			
+				history.push(`/projectdetail/${option.id}`);
 			}}
 			filterOption={(inputValue, option) =>
 				option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-			
 			}
 		>
 			{projectList?.map((project, index) => {
 				return (
-					<Option  value={project.projectName} id={project.id} key={index}>
-						<NavLink activeClassName="active" style={{color: 'black',width: '100%'}} to={`/projectdetail/${project.id}`}>{project.projectName}</NavLink>
+					<Option value={project.projectName} id={project.id} key={index}>
+						<NavLink
+							activeClassName="active"
+							style={{ color: "black", width: "100%" }}
+							to={`/projectdetail/${project.id}`}
+						>
+							{project.projectName}
+						</NavLink>
 					</Option>
 				);
 			})}
@@ -67,16 +71,19 @@ export default function SideBarJira() {
 	const onCollapse = (collapsed) => {
 		setState({ collapsed });
 	};
-	const handleLogOut = () => {
-		localStorage.removeItem(TOKEN_USER);
-		localStorage.removeItem(USER_LOGIN);
-		history.push("/login");
-	};
+	// const handleLogOut = () => {
+	
+	// 	history.push("/login");
+	// };
 
 	return (
 		<>
 			<Sider
-				style={{ backgroundColor: "#87AAAA", position: "fixed", height: "100%" }}
+				style={{
+					backgroundColor: "#87AAAA",
+					position: "fixed",
+					height: "100%",
+				}}
 				collapsed={collapsed}
 				onCollapse={onCollapse}
 			>
@@ -135,18 +142,18 @@ export default function SideBarJira() {
 					<Menu.Item
 						style={{ top: "63%" }}
 						key="3"
-						
 						icon={
 							<QuestionOutlined
 								twoToneColor={"#578bfe"}
 								style={{ color: "#000000", fontSize: "18px" }}
 							/>
-							
 						}
 						onClick={() => {
 							dispatch({
 								type: "OPEN_MODAL_ABOUT_JIRA",
-								callBackSubmit: () => {dispatch({type:'CLOSE_MODAL'})},
+								callBackSubmit: () => {
+									dispatch({ type: "CLOSE_MODAL" });
+								},
 								ComponentContentModal: <FromAboutJira></FromAboutJira>,
 								title: "About Website",
 							});
@@ -154,7 +161,7 @@ export default function SideBarJira() {
 					>
 						About
 					</Menu.Item>
-					<Popconfirm
+					{/* <Popconfirm
 						key="5"
 						placement="rightTop"
 						title={text}
@@ -162,19 +169,24 @@ export default function SideBarJira() {
 						okText="Yes"
 						cancelText="No"
 						
+					> */}
+					<Menu.Item
+						key="5"
+						style={{ top: "63%" }}
+						onClick={() => {
+							setTimeout(() => {
+								dispatch({
+									type: "LOG_OUT",
+								});
+							}, 500);
+						}}
+						icon={
+							<LogoutOutlined style={{ color: "#000000", fontSize: "18px" }} />
+						}
 					>
-						<Menu.Item
-							key="5"
-							style={{ top: "63%" }}
-							icon={
-								<LogoutOutlined
-									style={{ color: "#000000", fontSize: "18px" }}
-								/>
-							}
-						>
-							Log Out
-						</Menu.Item>
-					</Popconfirm>
+						Log Out
+					</Menu.Item>
+					{/* </Popconfirm> */}
 				</Menu>
 			</Sider>
 		</>

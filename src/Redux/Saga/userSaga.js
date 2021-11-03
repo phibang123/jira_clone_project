@@ -1,3 +1,4 @@
+import { Button, notification } from 'antd';
 import { DISPLAY_LOADING, HIDE_LOADING } from "../Constants/loading";
 import {
 	EDIT_USER_API_SAGA,
@@ -28,14 +29,22 @@ import {
 	takeLatest,
 } from "redux-saga/effects";
 
+import { HeartTwoTone } from '@ant-design/icons'
 import { Notification } from "../../Utils/Notification/Notification";
+import { SmileOutlined } from '@ant-design/icons';
+import {SmileTwoTone}from '@ant-design/icons';
 import axios from "axios";
 import { history } from "../../Utils/history";
+import { openNotification } from '../../Utils/Notification/NotificationBox';
 import { push } from "react-router-redux";
 import { string } from "yup/lib/locale";
 import { userService } from "../../Services/userService";
 
 //quan lý các acton saga
+
+//ant notification 
+
+
 
 //-------------------đăng nhập
 function* signinSaga(action) {
@@ -206,4 +215,29 @@ function* editUserSaga(action) {
 
 export function* theoDoiEditUserSaga() {
 	yield takeLatest(EDIT_USER_API_SAGA, editUserSaga);
+}
+
+
+
+function* theoDoiLogOut()
+{
+	yield put({
+		type: DISPLAY_LOADING,
+	});
+	yield localStorage.removeItem(TOKEN_USER);
+	yield localStorage.removeItem(USER_LOGIN);
+	yield delay(1000);
+  
+	yield put({
+		type: HIDE_LOADING,
+	});
+	history.push("/login");
+	// Notification("success", <SmileTwoTone/> ,"See You later");
+  openNotification( <HeartTwoTone twoToneColor="#eb2f96" />,"LogOut Success","See You later");  
+}
+
+
+export function* theoDoiLogOutSaga()
+{
+	yield takeLatest('LOG_OUT',theoDoiLogOut)
 }

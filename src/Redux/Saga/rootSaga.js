@@ -49,6 +49,7 @@ export function* rootSaga() {
 		commentSaga.theoDoiGetAllCommentSaga(),
 		commentSaga.theoDoiDeleteCommentSaga(),
 		commentSaga.theoDoiInsertCommentSaga(),
-	  userSaga.theoDoiEditUserSaga()
+		userSaga.theoDoiEditUserSaga(),
+		userSaga.theoDoiLogOutSaga()
     ]);
 }
