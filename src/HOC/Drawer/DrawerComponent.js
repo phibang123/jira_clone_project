@@ -39,7 +39,7 @@ export default function DrawerComponent(props)
           footer={
             <Space>
               <Button onClick={onClose}>Cancel</Button>
-              <Button onClick={callBackSubmit} type="primary">
+              <Button onClick={callBackSubmit} style={{ backgroundColor:"#87AAAA" ,border: "none", borderRadius: "5px" }} type="primary">
                 Edit Project
               </Button>
             </Space>

@@ -132,8 +132,8 @@ export default function CreateProject() {
 						</select>
 					</div>
 
-					<Button htmlType="submit" type="primary">
-						Save Changes
+					<Button style={{ backgroundColor:"#87AAAA" ,border: "none", borderRadius: "5px" }}htmlType="submit" type="primary">
+						Create Project
 					</Button>
 				</form>
 			</div>

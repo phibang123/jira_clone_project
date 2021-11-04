@@ -158,7 +158,6 @@ function* deleteProjectSaga(action) {
 		projectService.getProjectDetail(action.idProject)
 	);
 	let user = JSON.parse(localStorage.getItem("userlogin"));
-
 	if (data.content?.creator.id !== user?.id) {
 
 		Notification("error", "You not authorized ");
