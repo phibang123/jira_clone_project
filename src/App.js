@@ -13,6 +13,7 @@ import Login from "./Pages/Login/Login";
 import ModalComponent from "./HOC/Modal/ModalComponent";
 import NotFound from "./Pages/404/NotFound";
 import ProfileUser from "./Pages/ProfileUser.js/ProfileUser";
+import ProjectIssues from "./Pages/ProjectIssues/ProjectIssues";
 import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement";
 import SignUp from "./Pages/SignUp/SignUp";
 import UserLoginTemplate from "./Templates/LoginTemplate/UserLoginTemplate";
@@ -68,6 +69,11 @@ function App() {
 					exact
 					path="/profile"
 					Component={ProfileUser}
+				></JiraTemplate>
+					<JiraTemplate
+					exact
+					path="/projectmyissues"
+					Component={ProjectIssues}
 				></JiraTemplate>
 				<JiraTemplate exact path="/" Component={HomeIndex}></JiraTemplate>
 				<NotFound exact path="*"></NotFound>

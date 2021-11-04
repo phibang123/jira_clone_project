@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import {
 	CREATE_TASK_SAGA,
 	GET_LIST_PROJECT_SAGA,
+	GET_LIST_PROJECT_SAGA_ISSUES,
 	GET_USER_BY_PROJECT_ID_SAGA,
 	GET_USER_SAGA_API,
 } from "../../../Redux/Constants/constants";
@@ -38,7 +39,7 @@ function FromCreateTask(props)
 
 	const dispatch = useDispatch();
 
-	const { projectList } = useSelector((state) => state.projectManageReducer);
+	const { projectList } = useSelector((state) => state.ProjectIssuesReducer);
 	const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
 	const { arrPriority } = useSelector((state) => state.PriorityReducer);
 	const { arrStatus } = useSelector(state => state.StatusReducer)
@@ -61,7 +62,7 @@ function FromCreateTask(props)
 	useEffect(() =>
 	{
 		dispatch({
-			type: GET_LIST_PROJECT_SAGA,
+			type: GET_LIST_PROJECT_SAGA_ISSUES,
 		});
 		dispatch({
 			type: GELL_ALL_TASK_TYPE_SAGA,
@@ -100,6 +101,7 @@ function FromCreateTask(props)
 					onChange={(e) =>
 					{
 						let { value } = e.target;
+						console.log(value)
 						dispatch({
 							type: GET_USER_BY_PROJECT_ID_SAGA,
 							idProject: value
@@ -335,7 +337,7 @@ const mapStateToProps = (state) => ({
 	arrStatus:   state.StatusReducer.arrStatus,
 	arrTaskType: state.TaskTypeReducer.arrTaskType,
 	arrPriority: state.PriorityReducer.arrPriority,
-	projectList: state.projectManageReducer.projectList
+	projectList: state.ProjectIssuesReducer.projectList
 	
 });
 export default connect(mapStateToProps)(FrmCreateTask);

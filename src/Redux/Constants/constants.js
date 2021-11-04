@@ -42,6 +42,14 @@ export const GET_LIST_PROJECT = 'GET_LIST_PROJECT'
 
 
 
+//--------------------GET List Project-----------------------------------
+//-//-Saga
+export const GET_LIST_PROJECT_SAGA_ISSUES = 'GET_LIST_PROJECT_SAGA_ISSUES'
+//-//-Reducer
+export const GET_LIST_PROJECT_ISSUES = 'GET_LIST_PROJECT_ISSUES'
+
+
+
 
 //--------------------UPDATE Project-----------------------------------
 //-//-Saga

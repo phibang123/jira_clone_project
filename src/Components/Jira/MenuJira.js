@@ -43,7 +43,7 @@ export default function MenuJira() {
 				</div>
 
 				<div>
-					<i class="fa fa-user-cog"></i>
+					<i className="fa fa-user-cog"></i>
 					<NavLink
 						className="text-dark ml-2"
 						exact
@@ -64,6 +64,16 @@ export default function MenuJira() {
 					>
 						Create Project
 					</NavLink>
+				</div>	<div>
+					<i className="fa fa-server"></i>
+					<NavLink
+						className="text-dark  ml-2"
+						exact
+						activeClassName="actice font-weight-bold"
+						to="/projectmyissues"
+					>
+						Project My Issues
+					</NavLink>
 				</div>
 				<div>
 					<i className="fas fa-tasks"></i>
@@ -76,17 +86,7 @@ export default function MenuJira() {
 						Project Manage
 					</NavLink>
 				</div>
-				<div>
-					<i className="fa fa-server"></i>
-					<NavLink
-						className="text-dark  ml-2"
-						exact
-						activeClassName="actice font-weight-bold"
-						to="/projectmyissues"
-					>
-						Project My Issues
-					</NavLink>
-				</div>
+			
 			</div>
 			<div className="feature">
 				<div style={{ cursor: "not-allowed" }}>

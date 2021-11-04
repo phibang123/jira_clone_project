@@ -5,7 +5,9 @@ import {
 	GET_ALL_PROJECT_CATEGORY,
 	GET_ALL_PROJECT_CATEGORY_SAGA,
 	GET_LIST_PROJECT,
+	GET_LIST_PROJECT_ISSUES,
 	GET_LIST_PROJECT_SAGA,
+	GET_LIST_PROJECT_SAGA_ISSUES,
 	GET_PROJECT_DETAIL_API,
 	GET_PROJECT_DETAIL_API_SAGA,
 	GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
@@ -49,6 +51,11 @@ function* createProjectSaga(action) {
 			yield put({
 				type: GET_LIST_PROJECT_SAGA,
 			});
+	
+			yield put({
+				type: GET_LIST_PROJECT_SAGA_ISSUES,
+		
+			});
 		}
 	} catch (err) {
 		console.log(err.response.data);
@@ -78,11 +85,11 @@ function* getListProjectSaga(action) {
 				type: GET_LIST_PROJECT,
 				projectList: data.content,
 			});
-			//console.log(data.content[0]?.id)
-			yield put({
-				type: GET_USER_BY_PROJECT_ID_SAGA,
-				idProject: data.content[0]?.id,
-			});
+			// //console.log(data.content[0]?.id)
+			// yield put({
+			// 	type: GET_USER_BY_PROJECT_ID_SAGA,
+			// 	idProject: data.content[0]?.id,
+			// });
 		}
 	} catch (error) {
 		console.log(error);
@@ -91,6 +98,42 @@ function* getListProjectSaga(action) {
 
 export function* theoDoiGetListProjectSaga() {
 	yield takeLatest(GET_LIST_PROJECT_SAGA, getListProjectSaga);
+}
+
+
+//------------------- lấy danh sách project all issues
+
+function* getListProjectIssuesSaga(action) {
+	try {
+		const { data, status } = yield call(() => projectService.getListProject());
+		//sau khi lấy dử liệu từ api về thành công dispatch len reducer
+		if (status === STATUS_CODE.SUCCESS)
+		{
+			let user = yield JSON.parse(localStorage.getItem("userlogin"));
+			let projectIssues = yield data.content?.filter(project => project.creator?.id === user?.id)
+      let projectAssign = yield data.content?.filter(issue => issue.members.find(id => id.userId === user?.id)?.userId === user?.id)
+		
+			yield put({
+				type: GET_LIST_PROJECT_ISSUES,
+				projectListIssues: projectIssues,
+	      projectAssign: projectAssign
+				//projectALL: data.content
+			});
+	
+			
+			yield put({
+				type: GET_USER_BY_PROJECT_ID_SAGA,
+				idProject: projectIssues[0]?.id,
+	
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export function* theoDoiGetListProjectIssuesSaga() {
+	yield takeLatest(GET_LIST_PROJECT_SAGA_ISSUES, getListProjectIssuesSaga);
 }
 
 //update-project
@@ -105,7 +148,7 @@ function* updateProjectSaga(action) {
 		projectService.getProjectDetail(action.projectUpdate?.id)
 	);
 	
-	let user = JSON.parse(localStorage.getItem("userlogin"));
+	let user = yield JSON.parse(localStorage.getItem("userlogin"));
 
 	if (data.content?.creator.id !== user?.id) {
 
@@ -123,6 +166,9 @@ function* updateProjectSaga(action) {
 		if (status === STATUS_CODE.SUCCESS) {
 			yield put({
 				type: GET_LIST_PROJECT_SAGA,
+			});yield put({
+				type: GET_LIST_PROJECT_SAGA_ISSUES,
+		
 			});
 			yield put({
 				type: CLOSE_DRAWER,
@@ -157,7 +203,7 @@ function* deleteProjectSaga(action) {
 	const { data, status } = yield call(() =>
 		projectService.getProjectDetail(action.idProject)
 	);
-	let user = JSON.parse(localStorage.getItem("userlogin"));
+	let user = yield JSON.parse(localStorage.getItem("userlogin"));
 	if (data.content?.creator.id !== user?.id) {
 
 		Notification("error", "You not authorized ");
@@ -174,6 +220,10 @@ function* deleteProjectSaga(action) {
 		if (status === STATUS_CODE.SUCCESS) {
 			yield put({
 				type: GET_LIST_PROJECT_SAGA,
+			});
+			yield put({
+				type: GET_LIST_PROJECT_SAGA_ISSUES,
+
 			});
 			yield put({
 				type: CLOSE_DRAWER,
@@ -210,6 +260,11 @@ function* addUserProjectSaga(action) {
 			yield put({
 				type: GET_LIST_PROJECT_SAGA,
 			});
+
+			yield put({
+				type: GET_LIST_PROJECT_SAGA_ISSUES,
+
+			});
 		}
 	} catch (error) {
 		Notification("error", error.response.data.content);
@@ -232,6 +287,11 @@ function* removeUserProject(action) {
 			Notification("success", "Remove user from Project success");
 			yield put({
 				type: GET_LIST_PROJECT_SAGA,
+			});
+
+			yield put({
+				type: GET_LIST_PROJECT_SAGA_ISSUES,
+			
 			});
 		}
 	} catch (error) {

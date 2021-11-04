@@ -3,6 +3,7 @@ import {
 	DELETE_PROJECT_SAGA,
 	EDIT_PROJECT,
 	GET_LIST_PROJECT_SAGA,
+	GET_LIST_PROJECT_SAGA_ISSUES,
 	GET_USER_SAGA_API,
 	REMOVE_USER_PROJECT_API_SAGA,
 } from "../../Redux/Constants/constants";
@@ -19,9 +20,9 @@ import ReactHtmlParser from "react-html-parser";
 import { UserAddOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-export default function ProjectManagement() {
-	//lấy dử liệu từ reducer về
-	const { projectList } = useSelector((state) => state.projectManageReducer);
+export default function ProjectIssues() {
+ 	//lấy dử liệu từ reducer về
+	const { projectList } = useSelector((state) => state.ProjectIssuesReducer);
 	const { userSearch } = useSelector((state) => state.userReducer);
 	//sử dụng dispatch gọi action
 	const [value, setValue] = useState("");
@@ -31,7 +32,7 @@ export default function ProjectManagement() {
 
 	useEffect(() => {
 		dispatch({
-			type: GET_LIST_PROJECT_SAGA,
+			type: GET_LIST_PROJECT_SAGA_ISSUES,
 		});
 	}, []);
 
@@ -141,22 +142,7 @@ export default function ProjectManagement() {
 				return 1;
 			},
 		},
-		{
-			title: "Creator",
-			key: "creator",
-			width: 200,
-			render: (text, record, index) => {
-				return <Tag color="gold"> {record.creator?.name}</Tag>;
-			},
-			sorter: (item1, item2) => {
-				let creator1 = item1.creator?.name.trim().toLowerCase();
-				let creator2 = item2.creator?.name.trim().toLowerCase();
-				if (creator1 < creator2) {
-					return -1;
-				}
-				return 1;
-			},
-		},
+
 		{
 			title: "members",
 			key: "members",
@@ -195,7 +181,27 @@ export default function ProjectManagement() {
 																></img>
 															</td>
 															<td>{item.name}</td>
-														
+															<td>
+																<button
+																	testDeleteU={item.userId}
+																	onClick={() => {
+																		dispatch({
+																			type: REMOVE_USER_PROJECT_API_SAGA,
+																			userProject: {
+																				userId: item.userId,
+																				projectId: record.id,
+																			},
+																		});
+																	}}
+																	style={{
+																		borderRadius: "50%",
+																		lineHeight: "50%",
+																	}}
+																	className="btn btn-outline-danger"
+																>
+																	<DeleteOutlined />
+																</button>
+															</td>
 														</tr>
 													))}
 												</tbody>
@@ -208,77 +214,127 @@ export default function ProjectManagement() {
 							);
 						})}
 						{record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
-					
+						<Popover
+							
+							placement="right"
+							title={"Add User"}
+							content={() => {
+								return (
+									<AutoComplete
+										style={{ width: "100%" }}
+										options={userSearch?.map((user, index) => {
+											return {
+												label: user.name,
+
+												value: user.userId.toString(),
+											};
+										})}
+								
+										value={value}
+										onChange={(text) => {
+											setValue(text);
+										}}
+									  
+										onSearch={(value) => {
+											if (searchRef.current) {
+												clearTimeout(searchRef.current);
+											}
+											searchRef.current = setTimeout(() => {
+												dispatch({
+													type: GET_USER_SAGA_API,
+													keyWord: value,
+												});
+											}, 300);
+										}}
+										onSelect={(valueSelect, option) => {
+											//set giá trị của hộp thoại = option.label
+											setValue(option.label);
+											//gọi api trả về backend
+											dispatch({
+												type: ADD_USER_PROJECT_API_SAGA,
+												userProject: {
+													projectId: record.id,
+													userId: option.value,
+												},
+											});
+										}}
+									></AutoComplete>
+								);
+							}}
+							trigger="click"
+						>
+							<Button  className="m-1" icon={<UserAddOutlined />}></Button>
+						</Popover>
 					</div>
 				);
 			},
 		},
-		// {
-		// 	title: "Action",
-		// 	width: 150,
-		// 	key: "action",
-		// 	render: (text, record, index) => (
-		// 		<div size="middle">
-		// 			<button
-
-		
-		// 				style={{ lineHeight: "50%" }}
-		// 				className="btn mr-2 btn-outline-primary"
-		// 				onClick={() => {
-		// 					const action = {
-		// 						type: OPEN_DREWER_EDIT_PROJECT,
-		// 						Component: <FromEditProject></FromEditProject>,
-		// 						title: "Edit Project",
-		// 					};
-		// 					dispatch(action);
-		// 					//dispatch dử liệu dòng hiện tại lên reducer
-		// 					const actionEditProject = {
-		// 						type: EDIT_PROJECT,
-		// 						projectEditDrawer: record,
-		// 					};
-		// 					dispatch(actionEditProject);
-		// 				}}
-		// 			>
-		// 				<EditOutlined style={{ fontSize: "12px" }} />
-		// 			</button>
-           
-		// 			<button
-		// 		
-		// 				style={{ lineHeight: "50%" }}
-		// 				onClick={() =>
-		// 				{
-		// 					dispatch({
-		// 						type: DELETE_PROJECT_SAGA,
-		// 						idProject: record.id,
-		// 					});
-		// 				 }}
-		// 					className="btn mr-2 btn-outline-danger"
-		// 				>
-		// 					<DeleteOutlined style={{ fontSize: "12px" }} />
-		// 				</button>
-		// 			{/* <Popconfirm
-		// 				title="Are you sure to delete this project?"
+		{
+			title: "Action",
+			width: 150,
+			key: "action",
+			render: (text, record, index) => (
+				<div size="middle">
+					<button
+			
 						
-		// 				onConfirm={() => {
-		// 					dispatch({
-		// 						type: DELETE_PROJECT_SAGA,
-		// 						idProject: record.id,
-		// 					});
-		// 				}}
-		// 				okText="Yes"
-		// 				cancelText="No"
-		// 			>
-		// 				<button
-
-		// 					style={{ lineHeight: "50%" }}
-		// 					className="btn mr-2 btn-outline-danger"
-		// 				>
-		// 					<DeleteOutlined style={{ fontSize: "12px" }} />
-		// 				</button>
-		// 			</Popconfirm> */}
-		// 		</div>
-		// 	),
-		// },
+						style={{ lineHeight: "50%" }}
+						className="btn mr-2 btn-outline-primary"
+						onClick={() => {
+							const action = {
+								type: OPEN_DREWER_EDIT_PROJECT,
+								Component: <FromEditProject></FromEditProject>,
+								title: "Edit Project",
+							};
+							dispatch(action);
+							//dispatch dử liệu dòng hiện tại lên reducer
+							const actionEditProject = {
+								type: EDIT_PROJECT,
+								projectEditDrawer: record,
+							};
+							dispatch(actionEditProject);
+						}}
+					>
+						<EditOutlined style={{ fontSize: "12px" }} />
+					</button>
+           
+					{/* <button
+			
+						style={{ lineHeight: "50%" }}
+						onClick={() =>
+						{
+							dispatch({
+								type: DELETE_PROJECT_SAGA,
+								idProject: record.id,
+							});
+						 }}
+							className="btn mr-2 btn-outline-danger"
+						>
+							<DeleteOutlined style={{ fontSize: "12px" }} />
+						</button> */}
+					<Popconfirm
+						title="Are you sure to delete this project?"
+						
+						onConfirm={() => {
+							dispatch({
+								type: DELETE_PROJECT_SAGA,
+								idProject: record.id,
+							});
+						}}
+						okText="Yes"
+						cancelText="No"
+					>
+						<button
+						
+							style={{ lineHeight: "50%" }}
+							className="btn mr-2 btn-outline-danger"
+						>
+							<DeleteOutlined style={{ fontSize: "12px" }} />
+						</button>
+					</Popconfirm>
+				</div>
+			),
+		},
 		// {
 		//   title: 'Address',
 		//   dataIndex: 'address',
@@ -297,7 +353,7 @@ export default function ProjectManagement() {
 
 	return (
 		<div className="container mt-5">
-			<h3>Project Management: { projectList?.length}</h3>
+			<h3>Project Issues: { projectList?.length}</h3>
 			<Space style={{ marginBottom: 16 }}>
 				<h6
 					style={{
@@ -312,7 +368,7 @@ export default function ProjectManagement() {
 				</h6>
 			</Space>
 			<Table
-
+				pagination={{ pageSize: 3 }}
 				columns={columns}
 				rowKey={"id"}
 				dataSource={projectList}

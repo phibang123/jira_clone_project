@@ -12,7 +12,7 @@ export default function ModalComponent()
 
   
   const handleOk = () => {
-  
+    
     setConfirmLoading(true);
     setTimeout(() => {
       callBackSubmit()
@@ -35,11 +35,14 @@ export default function ModalComponent()
         title={title}
         style={{top: '30px'}}
         visible={visible}
-        width={900}
+          width={900}
+       
+          maskStyle={{ backgroundColor: "#87AAAA" }}
+          okType={'primary'}
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
-      
+        
       >
           {ComponentContentModal}
     

@@ -4,6 +4,7 @@ import { CommentReducer } from './Reducer/CommentReducer';
 import { DrawerReducer } from './Reducer/DrawerReducer';
 import { ModalReducer } from './Reducer/ModalReducer';
 import { PriorityReducer } from './Reducer/PriorityReducer'
+import { ProjectIssuesReducer } from './Reducer/ProjectIssuesReducer';
 import { StatusReducer } from './Reducer/StatusReducer';
 import { TaskReducer } from './Reducer/TaskReducer';
 import { TaskTypeReducer } from './Reducer/TaskTypeReducer';
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
     StatusReducer: StatusReducer,
     TaskReducer: TaskReducer,
     CommentReducer: CommentReducer,
+    ProjectIssuesReducer: ProjectIssuesReducer
 
 
 })

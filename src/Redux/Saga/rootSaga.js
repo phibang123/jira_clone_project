@@ -50,6 +50,7 @@ export function* rootSaga() {
 		commentSaga.theoDoiDeleteCommentSaga(),
 		commentSaga.theoDoiInsertCommentSaga(),
 		userSaga.theoDoiEditUserSaga(),
-		userSaga.theoDoiLogOutSaga()
+		userSaga.theoDoiLogOutSaga(),
+		projectSaga.theoDoiGetListProjectIssuesSaga()
     ]);
 }
