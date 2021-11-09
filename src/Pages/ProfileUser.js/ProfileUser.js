@@ -181,6 +181,7 @@ export default function ProfileUser(props) {
 													type="password"
 													className="form-control"
 													name="password"
+													placeholder="Password"
 													onChange={handleChange}
 													onBlur={handleBlur}
 												/>

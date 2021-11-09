@@ -45,11 +45,11 @@ function FromCreateTask(props)
 	const { arrStatus } = useSelector(state => state.StatusReducer)
 	const { arrUser } = useSelector((state) => state.userReducer);
 	// hàm biền dổi option trên thẻ select
-
-	const userOption = arrUser?.map((item, index) =>
+  console.log(arrUser,'arrUser')
+	const userOption = arrUser?.length > 0 ? arrUser?.map((item, index) =>
 	{
 		return { value: item.userId, label: item.name };
-	});
+	}): [];
 
 	const editorRef = useRef(null);
 	const [size, setSize] = React.useState("default");
@@ -89,211 +89,213 @@ function FromCreateTask(props)
 	// const handleSizeChange = (e) => {
 	// 	setSize(e.target.value);
 	// };
-
+  console.log(projectList, );
 	
 	return (
-		<form className="container" onSubmit={handleSubmit} >
-			<div className="form-group">
-				<p>Project</p>
-				<select
-					name="projectId"
-					className="form-control"
-					onChange={(e) =>
-					{
-						let { value } = e.target;
-						console.log(value)
-						dispatch({
-							type: GET_USER_BY_PROJECT_ID_SAGA,
-							idProject: value
-						})
-						//cập nhập giá trị cho projectId
-						setFieldValue('projectId', e.target.value)
-						//đồng thời dispath giá trị thay đổi user
-						
-					}}
-				>
-					{projectList?.map((project, index) => {
-						return (
-							<option key={index} value={project.id}>
-								{project.projectName}
-							</option>
-						);
-					})}
-				</select>
-			</div>
-			<div className="form-group">
-				<p>Task Name</p>
-				<input className='form-control' name='taskName' onBlur={handleBlur}	 onChange={handleChange}></input>
-				<div className="text-danger">
-						{errors.taskName && touched.taskName ? (
-							<>{errors.taskName}</>
-						) : null}
-					</div>
-			</div>
-			<div className="form-group">
-				<p>Status</p>
-				<select className='form-control' name='statusID' onChange={handleChange}>
-					{arrStatus?.slice(0,3).map((statusItem, index) =>
-					{
-						return <option key={index} value={statusItem.statusId}>{statusItem.statusName}</option>
+		<div>
+			   {projectList?.length > 0 ? 	<form className="container" onSubmit={handleSubmit} >
+				 <div className="form-group">
+					 <p>Project</p>
+					 <select
+						 name="projectId"
+						 className="form-control"
+						 onChange={(e) =>
+						 {
+							 let { value } = e.target;
+							 console.log(value)
+							 dispatch({
+								 type: GET_USER_BY_PROJECT_ID_SAGA,
+								 idProject: value
+							 })
+							 //cập nhập giá trị cho projectId
+							 setFieldValue('projectId', e.target.value)
+							 //đồng thời dispath giá trị thay đổi user
+							 
+						 }}
+					 >
+						 {projectList?.map((project, index) => {
+							 return (
+								 <option key={index} value={project.id}>
+									 {project.projectName}
+								 </option>
+							 );
 						 })}
-				</select>
-				
-			</div>
-			<div className="form-group">
-				<div className="row">
-					<div className="col-6">
-						<p>Priority</p>
-						<select className="form-control" onChange={handleChange} name="priorityId">
-							{arrPriority?.map((priority, index) => {
-								return (
-									<option value={priority.priorityId} key={index}>
-										{priority.priority}
-									</option>
-								);
-							})}
-						</select>
-					</div>
-					<div className="col-6">
-						<p>Task Type</p>
-						<select className="form-control" name="typeId" onChange={handleChange}>
-							{arrTaskType?.map((taskType, index) => {
-								return (
-									<option key={index} value={taskType.id} >
-										{taskType.taskType}
-									</option>
-								);
-							})}
-						</select>
-					</div>
-				</div>
-			</div>
-			<div className="form-group">
-				<div className="row">
-					<div className="col-6">
-						<p>Assignees</p>
-						<Select
-							mode="multiple"
-							size={size}
-							onBlur={handleBlur}
-							optionFilterProp="label"
-							options={userOption}
-							placeholder="Please select"
-							// defaultValue={["a10", "c12"]}
-							onChange={(values) =>
-							{
-								//dispatch thay đổi dử liệu api
-								//set lại giá trị cho list userAsign
-								 setFieldValue("listUserAsign",values)
-							}}
-							onSearch={(value) => {}}
-							style={{ width: "100%" }}
-							name='listUserAsign'
-						>
-							{children}
-						</Select>
-					
-						<div className="row mt-3">
-							<div className="col-12">
-								<p>Original Estimate</p>
-								<input
-									onChange={handleChange}
-									type="number"
-									min="0"
-									name="originalEstimate"
-									defaultValue="0"
-									className="form-control"
-									height="30"
-								></input>
-							</div>
-						</div>
-					</div>
-					<div className="col-6">
-						<p>TIME TRACKING</p>
-						<Slider
-							value={timeTracking.timeTrackingSpent}
-							max={
-								Number(timeTracking.timeTrackingSpent) +
-								Number(timeTracking.timeTrackingRemaining)
-							}
-							defaultValue={30}
-				
-						/>
-						<div className="row">
-							<div className="col-6 text-righ font-weight-bold">
-								{timeTracking.timeTrackingSpent}h logged
-							</div>
-							<div className="col-6 text-left font-weight-bold	">
-								{timeTracking.timeTrackingRemaining}h estimated{" "}
-							</div>
-						</div>
-						<div className="row" style={{ marginTop: 5 }}>
-							<div className="col-6">
-								<p>Time spent (hours)</p>
-								<input
-									type="number"
-									className="form-control"
-									name="timeTrackingSpent"
-								  
-									onChange={(e) => {
-										setTimeTracking({
-											...timeTracking,
-											timeTrackingSpent: e.target.value,
-										});
-										setFieldValue('timeTrackingSpent',e.target.value)
-									}}
-								></input>
-							</div>
-							<div className="col-6">
-								<p>Time remaining (hours)</p>
-								<input
-									type="number"
-									className="form-control"
-									name="timeTrackingRemaining"
-									onChange={(e) => {
-										setTimeTracking({
-											...timeTracking,
-											timeTrackingRemaining: e.target.value,
-										});
-										setFieldValue('timeTrackingRemaining',e.target.value)
-									}}
-								></input>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className="form-group">
-				<p>Description</p>
-				<Editor
-					name='description2'
-					
-		
-					// onChange={handleChange}
-					// onBlur={handleBlur}
-
-					onInit={(evt, editor) => (editorRef.current = editor)}
-					initialValue="Plan, track, and manage your agile and software development projects in Jira. Customize your workflow, collaborate, and release great software."
-					init={{
-						height: 300,
-						selector: "textarea",
-						document_base_url: "https://jiraclonebonlang.herokuapp.com",
-						plugins:
-							"a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
-						toolbar:
-							"a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
-						toolbar_mode: "floating",
-						tinycomments_mode: "embedded",
-						tinycomments_author: "Author name",
-					}}
-					onEditorChange={(content, editor) =>
-					{
-					    setFieldValue('description',content)
-					}}
-				/>
-			</div>
-	  
-		</form>
+					 </select>
+				 </div>
+				 <div className="form-group">
+					 <p>Task Name</p>
+					 <input className='form-control' name='taskName' onBlur={handleBlur}	 onChange={handleChange}></input>
+					 <div className="text-danger">
+							 {errors.taskName && touched.taskName ? (
+								 <>{errors.taskName}</>
+							 ) : null}
+						 </div>
+				 </div>
+				 <div className="form-group">
+					 <p>Status</p>
+					 <select className='form-control' name='statusID' onChange={handleChange}>
+						 {arrStatus?.slice(0,3).map((statusItem, index) =>
+						 {
+							 return <option key={index} value={statusItem.statusId}>{statusItem.statusName}</option>
+								})}
+					 </select>
+					 
+				 </div>
+				 <div className="form-group">
+					 <div className="row">
+						 <div className="col-6">
+							 <p>Priority</p>
+							 <select className="form-control" onChange={handleChange} name="priorityId">
+								 {arrPriority?.map((priority, index) => {
+									 return (
+										 <option value={priority.priorityId} key={index}>
+											 {priority.priority}
+										 </option>
+									 );
+								 })}
+							 </select>
+						 </div>
+						 <div className="col-6">
+							 <p>Task Type</p>
+							 <select className="form-control" name="typeId" onChange={handleChange}>
+								 {arrTaskType?.map((taskType, index) => {
+									 return (
+										 <option key={index} value={taskType.id} >
+											 {taskType.taskType}
+										 </option>
+									 );
+								 })}
+							 </select>
+						 </div>
+					 </div>
+				 </div>
+				 <div className="form-group">
+					 <div className="row">
+						 <div className="col-6">
+							 <p>Assignees</p>
+							 <Select
+								 mode="multiple"
+								 size={size}
+								 onBlur={handleBlur}
+								 optionFilterProp="label"
+								 options={userOption}
+								 placeholder="Please select"
+								 // defaultValue={["a10", "c12"]}
+								 onChange={(values) =>
+								 {
+									 //dispatch thay đổi dử liệu api
+									 //set lại giá trị cho list userAsign
+										setFieldValue("listUserAsign",values)
+								 }}
+								 onSearch={(value) => {}}
+								 style={{ width: "100%" }}
+								 name='listUserAsign'
+							 >
+								 {children}
+							 </Select>
+						 
+							 <div className="row mt-3">
+								 <div className="col-12">
+									 <p>Original Estimate</p>
+									 <input
+										 onChange={handleChange}
+										 type="number"
+										 min="0"
+										 name="originalEstimate"
+										 defaultValue="0"
+										 className="form-control"
+										 height="30"
+									 ></input>
+								 </div>
+							 </div>
+						 </div>
+						 <div className="col-6">
+							 <p>TIME TRACKING</p>
+							 <Slider
+								 value={timeTracking.timeTrackingSpent}
+								 max={
+									 Number(timeTracking.timeTrackingSpent) +
+									 Number(timeTracking.timeTrackingRemaining)
+								 }
+								 defaultValue={30}
+					 
+							 />
+							 <div className="row">
+								 <div className="col-6 text-righ font-weight-bold">
+									 {timeTracking.timeTrackingSpent}h logged
+								 </div>
+								 <div className="col-6 text-left font-weight-bold	">
+									 {timeTracking.timeTrackingRemaining}h estimated{" "}
+								 </div>
+							 </div>
+							 <div className="row" style={{ marginTop: 5 }}>
+								 <div className="col-6">
+									 <p>Time spent (hours)</p>
+									 <input
+										 type="number"
+										 className="form-control"
+										 name="timeTrackingSpent"
+										 
+										 onChange={(e) => {
+											 setTimeTracking({
+												 ...timeTracking,
+												 timeTrackingSpent: e.target.value,
+											 });
+											 setFieldValue('timeTrackingSpent',e.target.value)
+										 }}
+									 ></input>
+								 </div>
+								 <div className="col-6">
+									 <p>Time remaining (hours)</p>
+									 <input
+										 type="number"
+										 className="form-control"
+										 name="timeTrackingRemaining"
+										 onChange={(e) => {
+											 setTimeTracking({
+												 ...timeTracking,
+												 timeTrackingRemaining: e.target.value,
+											 });
+											 setFieldValue('timeTrackingRemaining',e.target.value)
+										 }}
+									 ></input>
+								 </div>
+							 </div>
+						 </div>
+					 </div>
+				 </div>
+				 <div className="form-group">
+					 <p>Description</p>
+					 <Editor
+						 name='description2'
+						 
+			 
+						 // onChange={handleChange}
+						 // onBlur={handleBlur}
+	 
+						 onInit={(evt, editor) => (editorRef.current = editor)}
+						 initialValue="Plan, track, and manage your agile and software development projects in Jira. Customize your workflow, collaborate, and release great software."
+						 init={{
+							 height: 300,
+							 selector: "textarea",
+							 document_base_url: "https://jiraclonebonlang.herokuapp.com",
+							 plugins:
+								 "a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
+							 toolbar:
+								 "a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
+							 toolbar_mode: "floating",
+							 tinycomments_mode: "embedded",
+							 tinycomments_author: "Author name",
+						 }}
+						 onEditorChange={(content, editor) =>
+						 {
+								 setFieldValue('description',content)
+						 }}
+					 />
+				 </div>
+			 
+			 </form> : <div>You Don't have Task</div>}
+		</div>
 	);
 }
 const FrmCreateTask = withFormik({
