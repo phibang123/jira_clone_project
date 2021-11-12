@@ -79,17 +79,21 @@ function FromCreateTask(props)
 		});
 
 		// đưa hàm handle submit lên modal reducer để cập nhật lại sự kiện cho nút submit
+
+
+	
 		dispatch({
 			type: 'SET_SUBMIT_CREATE_TASK',
 			submitFunction:  handleSubmit,
 			resetForm: resetForm
-		})
+		}) 
+	
 	}, []);
-
+  
 	// const handleSizeChange = (e) => {
 	// 	setSize(e.target.value);
 	// };
-  console.log(projectList, );
+
 	
 	return (
 		<div>
@@ -294,7 +298,11 @@ function FromCreateTask(props)
 					 />
 				 </div>
 			 
-			 </form> : <div>You Don't have Task</div>}
+			</form> : <form >You Don't have Project 
+			
+			
+			 
+			</form>}
 		</div>
 	);
 }

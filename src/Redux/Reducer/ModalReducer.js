@@ -9,7 +9,11 @@ const initialState = {
   //   return <p>Defail content</p> 
   // }
   //dạng funxtion
-	callBackSubmit: () => {  },
+  callBackSubmit: () =>
+  {
+    
+    
+  },
 	title:''
 };
 
