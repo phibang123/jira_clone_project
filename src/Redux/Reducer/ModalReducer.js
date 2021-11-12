@@ -43,7 +43,7 @@ export const ModalReducer = (state = initialState, action) => {
     }
   
     case 'SET_SUBMIT_CREATE_TASK': {
-      console.log(action,'sss')
+      
       return {...state,callBackSubmit: action.submitFunction}
     }
    

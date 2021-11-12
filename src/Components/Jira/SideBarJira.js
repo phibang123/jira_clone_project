@@ -7,6 +7,7 @@ import {
 	SearchOutlined,
 } from "@ant-design/icons";
 import { Button, Popconfirm, Popover, message } from "antd";
+import { GET_LIST_PROJECT_SAGA, GET_LIST_PROJECT_SAGA_ISSUES } from "../../Redux/Constants/constants";
 import { Layout, Menu } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -16,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import FromAboutJira from "../Froms/FromAboutJira/FromAboutJira";
 import FromCreateTask from "../Froms/FromCreateTask/FromCreateTask";
 import { GET_ALL_PRIORITY_SAGA } from "../../Redux/Constants/priority";
-import { GET_LIST_PROJECT_SAGA } from "../../Redux/Constants/constants";
 import { Notification } from "../../Utils/Notification/Notification";
 import { OPEN_DRAWER } from "../../Redux/Constants/drawer";
 import { Select } from "antd";
@@ -65,11 +65,15 @@ export default function SideBarJira()
 		dispatch({
 			type: GET_LIST_PROJECT_SAGA,
 		});
+		dispatch({
+			type: GET_LIST_PROJECT_SAGA_ISSUES
+		})
 	}, []);
-
+ 
 	const projectList = useSelector((state) => state.projectManageReducer);
 	const projectIssues = useSelector((state) => state.ProjectIssuesReducer);
 	const dispatch = useDispatch();
+
 	const [state, setState] = useState({ collapsed: true });
 	const { collapsed } = state;
 	const onCollapse = (collapsed) => {
