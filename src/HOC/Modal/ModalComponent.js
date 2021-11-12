@@ -9,22 +9,15 @@ export default function ModalComponent()
   const dispatch = useDispatch()
   const [confirmLoading, setConfirmLoading] = React.useState(false);
  
-  const closeModal = () =>
-	{
-	
-			dispatch({
-			   type: 'CLOSE_MODAL'
-			})
-	
-	}
+  
 
   
   const handleOk = () => {
     
     setConfirmLoading(true);
     setTimeout(() => {
-      closeModal()
-    
+      callBackSubmit()
+      
     }, 2000);
    
   };

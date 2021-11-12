@@ -33,11 +33,13 @@ import { TaskReducer } from "../Reducer/TaskReducer";
 import { TaskService } from "../../Services/Task/TaskService";
 
 function* createTaskSaga(action) {
-	try {
+	try
+	{
+	
 		const { data, status } = yield call(() =>
 			TaskService.createTask(action.taskObject)
 		);
-
+  
 		Notification("success", data.message);
 		yield put({
 			type: "CLOSE_MODAL",
@@ -46,8 +48,8 @@ function* createTaskSaga(action) {
 		//   type: GET_PROJECT_DETAIL_API_SAGA,
 		//   projectId: action.taskObject.projectId
 		// })
-
 		window.location.reload();
+		
 	} catch (error) {
 		Notification("error", error.response.data.content);
 	}

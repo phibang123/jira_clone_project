@@ -17,7 +17,7 @@ export const ProjectIssuesReducer = (state = initialState,action) => {
       state.projectList = action.projectListIssues
 
       state.projectAssign = action.projectAssign
-      
+     
 
       return {...state}
   }

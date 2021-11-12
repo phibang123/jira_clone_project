@@ -45,7 +45,7 @@ function FromCreateTask(props)
 	const { arrStatus } = useSelector(state => state.StatusReducer)
 	const { arrUser } = useSelector((state) => state.userReducer);
 	// hàm biền dổi option trên thẻ select
-  console.log(arrUser,'arrUser')
+
 	const userOption = arrUser?.length > 0 ? arrUser?.map((item, index) =>
 	{
 		return { value: item.userId, label: item.name };
@@ -298,7 +298,8 @@ function FromCreateTask(props)
 					 />
 				 </div>
 			 
-			</form> : <form >You Don't have Project 
+			</form> : <form onSubmit={handleSubmit}>
+				You Don't have Project
 			
 			
 			 
@@ -331,9 +332,10 @@ const FrmCreateTask = withFormik({
 
 	handleSubmit: (values, { props, setSubmitting, },) =>
 	{
-		
-		props.dispatch({ type: CREATE_TASK_SAGA, taskObject: values })
 	
+		//projectList?.length === 0 ? props.dispatch({}) : 
+		props.dispatch({ type: CREATE_TASK_SAGA, taskObject: values })
+	  
 
 	},
 })(FromCreateTask);

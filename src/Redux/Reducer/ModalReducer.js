@@ -1,4 +1,5 @@
 import React from "react";
+import { put } from "@redux-saga/core/effects";
 import { useDispatch } from "react-redux";
 
 const initialState = {
@@ -11,7 +12,7 @@ const initialState = {
   //dạng funxtion
   callBackSubmit: () =>
   {
-    
+  
     
   },
 	title:''
@@ -21,10 +22,12 @@ export const ModalReducer = (state = initialState, action) => {
   switch (action.type)
   {
     case 'OPEN_MODAL': {
+      
 			return { ...state, visible: true };
     }
   
     case "CLOSE_MODAL": {
+    
 			return { ...state, visible: false };
     }
     
@@ -40,6 +43,7 @@ export const ModalReducer = (state = initialState, action) => {
     }
   
     case 'SET_SUBMIT_CREATE_TASK': {
+      console.log(action,'sss')
       return {...state,callBackSubmit: action.submitFunction}
     }
    

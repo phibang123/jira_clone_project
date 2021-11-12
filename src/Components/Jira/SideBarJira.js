@@ -17,6 +17,7 @@ import FromAboutJira from "../Froms/FromAboutJira/FromAboutJira";
 import FromCreateTask from "../Froms/FromCreateTask/FromCreateTask";
 import { GET_ALL_PRIORITY_SAGA } from "../../Redux/Constants/priority";
 import { GET_LIST_PROJECT_SAGA } from "../../Redux/Constants/constants";
+import { Notification } from "../../Utils/Notification/Notification";
 import { OPEN_DRAWER } from "../../Redux/Constants/drawer";
 import { Select } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
@@ -57,7 +58,9 @@ const searchPop = (projectList) => {
 		</Select>
 	);
 };
-export default function SideBarJira() {
+export default function SideBarJira()
+{
+	
 	useEffect(() => {
 		dispatch({
 			type: GET_LIST_PROJECT_SAGA,
@@ -65,6 +68,7 @@ export default function SideBarJira() {
 	}, []);
 
 	const projectList = useSelector((state) => state.projectManageReducer);
+	const projectIssues = useSelector((state) => state.ProjectIssuesReducer);
 	const dispatch = useDispatch();
 	const [state, setState] = useState({ collapsed: true });
 	const { collapsed } = state;
@@ -129,7 +133,9 @@ export default function SideBarJira() {
 								style={{ color: "#000000", fontSize: "18px" }}
 							/>
 						}
-						onClick={() => {
+						onClick={() =>
+						{
+							projectIssues?.projectList.length === 0 ? Notification('warning',"You Don't have Project") :
 							dispatch({
 								type: "OPEN_MODAL_CREATE_TASK",
 								ComponentContentModal: <FromCreateTask></FromCreateTask>,
