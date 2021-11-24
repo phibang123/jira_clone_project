@@ -11,7 +11,8 @@ class ProjectService extends baseService  {
   }
   getAllProjectCategory = () =>
   {
-     return this.get(`/ProjectCategory`)
+    return this.get(`/ProjectCategory`)
+    //done(1.0)
   }
   createProject = (newProject) =>
   {
