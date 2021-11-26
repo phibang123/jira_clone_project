@@ -201,23 +201,23 @@ export const projectReducer = (state = initialState, action) => {
     }
     case 'TASK_MY_ISSUES': {
       const useNotJoin = state.projectDetail.members?.findIndex(id => id.userId === action.myId)
-      // if (state.projectDetail.creator.id === action.myId)
-      // {
-      //   Notification("warning", "You are Creator");
-      //   return {...state}
-      // }
+      if (state.projectDetail.creator.id === action.myId)
+      {
+        Notification("warning", "You are Creator");
+        return {...state}
+      }
       
-      // else if (useNotJoin === -1)
-      // {
-      //   Notification("error", "You not Join Project");
-      //   return {...state}
-      // }
-     
-       if (useNotJoin === -1)
+      else if (useNotJoin === -1)
       {
         Notification("error", "You not Join Project");
         return {...state}
       }
+     
+      //  if (useNotJoin === -1)
+      // {
+      //   Notification("error", "You not Join Project");
+      //   return {...state}
+      // }
 
 
       //console.log(action.myId)

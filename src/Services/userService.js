@@ -10,18 +10,18 @@ export class UserService extends baseService {
 
 	signinUser = (userLogin) =>
 	{
-		
+		console.log(userLogin)
 		return this.post(`/Users/signin`, userLogin);
 	};
 	signupUser = (userSignup) => {
 		return this.post(`/Users/signup`, userSignup);
 	};
 	getUser = (keyWord) => {
-		return this.get(`/Users/getUser?keyword=${keyWord}`);
+		return this.get(`/Users/getUser/keyword=${keyWord}`);
 	};
 	getUserByProjectId = (idProject) =>
 	{
-		 return this.get(`/Users/getUserByProjectId?idProject=${idProject}`)
+		 return this.get(`/Users/getUserByProjectId/idProject=${idProject}`)
 	}
 	editUser = (editUser) =>
 	{

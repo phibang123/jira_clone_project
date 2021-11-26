@@ -82,7 +82,7 @@ export default function ProfileUser(props) {
 									}}
 									validationSchema={Yup.object({
 										password: Yup.string()
-											.required("Password is required")
+											.required("password is required")
 											.min(6, "Paswword must than 6 letter"),
 										email: Yup.string()
 											.email("Invalid email address")
@@ -103,7 +103,7 @@ export default function ProfileUser(props) {
 												type: EDIT_USER_API_SAGA,
 												editUser: {
 													id: userLogin.id,
-													passWord: values.password,
+													password: values.password,
 													email: values.email,
 													name: values.name,
 													phoneNumber: values.phoneNumber,
@@ -176,12 +176,12 @@ export default function ProfileUser(props) {
 											</div>
 
 											<div className="form-group">
-												<p>Password</p>
+												<p>password</p>
 												<input
 													type="password"
 													className="form-control"
 													name="password"
-													placeholder="Password"
+													placeholder="password"
 													onChange={handleChange}
 													onBlur={handleBlur}
 												/>
@@ -193,10 +193,10 @@ export default function ProfileUser(props) {
 											</div>
 
 											<div className="form-group">
-												<p>Password Confirm</p>
+												<p>password Confirm</p>
 												<input
 													type="password"
-													placeholder="Password Confirm"
+													placeholder="password Confirm"
 													className="form-control"
 													name="passwordConfirmation"
 													onChange={handleChange}

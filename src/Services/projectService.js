@@ -28,11 +28,11 @@ class ProjectService extends baseService  {
   }
   updateProject = (projectUpdate) =>
   {
-    return this.put(`/Project/updateProject?projectId=${projectUpdate.id}`,projectUpdate)
+    return this.put(`/Project/updateProject/projectId=${projectUpdate.id}`,projectUpdate)
   }
   deleteProject = (id) =>
   {
-    return this.delete(`/Project/deleteProject?projectId=${id}`)
+    return this.delete(`/Project/deleteProject/projectId=${id}`)
   }
 
   //THÊM XÓA NGƯỜI DÙNG TRONG DỰ ÁN
@@ -48,7 +48,7 @@ class ProjectService extends baseService  {
   //Detail của project
   getProjectDetail = (projectId) =>
   {
-    return this.get(`/Project/getProjectDetail?id=${projectId}`,)
+    return this.get(`/Project/getProjectDetail/id=${projectId}`,)
   }
 
 

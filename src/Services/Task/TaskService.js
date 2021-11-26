@@ -7,25 +7,25 @@ class taskService extends baseService {
 
   createTask = (taskObject) =>
   {
-    return this.post(`/Project/createTask`,taskObject)
+    return this.post(`/Task/createTask`,taskObject)
   }
   getTaskDetail = (taskId) =>
   {
-    return this.get(`/Project/getTaskDetail?taskId=${taskId}`)
+    return this.get(`/Task/getTaskDetail/taskId=${taskId}`)
   }
   updateStatusTask = (taskStatusUpdate) =>
   {
  
-    return this.put(`/Project/updateStatus`,taskStatusUpdate)
+    return this.put(`/Task/updateStatus`,taskStatusUpdate)
   }
   updateTask = (taskUpdate) =>
   {
-    return this.post(`/Project/updateTask`,taskUpdate)
+    return this.post(`/Task/updateTask`,taskUpdate)
   }
   deleteTask = (taskId) =>
   {
 
-    return this.delete(`/Project/removeTask?taskId=${taskId}`,)
+    return this.delete(`/Task/removeTask/taskId=${taskId}`,)
   }
 }
 

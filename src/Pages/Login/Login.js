@@ -29,7 +29,7 @@ export default function Login(props)
         },
         validationSchema: Yup.object({
             email: Yup.string().required('Email not required'),
-            password:  Yup.string().min(6,"Password must have min 6 characters").required('PassWord not required').max(32,'Password must have max 32 character')
+            password:  Yup.string().min(6,"password must have min 6 characters").required('password not required').max(32,'password must have max 32 character')
         }),
         onSubmit: (values) =>
         {

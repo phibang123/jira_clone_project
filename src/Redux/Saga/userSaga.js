@@ -73,7 +73,7 @@ function* signinSaga(action) {
 		});
 		yield history.push("/");
 	
-		Notification("success", data.message);
+		Notification("success", "Login Success");
 	} catch (error) {
 		yield put({
 			type: HIDE_LOADING,
@@ -188,8 +188,8 @@ function* editUserSaga(action) {
 	try {
 		const { editUser } = action;
 		const { data, status } = yield call(() => userService.editUser(editUser));
-		const { email, passWord } = editUser;
-		const userLogin = { email, passWord }
+		const { email, password } = editUser;
+		const userLogin = { email, password }
 
 		Notification("success", data.message);
 		if (status === STATUS_CODE.SUCCESS) {
