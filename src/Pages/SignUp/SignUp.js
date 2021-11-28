@@ -57,7 +57,7 @@ export default function SignUp(props) {
 					style={{ height: window.innerHeight }}
 				>
 					<h3 className="text-center" style={{ fontWeight: 300 }}>
-						Sign up Jira
+						Sign up
 					</h3>
 					<div
 						className="d-flex mt-3"

@@ -36,6 +36,11 @@ export const ModalReducer = (state = initialState, action) => {
       return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title };
       
     }
+    case 'OPEN_MODAL_LEAVE_RPOJECT': {
+    
+      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title };
+      
+    }
     case 'OPEN_MODAL_ABOUT_JIRA': {
     
       return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title,callBackSubmit: action.callBackSubmit };
@@ -46,7 +51,10 @@ export const ModalReducer = (state = initialState, action) => {
       
       return {...state,callBackSubmit: action.submitFunction}
     }
-   
+    case 'SET_LEAVE_PROJECT': {
+      
+      return {...state,callBackSubmit: action.Function}
+    }
 		default:
 			return state;
 	}

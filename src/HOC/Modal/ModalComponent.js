@@ -17,7 +17,7 @@ export default function ModalComponent()
     setConfirmLoading(true);
     setTimeout(() => {
       callBackSubmit()
-      
+      setConfirmLoading(false);
     }, 2000);
    
   };
@@ -35,10 +35,10 @@ export default function ModalComponent()
         title={title}
         style={{top: '30px'}}
         visible={visible}
-          width={900}
+        width={900}
        
-          maskStyle={{ backgroundColor: "#87AAAA" }}
-          okType={'primary'}
+        maskStyle={{ backgroundColor: "#87AAAA" }}
+        okType={'primary'}
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}

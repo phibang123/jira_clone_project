@@ -12,6 +12,7 @@ import {
 	GET_PROJECT_DETAIL_API_SAGA,
 	GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
 	GET_USER_BY_PROJECT_ID_SAGA,
+	LEAVE_PROJECT_SAGA,
 	REMOVE_USER_PROJECT_API_SAGA,
 	UPDATE_PROJECT_SAGA,
 } from "../Constants/constants";
@@ -356,5 +357,39 @@ export function* theoDoiGetProjectDetailNoLoading() {
 	yield takeLatest(
 		GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
 		getProjectDetailNoLoading
+	);
+}
+
+function* postUserLeaveProject(action)
+{
+	try
+	{
+		let project = {
+			projectId :action?.projectId
+		}
+		const { data, status } = yield call(() => projectService.leaveProject(project))
+		yield put({
+			type: GET_LIST_PROJECT_SAGA,
+		});
+
+		yield put({
+			type: GET_LIST_PROJECT_SAGA_ISSUES,
+	
+		});
+		yield put({
+			type: "CLOSE_MODAL",
+		});
+		Notification("success", "Leave project is sucess");
+	} catch (error) {
+		Notification("error", error?.response.data.content);
+	}
+}
+
+
+
+export function* theoDoiPostUserLeaveProject() {
+	yield takeLatest(
+		LEAVE_PROJECT_SAGA,
+		postUserLeaveProject
 	);
 }

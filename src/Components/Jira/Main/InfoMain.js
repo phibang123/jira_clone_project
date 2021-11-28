@@ -17,7 +17,7 @@ export default function InfoMain(props) {
 	const dispatch = useDispatch();
 	const { projectDetail, TaskMyIssues, projectId } = props;
 	const classMyTask =  TaskMyIssues === true ? 'btn-warning': 'btn-outline-warning'
-	console.log(TaskMyIssues);
+	
 
 
 	const renderAvatar = () => {

@@ -45,6 +45,7 @@ function FromCreateTask(props)
 	const { arrStatus } = useSelector(state => state.StatusReducer)
 	const { arrUser } = useSelector((state) => state.userReducer);
 	// hàm biền dổi option trên thẻ select
+	
 
 	const userOption = arrUser?.length > 0 ? arrUser?.map((item, index) =>
 	{
@@ -152,7 +153,7 @@ function FromCreateTask(props)
 							 <select className="form-control" onChange={handleChange} name="priorityId">
 								 {arrPriority?.map((priority, index) => {
 									 return (
-										 <option value={priority.priorityId} key={index}>
+										 <option value={priority.id} key={index}>
 											 {priority.priority}
 										 </option>
 									 );
@@ -322,7 +323,7 @@ const FrmCreateTask = withFormik({
 			timeTrackingRemaining: 0,
 			projectId:projectList[0]?.id,
 			typeId: arrTaskType[0]?.id,
-			priorityId: arrPriority[0]?.priorityId,
+			priorityId: arrPriority[0]?.id,
 		};
 	},
 	validationSchema: Yup.object({

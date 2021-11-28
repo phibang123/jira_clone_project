@@ -13,7 +13,9 @@ export default function MenuJira() {
 			className="menu"
 			style={{ position: "fixed", left: "80px", fontSize: "15px" }}
 		>
+			
 			<div className="account">
+
 				<div className="avatar">
 					<NavLink to="/profile">
 						<img src={userLogin?.avatar} alt=".." />

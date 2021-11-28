@@ -51,7 +51,7 @@ export default function Login(props)
 				className="d-flex flex-column justify-content-center align-items-center"
 				style={{ height: window.innerHeight }}
 			>
-                <h3 className="text-center" style={{ fontWeight: 300 }}>Sign In Jira</h3>
+                <h3 className="text-center" style={{ fontWeight: 300 }}>Sign In </h3>
 				<div className='d-flex mt-3' style={{flexDirection: 'column',width: '50%'}}>
 					<Input onChange={formik.handleChange} onBlur={formik.handleBlur} type='email' name='email' size="large"  placeholder="Gmail" prefix={<UserOutlined />} />
                 </div>

@@ -50,7 +50,10 @@ class ProjectService extends baseService  {
   {
     return this.get(`/Project/getProjectDetail/id=${projectId}`,)
   }
-
+  leaveProject = (projectId) =>
+  {
+    return this.post(`/Project/userLeaveProject`,projectId)
+  }
 
 }
 

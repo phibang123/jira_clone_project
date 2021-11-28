@@ -102,7 +102,7 @@ export default function ContentMain(props) {
 																	</p>
 																	<div
 																		className="block"
-																		style={{ display: "flex",alignItems:'flex-end' }}
+																		style={{ display: "flex",alignItems:'center',justifyContent: 'space-between;' }}
 																	>
 																		<div className="block-left d-flex">
 																			<span>
@@ -166,7 +166,7 @@ export default function ContentMain(props) {
 																		<div className="block-right">
 																			<div
 																				className="avatar-group"
-																				style={{ display: "flex" }}
+																				style={{ display: "flex",flexWrap: 'wrap',justifyContent:'end' }}
 																			>
 																				{task.assigness?.map((mem, index) => {
 																					return (

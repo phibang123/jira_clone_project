@@ -12,7 +12,7 @@ import LoadingComponent from "./Components/GlobalSetting/LoadingComponent";
 import Login from "./Pages/Login/Login";
 import ModalComponent from "./HOC/Modal/ModalComponent";
 import NotFound from "./Pages/404/NotFound";
-import ProfileUser from "./Pages/ProfileUser.js/ProfileUser";
+import ProfileUser from "./Pages/ProfileUser/ProfileUser";
 import ProjectIssues from "./Pages/ProjectIssues/ProjectIssues";
 import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement";
 import SignUp from "./Pages/SignUp/SignUp";

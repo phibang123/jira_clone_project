@@ -39,11 +39,12 @@ function* createTaskSaga(action) {
 		const { data, status } = yield call(() =>
 			TaskService.createTask(action.taskObject)
 		);
-  
-		Notification("success", data.message);
+    Notification("success", "Create Task is successly");
+		
 		yield put({
 			type: "CLOSE_MODAL",
 		});
+		yield delay(1000)
 		// yield put({
 		//   type: GET_PROJECT_DETAIL_API_SAGA,
 		//   projectId: action.taskObject.projectId
@@ -249,11 +250,12 @@ function* deleteTaskSaga(action)
 	try
 	{
 		const { data, status } = yield call(() => TaskService.deleteTask(action.taskId))
-		Notification("success", data.message);
+		
 		yield put({
 			type: GET_PROJECT_DETAIL_API_SAGA,
 			projectId: action.projectId
 		})
+		Notification("success", "Delete Task successly");
 	}
 	catch (err)
 	{

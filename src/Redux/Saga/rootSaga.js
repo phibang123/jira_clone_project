@@ -51,6 +51,7 @@ export function* rootSaga() {
 		commentSaga.theoDoiInsertCommentSaga(),
 		userSaga.theoDoiEditUserSaga(),
 		userSaga.theoDoiLogOutSaga(),
-		projectSaga.theoDoiGetListProjectIssuesSaga()
+		projectSaga.theoDoiGetListProjectIssuesSaga(),
+		projectSaga.theoDoiPostUserLeaveProject()
     ]);
 }

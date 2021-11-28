@@ -14,6 +14,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import FromEditProject from "../../Components/Froms/FromEditProject/FromEditProject";
+import FromLeaveProject from "../../Components/Froms/FromLeaveProject/FromLeaveProject";
 import { NavLink } from "react-router-dom";
 import { OPEN_DREWER_EDIT_PROJECT } from "../../Redux/Constants/drawer";
 import ReactHtmlParser from "react-html-parser";
@@ -21,7 +22,7 @@ import { UserAddOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
 export default function ProjectIssues() {
- 	//lấy dử liệu từ reducer về
+	//lấy dử liệu từ reducer về
 	const { projectList } = useSelector((state) => state.ProjectIssuesReducer);
 	const { projectAssign } = useSelector((state) => state.ProjectIssuesReducer);
 	const { userSearch } = useSelector((state) => state.userReducer);
@@ -92,10 +93,10 @@ export default function ProjectIssues() {
 		},
 		{
 			title: "Project Name",
-      width: 300,
+			width: 300,
 			dataIndex: "projectName",
 			render: (text, recond, index) => {
-				return <NavLink  to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
+				return <NavLink to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
 			},
 			key: "projectName",
 			sorter: (item1, item2) => {
@@ -210,13 +211,12 @@ export default function ProjectIssues() {
 										);
 									}}
 								>
-									<Avatar className="m-1" key={index}  src={member.avatar} />
+									<Avatar className="m-1" key={index} src={member.avatar} />
 								</Popover>
 							);
 						})}
 						{record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
 						<Popover
-							
 							placement="right"
 							title={"Add User"}
 							content={() => {
@@ -230,12 +230,10 @@ export default function ProjectIssues() {
 												value: user.userId.toString(),
 											};
 										})}
-								
 										value={value}
 										onChange={(text) => {
 											setValue(text);
 										}}
-									  
 										onSearch={(value) => {
 											if (searchRef.current) {
 												clearTimeout(searchRef.current);
@@ -264,7 +262,7 @@ export default function ProjectIssues() {
 							}}
 							trigger="click"
 						>
-							<Button  className="m-1" icon={<UserAddOutlined />}></Button>
+							<Button className="m-1" icon={<UserAddOutlined />}></Button>
 						</Popover>
 					</div>
 				);
@@ -277,8 +275,6 @@ export default function ProjectIssues() {
 			render: (text, record, index) => (
 				<div size="middle">
 					<button
-			
-						
 						style={{ lineHeight: "50%" }}
 						className="btn mr-2 btn-outline-primary"
 						onClick={() => {
@@ -298,7 +294,7 @@ export default function ProjectIssues() {
 					>
 						<EditOutlined style={{ fontSize: "12px" }} />
 					</button>
-           
+
 					{/* <button
 			
 						style={{ lineHeight: "50%" }}
@@ -315,7 +311,6 @@ export default function ProjectIssues() {
 						</button> */}
 					<Popconfirm
 						title="Are you sure to delete this project?"
-						
 						onConfirm={() => {
 							dispatch({
 								type: DELETE_PROJECT_SAGA,
@@ -326,7 +321,6 @@ export default function ProjectIssues() {
 						cancelText="No"
 					>
 						<button
-						
 							style={{ lineHeight: "50%" }}
 							className="btn mr-2 btn-outline-danger"
 						>
@@ -351,7 +345,7 @@ export default function ProjectIssues() {
 		//   ellipsis: true,
 		// },
 	];
-  
+
 	const columnsAssign = [
 		{
 			title: "Id",
@@ -361,14 +355,13 @@ export default function ProjectIssues() {
 			sorter: (item1, item2) => {
 				return item1.id - item2.id;
 			},
-		
 		},
 		{
 			title: "Project Name",
-      width: 300,
+			width: 300,
 			dataIndex: "projectName",
 			render: (text, recond, index) => {
-				return <NavLink  to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
+				return <NavLink to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
 			},
 			key: "projectName",
 			sorter: (item1, item2) => {
@@ -379,7 +372,6 @@ export default function ProjectIssues() {
 				}
 				return 1;
 			},
-		
 		},
 
 		//tạm thời không lấy derestion
@@ -451,7 +443,6 @@ export default function ProjectIssues() {
 														<th>Id</th>
 														<th>Avatar</th>
 														<th>name</th>
-													
 													</tr>
 												</thead>
 												<tbody>
@@ -468,7 +459,6 @@ export default function ProjectIssues() {
 																></img>
 															</td>
 															<td>{item.name}</td>
-														
 														</tr>
 													))}
 												</tbody>
@@ -476,12 +466,11 @@ export default function ProjectIssues() {
 										);
 									}}
 								>
-									<Avatar className="m-1" key={index}  src={member.avatar} />
+									<Avatar className="m-1" key={index} src={member.avatar} />
 								</Popover>
 							);
 						})}
 						{record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
-					
 					</div>
 				);
 			},
@@ -493,57 +482,42 @@ export default function ProjectIssues() {
 			render: (text, record, index) => (
 				<div size="middle">
 					<button
-			
-						
 						style={{ lineHeight: "50%" }}
-						className="btn mr-2 btn-outline-primary"
-						onClick={() => {
-							const action = {
-								type: OPEN_DREWER_EDIT_PROJECT,
-								Component: <FromEditProject></FromEditProject>,
-								title: "Edit Project",
-							};
-							dispatch(action);
-							//dispatch dử liệu dòng hiện tại lên reducer
-							const actionEditProject = {
-								type: EDIT_PROJECT,
-								projectEditDrawer: record,
-							};
-							dispatch(actionEditProject);
+						className="btn mr-2 btn-outline-danger"
+						// onClick={() => {
+						// 	const action = {
+						// 		type: OPEN_DREWER_EDIT_PROJECT,
+						// 		Component: <FromEditProject></FromEditProject>,
+						// 		title: "Edit Project",
+						// 	};
+						// 	dispatch(action);
+						// 	//dispatch dử liệu dòng hiện tại lên reducer
+						// 	const actionEditProject = {
+						// 		type: EDIT_PROJECT,
+						// 		projectEditDrawer: record,
+						// 	};
+						// 	dispatch(actionEditProject);
+						// }}
+						onClick={() =>
+						{
+							const actionLeave = {
+								type: "OPEN_MODAL_LEAVE_RPOJECT",
+								ComponentContentModal: <FromLeaveProject record={record}></FromLeaveProject>,
+								title: "Leave Project",
+							}
+							dispatch(actionLeave);
 						}}
 					>
-						<EditOutlined style={{ fontSize: "12px" }} />
+						<i className="fa fa-sign-out-alt"></i>
 					</button>
-           
-					
-					<Popconfirm
-						title="Are you sure to delete this project?"
-						
-						onConfirm={() => {
-							dispatch({
-								type: DELETE_PROJECT_SAGA,
-								idProject: record.id,
-							});
-						}}
-						okText="Yes"
-						cancelText="No"
-					>
-						<button
-						
-							style={{ lineHeight: "50%" }}
-							className="btn mr-2 btn-outline-danger"
-						>
-							<DeleteOutlined style={{ fontSize: "12px" }} />
-						</button>
-					</Popconfirm>
+
 				</div>
 			),
 		},
-	
 	];
 	return (
 		<div className="container mt-5">
-			<h3>Project Issues: { projectList?.length}</h3>
+			<h3>Project Issues: {projectList?.length}</h3>
 			<Space style={{ marginBottom: 16 }}>
 				<h6
 					style={{
@@ -564,21 +538,21 @@ export default function ProjectIssues() {
 				dataSource={projectList}
 				onChange={handleChange}
 			/>
+
 			<Space style={{ marginBottom: 16 }}>
 				<h3>Project Assignees: {projectAssign?.length}</h3>
-				
 			</Space>
 			<h6
-					style={{
-						background: "rgb(235, 236, 240)",
-						width: "600px",
-						padding: "10px",
-					}}
-				>
-					<span style={{ color: "red" }}>* </span>Note: here allows you to
-					change, delete, and add members to the project you can click on the
-					project name link to manage your project details more
-				</h6>
+				style={{
+					background: "rgb(235, 236, 240)",
+					width: "600px",
+					padding: "10px",
+				}}
+			>
+				<span style={{ color: "red" }}>* </span>Note: here allows you to change,
+				delete, and add members to the project you can click on the project name
+				link to manage your project details more
+			</h6>
 			<Table
 				pagination={{ pageSize: 3 }}
 				columns={columnsAssign}

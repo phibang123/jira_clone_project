@@ -32,7 +32,8 @@ export const POST_AUTHOR = 'POST_AUTHOR'
 //-//-Saga
 export const CREATE_PROJECT_SAGA = 'CREATE_PROJECT_SAGA'
 
-
+//--------------------LEAVE PROJECT-------------------------------------
+export const LEAVE_PROJECT_SAGA = 'LEAVE_PROJECT_SAGA'
 
 //--------------------GET List Project-----------------------------------
 //-//-Saga
