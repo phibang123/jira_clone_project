@@ -44,6 +44,7 @@ import { GET_ALL_STATUS_API_SAGA } from "../../../Redux/Constants/status";
 import ReactHtmlParser from "react-html-parser";
 import { Select } from "antd";
 import { USER_LOGIN } from "../../../Utils/constants/settingSystem";
+import moment from "moment-timezone";
 import { useFormik } from "formik";
 
 const { TextArea } = Input;
@@ -77,7 +78,8 @@ export default function ModelInfo() {
 	const { arrPriority } = useSelector((state) => state.PriorityReducer);
 	const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
 	const { projectDetail } = useSelector((state) => state.projectReducer);
-
+	const { userLogin } = useSelector((state) => state.userReducer);
+  
 	//useState
 	const [visibleEditor, setVisibleEditor] = useState(false);
 	const [visibleInput, setVisibleInput] = useState(false);
@@ -122,47 +124,12 @@ export default function ModelInfo() {
 				>
 					<span className="comment-action">Delete</span>
 				</span>
+				<span className="ml-2">
+             {moment(com.createdAt).fromNow()}
+				</span>
 				<span
 					style={{ color: "blue" }}
-					// onClick={() => {
-					// 	dispatch({
-					// 		type: DELETE_COMMENT_SAGA,
-					// 		id: com.id,
-					// 		taskId: com.taskId,
-					// 	});
-					// }}
 				>
-					
-					{/* <span className="comment-action"
-					// 	onClick={() =>
-					// 	{
-					// 	dispatch({
-					// 		type: EDIT_COMMENT_SAGA,
-					// 		id: com.id,
-					// 		comment : com.contentComment
-					// 	});
-					// }}
-					
-					
-					onClick={() => {
-						const action = {
-							type: "OPEN_MODAL_CREATE_TASK",
-							ComponentContentModal: <FromEditComment></FromEditComment>,
-					
-							title: "Edit Comment",
-						};
-						dispatch(action);
-						//dispatch dử liệu dòng hiện tại lên reducer
-						const actionEditComment = {
-							type: EDIT_COMMENT_REDUCER,
-							comment: {
-								id: com.id,
-								comment : com.contentComment
-							},
-						};
-						dispatch(actionEditComment);
-						}}
-					>Edit Comment</span>*/}
 				</span> 
 			</Tooltip>,
 		];
@@ -323,18 +290,20 @@ export default function ModelInfo() {
 		setComment({
 			submitting: true,
 		});
-		dispatch({
-			type: INSERT_COMMENT_SAGA,
-			comment: {
-				taskId: taskDetailModal.taskId,
-				contentComment: comment.value,
-			},
-		});
+		
 		setTimeout(() => {
 			setComment({
 				submitting: false,
 				value: "",
 			});
+			dispatch({
+				type: INSERT_COMMENT_SAGA,
+				comment: {
+					taskId: taskDetailModal.taskId,
+					contentComment: comment.value,
+				},
+			});
+		
 		}, 1000);
 	};
 	const handleChangeInput = (e) => {
@@ -469,19 +438,31 @@ export default function ModelInfo() {
 											</div>
 										</div>
 										<div className="lastest-comment">
-											{taskDetailModal.lstComment?.map((comment, index) => {
+											{taskDetailModal?.lstComment?.map((comment, index) => {
 												return (
 													<Comment
 														key={index}
 														actions={actions(comment)}
-														author={<span>{comment.user?.name}</span>}
+														author={userLogin?.id !== comment?.idUser ? <span style={{fontSize: "15px", fontWeight: "500"}}>{comment?.name}</span>  : <span style={{fontSize: "15px", fontWeight: "500"}}>You</span> }
 														avatar={
 															<Avatar
-																src={comment.user?.avatar}
-																alt={comment.user?.name}
+																src={comment?.avatar}
+																alt={comment?.name}
+																style={{marginTop: "5px"}}
 															/>
 														}
-														content={comment.contentComment}
+														
+														content={
+
+															<div className="w-100"><p style={{
+																borderRadius: "5px",
+																color: "rgba(0, 0, 0, 0.85)",
+																fontWeight: "500",
+																padding: "10px",
+																maxWidth: "fit-content",
+																backgroundColor: 'rgb(235, 236, 240)'
+															}}>{comment.commentContent }</p></div>
+														}
 													/>
 												);
 											})}
@@ -499,14 +480,7 @@ export default function ModelInfo() {
 											value={taskDetailModal.statusId}
 											onChange={(e) => {
 												handleChanges(e);
-												// dispatch({
-												//   type: UPDATE_TASK_STATUS_SAGA_TEXT,
-												//   taskUpdateStatus: {
-												// 		taskId: taskDetailModal.taskId,
-												//     statusId: e.target.value,
-												//     projectId: taskDetailModal.projectId
-												// 	},
-												//   })
+									
 											}}
 										>
 											{arrStatus?.map((status, index) => {
@@ -626,7 +600,7 @@ export default function ModelInfo() {
 										>
 											{arrPriority?.map((priority, index) => {
 												return (
-													<option key={index} value={priority.priorityId}>
+													<option key={index} value={priority.id}>
 														{priority.priority}
 													</option>
 												);
@@ -638,9 +612,9 @@ export default function ModelInfo() {
 										<h6>TIME TRACKING</h6>
 										{renderTimeTracking()}
 									</div>
-									<div style={{ color: "#929398" }}>Create at a month ago</div>
+									<div style={{ color: "#929398" }}>Create at: {moment(taskDetailModal?.createdAt).fromNow()}</div>
 									<div style={{ color: "#929398" }}>
-										Update at a few seconds ago
+										Update at:  {moment(taskDetailModal?.updatedAt).fromNow()}
 									</div>
 								</div>
 							</div>

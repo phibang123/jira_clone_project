@@ -12,6 +12,7 @@ import {
 	takeLatest,
 } from "redux-saga/effects";
 
+import { GET_TASK_DETAIL_SAGA } from "../Constants/constants";
 import { Notification } from "../../Utils/Notification/Notification";
 import { STATUS_CODE } from "../../Utils/constants/settingSystem";
 
@@ -44,11 +45,11 @@ function* deleteCommentSaga(action) {
 
   try
   {
- 
+    console.log(action)
     let { data, status } = yield call(() => CommentService.deleteComment(action.id))
    
     yield put({
-      type: GET_ALL_COMMENT_SAGA,
+      type: GET_TASK_DETAIL_SAGA,
       taskId: action.taskId
     })
     Notification("success", "Delete comment success");
@@ -72,6 +73,8 @@ export function * theoDoiDeleteCommentSaga(){
   yield takeLatest(DELETE_COMMENT_SAGA,deleteCommentSaga)
 }
 
+
+
 function*  insertCommentSaga  (action) 
 {
   try
@@ -79,8 +82,8 @@ function*  insertCommentSaga  (action)
     let { comment } = action
     const { data, status } = yield  call(() => CommentService.insertComment(comment))
     yield put({
-      type: GET_ALL_COMMENT_SAGA,
-      taskId: comment.taskId
+      type: GET_TASK_DETAIL_SAGA,
+      taskId: action?.comment.taskId
     })
     Notification("Success", "Success");
   } catch (err)

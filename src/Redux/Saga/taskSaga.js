@@ -71,10 +71,7 @@ function* getTaskDetail(action) {
 			type: GET_TASK_DETAIL,
 			taskDetailModal: data.content,
 		});
-		yield put({
-			type: GET_ALL_COMMENT_SAGA,
-			taskId
-		});
+	
 	} catch (err) {
 		console.log(err);
 		console.log(err.response?.data);
@@ -144,6 +141,7 @@ export function* theoDoiUpdateTaskSaga() {
 //thay đổi task dưa lên reducer
 function* handleChangPostApi(action) {
   
+	console.log(action)
 	let { projectDetail } = yield select((state) => state.projectReducer)
 	
 
@@ -190,7 +188,20 @@ function* handleChangPostApi(action) {
   try
 	{
 			//gọi action làm thay đổi detail modal
-	 
+		if (action.name === "timeTrackingRemaining")
+		{
+			if (action.value === "")
+			{
+				return {...action,value: 0}
+			}	 
+		}
+		else if (action.name === "timeTrackingSpent")
+		{
+			if (action.value === "")
+			{
+				return {...action,value: 0}
+			}	 
+		}
 
 		
 	//Save lại rồi chạy qua UPDATE_TASK_SAGA
@@ -216,10 +227,7 @@ function* handleChangPostApi(action) {
         type: GET_TASK_DETAIL_SAGA,
         taskId: taskUpdateApi.taskId,
 			});
-			yield put({
-        type: GET_ALL_COMMENT_SAGA,
-        taskId: taskUpdateApi.taskId,
-			});
+			
 			
 			
     }

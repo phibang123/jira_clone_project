@@ -25,6 +25,7 @@ const initialState = {
       "timeTrackingSpent": 12,
       "timeTrackingRemaining": 12,
       "typeId": 1,
+      
       "priorityId": 1,
       "projectId": 1290
  
