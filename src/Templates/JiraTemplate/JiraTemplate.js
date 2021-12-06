@@ -1,6 +1,6 @@
 import "../../index.css";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Redirect, Route } from "react-router";
 import { TOKEN_USER, USER_LOGIN } from "../../Utils/constants/settingSystem";
 
@@ -43,7 +43,7 @@ export default function JiraTemplate(props)
 							<div style={{padding: '0px 32px 10px 420px',width: '100%',backgroundColor: '#fffff'}}> <Component  {...propsRoute}/></div>
 							
 							{/* <ModelSearch></ModelSearch> */}
-							<ModelInfo></ModelInfo>
+							<ModelInfo ></ModelInfo>
 				 </div>
 					</>
 				);

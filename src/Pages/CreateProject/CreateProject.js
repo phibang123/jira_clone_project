@@ -88,7 +88,7 @@ export default function CreateProject() {
 					<div className="form-group">
 						<p>Description</p>
 						<Editor
-							apiKey="he1jrx3auj0uyxh2jmf5j7e28dpg3cug4bwpzuatlw3n3ozm"
+							apiKey="yxpqqmnqzrl7wgziqhdogk4zkczzwllqhbsnkx9msyqopftl"
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							name="description"

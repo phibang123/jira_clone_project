@@ -94,6 +94,15 @@ function* getListProjectSaga(action) {
 		}
 	} catch (error) {
 		console.log(error);
+	
+		if (error.response.data.statusCode === 405)
+		{
+			console.log(123)
+			yield put({
+				type: "LOG_OUT"
+			})
+			Notification("error",error.response.data.content)
+		}
 	}
 }
 
@@ -336,6 +345,10 @@ function* getProjectDetail(action) {
 export function* theoDoiGetProjectDetail() {
 	yield takeLatest(GET_PROJECT_DETAIL_API_SAGA, getProjectDetail);
 }
+
+
+
+
 
 //get detail from project saga
 

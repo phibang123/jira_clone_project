@@ -96,7 +96,7 @@ export default function ProjectIssues() {
 			width: 300,
 			dataIndex: "projectName",
 			render: (text, recond, index) => {
-				return <NavLink to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
+				return <span style={{fontSize: '15px',fontWeight: "500"}}>{text}</span>;
 			},
 			key: "projectName",
 			sorter: (item1, item2) => {
@@ -107,28 +107,7 @@ export default function ProjectIssues() {
 				}
 				return 1;
 			},
-			// sorter: (a, b) => a.age - b.age,
-			// sortOrder: sortedInfo.columnKey === 'age' && sortedInfo.order,
-			// ellipsis: true,
 		},
-
-		//tạm thời không lấy derestion
-
-		// {
-		//   title: 'Description',
-		//   dataIndex: 'description',
-		//   key: 'description',
-		//   render: (text, record, index) =>
-		//   {
-		//     // console.log('text',text)
-		//     // console.log('record',record)
-		//     // console.log('index', index)
-		//     let jsxContent = ReactHtmlParser(text)
-		//     return <div>
-		//       {jsxContent}
-		//     </div>
-		//   }
-		// },
 
 		{
 			title: "Category",
@@ -330,20 +309,23 @@ export default function ProjectIssues() {
 				</div>
 			),
 		},
-		// {
-		//   title: 'Address',
-		//   dataIndex: 'address',
-		//   key: 'address',
-		//   filters: [
-		//     { text: 'London', value: 'London' },
-		//     { text: 'New York', value: 'New York' },
-		//   ],
-		//   filteredValue: filteredInfo.address || null,
-		//   onFilter: (value, record) => record.address.includes(value),
-		//   sorter: (a, b) => a.address.length - b.address.length,
-		//   sortOrder: sortedInfo.columnKey === 'address' && sortedInfo.order,
-		//   ellipsis: true,
-		// },
+		{
+			title: "Detail",
+			width: 200,
+			key: "action",
+			render: (text, record, index) => (
+				<div size="middle">
+					<NavLink to={`/projectdetail/${record.id}`}>
+						<button
+							style={{ lineHeight: "50%" }}
+							className="btn p-2 btn-outline-success"
+						>
+							Go to  Detail
+						</button>
+					</NavLink>
+				</div>
+			),
+		},
 	];
 
 	const columnsAssign = [
@@ -361,7 +343,8 @@ export default function ProjectIssues() {
 			width: 300,
 			dataIndex: "projectName",
 			render: (text, recond, index) => {
-				return <NavLink to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
+				return <span style={{fontSize: '15px',fontWeight: "500"}}>{text}</span>
+				
 			},
 			key: "projectName",
 			sorter: (item1, item2) => {
@@ -373,25 +356,6 @@ export default function ProjectIssues() {
 				return 1;
 			},
 		},
-
-		//tạm thời không lấy derestion
-
-		// {
-		//   title: 'Description',
-		//   dataIndex: 'description',
-		//   key: 'description',
-		//   render: (text, record, index) =>
-		//   {
-		//     // console.log('text',text)
-		//     // console.log('record',record)
-		//     // console.log('index', index)
-		//     let jsxContent = ReactHtmlParser(text)
-		//     return <div>
-		//       {jsxContent}
-		//     </div>
-		//   }
-		// },
-
 		{
 			title: "Category",
 			width: 150,
@@ -476,7 +440,7 @@ export default function ProjectIssues() {
 			},
 		},
 		{
-			title: "Action",
+			title: "Leave project",
 			width: 150,
 			key: "action",
 			render: (text, record, index) => (
@@ -484,33 +448,36 @@ export default function ProjectIssues() {
 					<button
 						style={{ lineHeight: "50%" }}
 						className="btn mr-2 btn-outline-danger"
-						// onClick={() => {
-						// 	const action = {
-						// 		type: OPEN_DREWER_EDIT_PROJECT,
-						// 		Component: <FromEditProject></FromEditProject>,
-						// 		title: "Edit Project",
-						// 	};
-						// 	dispatch(action);
-						// 	//dispatch dử liệu dòng hiện tại lên reducer
-						// 	const actionEditProject = {
-						// 		type: EDIT_PROJECT,
-						// 		projectEditDrawer: record,
-						// 	};
-						// 	dispatch(actionEditProject);
-						// }}
-						onClick={() =>
-						{
+						onClick={() => {
 							const actionLeave = {
 								type: "OPEN_MODAL_LEAVE_RPOJECT",
-								ComponentContentModal: <FromLeaveProject record={record}></FromLeaveProject>,
+								ComponentContentModal: (
+									<FromLeaveProject record={record}></FromLeaveProject>
+								),
 								title: "Leave Project",
-							}
+							};
 							dispatch(actionLeave);
 						}}
 					>
 						<i className="fa fa-sign-out-alt"></i>
 					</button>
-
+				</div>
+			),
+		},
+		{
+			title: "Detail",
+			width: 200	,
+			key: "action",
+			render: (text, record, index) => (
+				<div size="middle">
+					<NavLink to={`/projectdetail/${record.id}`}>
+						<button
+							style={{ lineHeight: "50%" }}
+							className="btn p-2 btn-outline-success"
+						>
+							Go to Detail
+						</button>
+					</NavLink>
 				</div>
 			),
 		},

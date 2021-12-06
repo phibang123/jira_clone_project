@@ -93,7 +93,7 @@ export default function ProjectManagement() {
       width: 300,
 			dataIndex: "projectName",
 			render: (text, recond, index) => {
-				return <NavLink  to={`/projectdetail/${recond.id}`}>{text}</NavLink>;
+				return <span style={{fontSize: '15px',fontWeight: "500"}}>{text}</span>;
 			},
 			key: "projectName",
 			sorter: (item1, item2) => {
@@ -298,19 +298,7 @@ export default function ProjectManagement() {
 	return (
 		<div className="container mt-5">
 			<h3>Project Management: { projectList?.length}</h3>
-			<Space style={{ marginBottom: 16 }}>
-				<h6
-					style={{
-						background: "rgb(235, 236, 240)",
-						width: "600px",
-						padding: "10px",
-					}}
-				>
-					<span style={{ color: "red" }}>* </span>Note: here allows you to
-					change, delete, and add members to the project you can click on the
-					project name link to manage your project details more
-				</h6>
-			</Space>
+			
 			<Table
 
 				columns={columns}

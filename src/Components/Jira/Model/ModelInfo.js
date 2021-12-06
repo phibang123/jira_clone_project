@@ -79,7 +79,9 @@ export default function ModelInfo() {
 	const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
 	const { projectDetail } = useSelector((state) => state.projectReducer);
 	const { userLogin } = useSelector((state) => state.userReducer);
-  
+
+	console.log(taskDetailModal, "taskDetailModal");
+
 	//useState
 	const [visibleEditor, setVisibleEditor] = useState(false);
 	const [visibleInput, setVisibleInput] = useState(false);
@@ -88,14 +90,14 @@ export default function ModelInfo() {
 	);
 
 	const [content, setContent] = useState(taskDetailModal.description);
-	const [originalEstimate, setOriginalEstimate] = useState({number: 0});
+	const [originalEstimate, setOriginalEstimate] = useState({ number: 0 });
 	const [comment, setComment] = React.useState({
 		submitting: false,
 		value: "",
 	});
 
 	//function
-  
+
 	useEffect(() => {
 		dispatch({
 			type: GET_ALL_STATUS_API_SAGA,
@@ -107,13 +109,13 @@ export default function ModelInfo() {
 			type: GELL_ALL_TASK_TYPE_SAGA,
 		});
 	}, []);
-  //console.log(taskDetailModal)
+	//console.log(taskDetailModal)
 	//comment
 	const actions = (com) => {
 		return [
 			<Tooltip key="comment-basic-dislike">
 				<span
-					style={{ color: "red" ,marginRight: '20px'}}
+					style={{ color: "red", marginRight: "20px" }}
 					onClick={() => {
 						dispatch({
 							type: DELETE_COMMENT_SAGA,
@@ -124,13 +126,8 @@ export default function ModelInfo() {
 				>
 					<span className="comment-action">Delete</span>
 				</span>
-				<span className="ml-2">
-             {moment(com.createdAt).fromNow()}
-				</span>
-				<span
-					style={{ color: "blue" }}
-				>
-				</span> 
+				<span className="ml-2">{moment(com.createdAt).fromNow()}</span>
+				<span style={{ color: "blue" }}></span>
 			</Tooltip>,
 		];
 	};
@@ -141,8 +138,7 @@ export default function ModelInfo() {
 				{visibleEditor ? (
 					<div className="m-2">
 						<Editor
-							apiKey="he1jrx3auj0uyxh2jmf5j7e28dpg3cug4bwpzuatlw3n3ozm"
-							
+							apiKey="yxpqqmnqzrl7wgziqhdogk4zkczzwllqhbsnkx9msyqopftl"
 							// onChange={handleChange}
 							// onBlur={handleBlur}
 							name="description"
@@ -189,7 +185,11 @@ export default function ModelInfo() {
 					</div>
 				) : (
 					<div
-					style={{background: 'rgb(235, 236, 240)' ,padding: '20px',transform: 'translate 2s all'}}
+						style={{
+							background: "rgb(235, 236, 240)",
+							padding: "20px",
+							transform: "translate 2s all",
+						}}
 						className="mt-3 mb-3"
 						onClick={() => {
 							setVisibleEditor(!visibleEditor);
@@ -266,15 +266,15 @@ export default function ModelInfo() {
 					<div className="col-6">
 						<input
 							className="form-control"
-							value={Number(timeTrackingRemaining) + Number(originalEstimate.number)}
+							value={
+								Number(timeTrackingRemaining) + Number(originalEstimate.number)
+							}
 							onChange={(e) => {
 								console.log(e);
 								handleChanges(e);
 							}}
-						
 							name="timeTrackingRemaining"
 						></input>
-					
 					</div>
 				</div>
 			</div>
@@ -290,7 +290,7 @@ export default function ModelInfo() {
 		setComment({
 			submitting: true,
 		});
-		
+
 		setTimeout(() => {
 			setComment({
 				submitting: false,
@@ -303,7 +303,6 @@ export default function ModelInfo() {
 					contentComment: comment.value,
 				},
 			});
-		
 		}, 1000);
 	};
 	const handleChangeInput = (e) => {
@@ -388,6 +387,15 @@ export default function ModelInfo() {
 						<div className="container-fluid">
 							<div className="row">
 								<div className="col-8">
+									<h6
+										style={{
+											marginTop: "0",
+											color: "rgba(0, 0, 0, 0.85)",
+											fontWeight: "500",
+										}}
+									>
+										Task name:
+									</h6>
 									<h2
 										style={{
 											fontWeight: "500",
@@ -406,7 +414,7 @@ export default function ModelInfo() {
 												fontWeight: "500",
 											}}
 										>
-											Description
+											Description:
 										</h6>
 										{renderDescription()}
 									</div>
@@ -443,25 +451,49 @@ export default function ModelInfo() {
 													<Comment
 														key={index}
 														actions={actions(comment)}
-														author={userLogin?.id !== comment?.idUser ? <span style={{fontSize: "15px", fontWeight: "500"}}>{comment?.name}</span>  : <span style={{fontSize: "15px", fontWeight: "500"}}>You</span> }
+														author={
+															userLogin?.id !== comment?.idUser ? (
+																<span
+																	style={{
+																		fontSize: "15px",
+																		fontWeight: "500",
+																	}}
+																>
+																	{comment?.name}
+																</span>
+															) : (
+																<span
+																	style={{
+																		fontSize: "15px",
+																		fontWeight: "500",
+																	}}
+																>
+																	You
+																</span>
+															)
+														}
 														avatar={
 															<Avatar
 																src={comment?.avatar}
 																alt={comment?.name}
-																style={{marginTop: "5px"}}
+																style={{ marginTop: "5px" }}
 															/>
 														}
-														
 														content={
-
-															<div className="w-100"><p style={{
-																borderRadius: "5px",
-																color: "rgba(0, 0, 0, 0.85)",
-																fontWeight: "500",
-																padding: "10px",
-																maxWidth: "fit-content",
-																backgroundColor: 'rgb(235, 236, 240)'
-															}}>{comment.commentContent }</p></div>
+															<div className="w-100">
+																<p
+																	style={{
+																		borderRadius: "5px",
+																		color: "rgba(0, 0, 0, 0.85)",
+																		fontWeight: "500",
+																		padding: "10px",
+																		maxWidth: "fit-content",
+																		backgroundColor: "rgb(235, 236, 240)",
+																	}}
+																>
+																	{comment.commentContent}
+																</p>
+															</div>
 														}
 													/>
 												);
@@ -480,7 +512,6 @@ export default function ModelInfo() {
 											value={taskDetailModal.statusId}
 											onChange={(e) => {
 												handleChanges(e);
-									
 											}}
 										>
 											{arrStatus?.map((status, index) => {
@@ -544,6 +575,7 @@ export default function ModelInfo() {
 											<div className="col-6 mt-2 mb-2">
 												<Select
 													showSearch
+													className="custom-select"
 													options={projectDetail.members
 														?.filter((mem) => {
 															let index = taskDetailModal.assigness?.findIndex(
@@ -560,7 +592,7 @@ export default function ModelInfo() {
 														})}
 													optionFilterProp="label"
 													style={{ width: "100%" }}
-													value="Select User"
+													value="Add User"
 													name="lstUser"
 													onSelect={(value) => {
 														//nom nha là nó sẻ tìm thằng mà mình đã click vào
@@ -607,14 +639,34 @@ export default function ModelInfo() {
 											})}
 										</select>
 									</div>
-								
+
 									<div className="time-tracking">
 										<h6>TIME TRACKING</h6>
 										{renderTimeTracking()}
 									</div>
-									<div style={{ color: "#929398" }}>Create at: {moment(taskDetailModal?.createdAt).fromNow()}</div>
+									<div className="time-tracking">
+										<h6>Original Estimate</h6>
+										<input
+											className="form-control "
+											name="timeTrackingSpent"
+											
+											// onChange={(e) => {
+											// 	handleChanges(e);
+											// }}
+										></input>
+									</div>
 									<div style={{ color: "#929398" }}>
-										Update at:  {moment(taskDetailModal?.updatedAt).fromNow()}
+										Create at: {moment(taskDetailModal?.createdAt).fromNow()}
+									</div>
+									<div style={{ color: "#929398" }}>
+										Update at: {moment(taskDetailModal?.updatedAt).fromNow()}
+									</div>
+									<div style={{ color: "#929398" }}>
+										Day done: { moment(taskDetailModal?.createdAt).add(taskDetailModal?.originalEstimate, 'hours').format('MMMM Do YYYY, h:mm:ss a') }
+									</div>
+								
+									<div style={{ color: "#929398" }}>
+									  { Number((moment(taskDetailModal?.createdAt).add(taskDetailModal?.originalEstimate, 'hours').valueOf() - moment().valueOf()) / 3600000).toFixed(0)}
 									</div>
 								</div>
 							</div>

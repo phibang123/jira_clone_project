@@ -1,4 +1,8 @@
-import { GET_PROJECT_DETAIL_API_SAGA, GET_TASK_DETAIL_SAGA } from "../../../Redux/Constants/constants";
+import {
+	GET_PROJECT_DETAIL_API_SAGA,
+	GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
+	GET_TASK_DETAIL_SAGA,
+} from "../../../Redux/Constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 
 import { DownCircleOutlined } from "@ant-design/icons";
@@ -16,9 +20,8 @@ export default function InfoMain(props) {
 
 	const dispatch = useDispatch();
 	const { projectDetail, TaskMyIssues, projectId } = props;
-	const classMyTask =  TaskMyIssues === true ? 'btn-warning': 'btn-outline-warning'
-	
-
+	const classMyTask =
+		TaskMyIssues === true ? "btn-warning" : "btn-outline-warning";
 
 	const renderAvatar = () => {
 		return projectDetail.members?.map((user, index) => {
@@ -36,7 +39,6 @@ export default function InfoMain(props) {
 	return (
 		<div>
 			<div className="d-lex justify-content-center">
-
 				<span style={{ fontSize: "28px", fontWeight: "700" }} className="mb-3">
 					{projectDetail.projectName}
 				</span>
@@ -58,7 +60,7 @@ export default function InfoMain(props) {
 						value={value}
 						dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
 						placeholder="Please select"
-						allowClear	
+						allowClear
 						treeDefaultExpandAll
 						onChange={onChange}
 					>
@@ -73,7 +75,6 @@ export default function InfoMain(props) {
 										{status?.lstTaskDeTail.map((taskDetail, index) => {
 											return (
 												<TreeNode
-											
 													onClick={() => {
 														dispatch({
 															type: GET_TASK_DETAIL_SAGA,
@@ -84,7 +85,6 @@ export default function InfoMain(props) {
 															taskId: taskDetail.taskId,
 														});
 													}}
-												
 													data-toggle="modal"
 													data-target="#infoModal"
 													key={index.index}
@@ -116,23 +116,31 @@ export default function InfoMain(props) {
 				<div className="avatar-group" style={{ display: "flex" }}>
 					{renderAvatar()}
 				</div>
-				<button className={`btn ml-3 ${classMyTask}`} onClick={() =>
-				{
-					dispatch({
-						type: "TASK_MY_ISSUES",
-						myId: id
-					})
-				}} >
-					Only My Issues
+				<button
+					className={`btn ml-3 ${classMyTask}`}
+					onClick={() => {
+						TaskMyIssues
+							? dispatch({
+									type: GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
+									projectId,
+							  })
+							: dispatch({
+									type: "TASK_MY_ISSUES",
+									myId: id,
+							  });
+					}}
+				>
+					{TaskMyIssues ?	 "Get All Task" : "Only My Issues " }
 				</button>
-				<button className='btn btn-dark ml-3'   onClick={() =>
-				{
-				
-					dispatch({
-						type: GET_PROJECT_DETAIL_API_SAGA,
-						projectId
-					})
-				}}>
+				<button
+					className="btn btn-dark ml-3"
+					onClick={() => {
+						dispatch({
+							type: GET_PROJECT_DETAIL_API_SAGA,
+							projectId,
+						});
+					}}
+				>
 					Reload Project
 				</button>
 			</div>

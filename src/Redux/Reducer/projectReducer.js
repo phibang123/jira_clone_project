@@ -1,4 +1,4 @@
-import { EDIT_PROJECT, GET_PROJECT_DETAIL_API } from "../Constants/constants"
+import { EDIT_PROJECT, GET_PROJECT_DETAIL_API, GET_PROJECT_DETAIL_API_SAGA_NOLOADING } from "../Constants/constants"
 
 import { Notification } from "../../Utils/Notification/Notification";
 import _ from "lodash";
@@ -234,7 +234,11 @@ export const projectReducer = (state = initialState, action) => {
       //console.log(state.projectDetail.lstTask[3]?.lstTaskDeTail,'3');
       state.TaskMyIssues = true
       return {...state}
-      }
+    }
+    case GET_PROJECT_DETAIL_API_SAGA_NOLOADING: {
+      state.TaskMyIssues = false
+      return {...state}
+    } 
   default:
     return state
   }
