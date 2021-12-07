@@ -91,6 +91,7 @@ export default function SideBarJira()
 					backgroundColor: "#87AAAA",
 					position: "fixed",
 					height: "100%",
+					maxWidth: "65px"
 				}}
 				collapsed={collapsed}
 				onCollapse={onCollapse}
@@ -101,7 +102,6 @@ export default function SideBarJira()
 						src={logo}
 						style={{
 							width: "100%",
-
 							borderRadius: "50%",
 							backgroundPosition: "center",
 						}}

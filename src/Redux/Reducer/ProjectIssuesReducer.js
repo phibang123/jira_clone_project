@@ -7,7 +7,8 @@ const initialState = {
     description: '<p className="text-red">bas</p>'
    }*/],
 
-  projectAssign: []
+  projectAssign: [],
+  projectUserAddTask: []
 }
 
 export const ProjectIssuesReducer = (state = initialState,action) => {
@@ -17,8 +18,11 @@ export const ProjectIssuesReducer = (state = initialState,action) => {
       state.projectList = action.projectListIssues
 
       state.projectAssign = action.projectAssign
+      state.projectUserAddTask = action.projectListIssues
+      state.projectUserAddTask = state.projectUserAddTask.concat(action.projectAssign)
      
 
+      console.log(state.projectUserAddTask)
       return {...state}
   }
  

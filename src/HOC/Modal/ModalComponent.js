@@ -5,19 +5,22 @@ import React from 'react'
 
 export default function ModalComponent()
 {
-  const {visible,ComponentContentModal,callBackSubmit,title} = useSelector(state => state.ModalReducer)
+  const {visible,ComponentContentModal,callBackSubmit,title,cancel,width} = useSelector(state => state.ModalReducer)
   const dispatch = useDispatch()
   const [confirmLoading, setConfirmLoading] = React.useState(false);
- 
+  console.log(width)
   
 
   
   const handleOk = () => {
     
     setConfirmLoading(true);
-    setTimeout(() => {
-      callBackSubmit()
-      setConfirmLoading(false);
+    setTimeout(async() => {
+      await callBackSubmit()
+      await setConfirmLoading(false);
+      dispatch({
+        type: "CLOSE_MODAL"
+     });
     }, 2000);
    
   };
@@ -26,6 +29,7 @@ export default function ModalComponent()
     dispatch({
        type: "CLOSE_MODAL"
     });
+    cancel()
   };
   return (
     <div>
@@ -35,9 +39,9 @@ export default function ModalComponent()
         title={title}
         style={{top: '30px'}}
         visible={visible}
-        width={900}
+        width={width}
        
-        maskStyle={{ backgroundColor: "#87AAAA" }}
+        
         okType={'primary'}
         onOk={handleOk}
         confirmLoading={confirmLoading}

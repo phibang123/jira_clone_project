@@ -1,5 +1,6 @@
+import React, { useEffect } from "react";
+
 import { AntDesignOutlined } from "@ant-design/icons";
-import React from "react";
 import angular from "../../../Assets/Img/icons/angularjs.png";
 import bangbang from "../../../Assets/Img/Avatar/bangbang.jpg";
 import bootstrap from "../../../Assets/Img/icons/bootstrap.png";
@@ -15,9 +16,18 @@ import reactjs from "../../../Assets/Img/icons/react.png";
 import tailwind from "../../../Assets/Img/icons/tailwind.png";
 import typescript from "../../../Assets/Img/icons/typescript.png";
 import udemi from "../../../Assets/Img/icons/udemy.png";
+import { useDispatch } from "react-redux";
 import youtube from "../../../Assets/Img/icons/youtube.png";
 
-export default function FromAboutJira() {
+export default function FromAboutJira()
+{
+	const dispatch = useDispatch()
+  useEffect(() => {
+		dispatch({
+			type: "SET_NONE",
+			
+		});
+	}, []);
 	return (
 		<div className="row py-5" style={{ backgroundColor: "#e2e8f0" }}>
 			<div className="col-6 ">

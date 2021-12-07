@@ -40,17 +40,17 @@ export default function InfoMain(props) {
 		<div>
 			<div className="d-lex justify-content-center">
 				<span style={{ fontSize: "28px", fontWeight: "700" }} className="mb-3">
-					{projectDetail.projectName}
+					{projectDetail?.projectName}
 				</span>
 				<span
 					className="p-2 ml-5"
 					style={{ backgroundColor: "#EBECF0", borderRadius: "5px" }}
 				>
-					Creator: {projectDetail.creator.name}
+					Creator: {projectDetail?.creator?.name}
 				</span>
 			</div>
 			<section style={{ marginTop: "15px", marginBottom: "15px" }}>
-				{ReactHtmlParser(projectDetail.description)}
+				{ReactHtmlParser(projectDetail?.description)}
 			</section>
 			<div className="info" style={{ display: "flex" }}>
 				<div className="search-block">

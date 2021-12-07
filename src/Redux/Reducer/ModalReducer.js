@@ -15,7 +15,11 @@ const initialState = {
   
     
   },
-	title:''
+  width: 500,
+  title: '',
+  cancel: () => {
+  
+  }
 };
 
 export const ModalReducer = (state = initialState, action) => {
@@ -33,27 +37,40 @@ export const ModalReducer = (state = initialState, action) => {
     
     case 'OPEN_MODAL_CREATE_TASK': {
     
-      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title };
+      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title,width: 900 };
       
     }
     case 'OPEN_MODAL_LEAVE_RPOJECT': {
     
-      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title };
+      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title,width: 500  };
+      
+    }
+    case 'OPEN_MODAL_CONFIRM_TASK': {
+     
+      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title,width: 500  };
       
     }
     case 'OPEN_MODAL_ABOUT_JIRA': {
     
-      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal, title: action.title,callBackSubmit: action.callBackSubmit };
+      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal,cancel: ()=>{}, title: action.title,callBackSubmit: action.callBackSubmit  };
       
     }
-  
+      
+    case 'SET_NONE': {
+      
+      return {...state,callBackSubmit:  ()=>{},cancel: ()=>{} ,width: 900}
+    }
     case 'SET_SUBMIT_CREATE_TASK': {
       
-      return {...state,callBackSubmit: action.submitFunction}
+      return {...state,callBackSubmit: action.submitFunction,cancel: ()=>{},width: 900}
     }
     case 'SET_LEAVE_PROJECT': {
       
-      return {...state,callBackSubmit: action.Function}
+      return {...state,callBackSubmit: action.Function,cancel: ()=>{} ,width: 500}
+    }
+    case 'SET_DONE_TASK': {
+      
+      return {...state,callBackSubmit: action.Function,cancel: action.cancel ,width: 500}
     }
 		default:
 			return state;

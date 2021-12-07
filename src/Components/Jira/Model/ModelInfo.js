@@ -4,9 +4,11 @@ import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
 	BugOutlined,
+	CloseOutlined,
 	DeleteOutlined,
 	FileTextOutlined,
 	MinusOutlined,
+	PaperClipOutlined,
 	VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
 import {
@@ -45,10 +47,12 @@ import ReactHtmlParser from "react-html-parser";
 import { Select } from "antd";
 import { USER_LOGIN } from "../../../Utils/constants/settingSystem";
 import moment from "moment-timezone";
+import newTask from "../../../Assets/Img/taskType/task.png";
 import { useFormik } from "formik";
 
 const { TextArea } = Input;
-const Editors = ({ onChange, onSubmit, submitting, value }) => (
+const { Option } = Select;
+const Editors = ({ onChange, onSubmit, submitting, value, close }) => (
 	<>
 		<Form.Item>
 			<TextArea rows={4} onChange={onChange} value={value} />
@@ -61,6 +65,9 @@ const Editors = ({ onChange, onSubmit, submitting, value }) => (
 				type="primary"
 			>
 				Add Comment
+			</Button>
+			<Button className="ml-2" onClick={close} type="danger">
+				Close
 			</Button>
 		</Form.Item>
 	</>
@@ -79,8 +86,6 @@ export default function ModelInfo() {
 	const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
 	const { projectDetail } = useSelector((state) => state.projectReducer);
 	const { userLogin } = useSelector((state) => state.userReducer);
-
-	console.log(taskDetailModal, "taskDetailModal");
 
 	//useState
 	const [visibleEditor, setVisibleEditor] = useState(false);
@@ -166,6 +171,7 @@ export default function ModelInfo() {
 								dispatch({
 									type: CHANGE_TASK_MODAL_API_SAGA,
 									actionType: CHANGE_TASK_MODAL_API,
+									auth: taskDetailModal?.userReporter?.userId,
 									name: "description",
 									value: content,
 								});
@@ -207,6 +213,7 @@ export default function ModelInfo() {
 		dispatch({
 			type: CHANGE_TASK_MODAL_API_SAGA,
 			actionType: CHANGE_TASK_MODAL_API,
+			auth: taskDetailModal?.userReporter?.userId,
 			name,
 			value,
 		});
@@ -325,24 +332,9 @@ export default function ModelInfo() {
 			<div className="modal-dialog modal-info">
 				<div className="modal-content">
 					<div className="modal-header">
-						<div className="task-title d-flex align-items-baseline">
-							<p>
-								{taskDetailModal.typeId === 1 ? (
-									<BugOutlined
-										style={{ color: "blue", fontSize: "16px", margin: "3px" }}
-									/>
-								) : (
-									<FileTextOutlined
-										style={{
-											color: "#146870",
-											fontSize: "16px",
-											margin: "3px",
-										}}
-									/>
-								)}
-							</p>
+						<div className="task-title d-flex align-items-center">
 							<select
-								className="form-control"
+								className=" custom-select"
 								onChange={handleChanges}
 								name="typeId"
 								value={taskDetailModal.typeId}
@@ -355,10 +347,34 @@ export default function ModelInfo() {
 									);
 								})}
 							</select>
+							<span className="ml-2">
+								{taskDetailModal.typeId == 1 ? (
+									<BugOutlined
+										style={{ color: "blue", fontSize: "16px", margin: "3px" }}
+									/>
+								) : taskDetailModal.typeId == 3 ? (
+									<FileTextOutlined
+										style={{
+											color: "#146870",
+											fontSize: "16px",
+											margin: "3px",
+										}}
+									/>
+								) : (
+									<PaperClipOutlined
+										style={{
+											color: "#6aba3c",
+											fontSize: "16px",
+											margin: "3px",
+										}}
+									/>
+								)}
+							</span>
 						</div>
 
 						<div style={{ display: "flex" }} className="task-click">
-							<Button
+							<button
+								type="button"
 								onClick={() => {
 									dispatch({
 										type: DELETE_TASK_API_SAGA,
@@ -366,11 +382,13 @@ export default function ModelInfo() {
 										projectId: taskDetailModal.projectId,
 									});
 								}}
-								data-toggle="modal"
-								data-target="#infoModal"
-								style={{ outline: "none", border: "none" }}
-								icon={<DeleteOutlined />}
-							></Button>
+								style={{ outline: "none" }}
+								className="close"
+								data-dismiss="modal"
+								aria-label="Close"
+							>
+								<DeleteOutlined style={{ color: "#000000" }} />
+							</button>
 
 							<button
 								type="button"
@@ -379,7 +397,7 @@ export default function ModelInfo() {
 								data-dismiss="modal"
 								aria-label="Close"
 							>
-								<span aria-hidden="true">×</span>
+								<CloseOutlined style={{ color: "#000000" }} />
 							</button>
 						</div>
 					</div>
@@ -428,9 +446,14 @@ export default function ModelInfo() {
 														content={
 															<Editors
 																onChange={handleChangeInput}
-																onSubmit={handleSubmit}
+																onSubmit={async () => {
+																	await handleSubmit();
+																}}
 																submitting={comment.submitting}
 																value={comment.value}
+																close={() => {
+																	setVisibleInput(!visibleInput);
+																}}
 															/>
 														}
 													/>
@@ -507,7 +530,7 @@ export default function ModelInfo() {
 
 										{/* map select status */}
 										<select
-											className="custom-select"
+											className="custom-select mb-3"
 											name="statusId"
 											value={taskDetailModal.statusId}
 											onChange={(e) => {
@@ -522,6 +545,24 @@ export default function ModelInfo() {
 												);
 											})}
 										</select>
+									</div>
+									<div className="reportor mb-3">
+										<h6>REPORTER</h6>
+										<div style={{ display: "flex" }} className="item">
+											<div className="avatar">
+												 <img src={taskDetailModal?.userReporter?.avatar} alt={taskDetailModal?.userReporter?.userId} /> 
+											</div>
+											<p
+												style={{
+													overflow: "hidden",
+													textOverflow: "ellipsis",
+												
+												}}
+												className="name mt-1 ml-1"
+											>
+												{taskDetailModal?.userReporter?.name}
+											</p>
+										</div>
 									</div>
 									<div className="assignees">
 										<h6>ASSIGNEES</h6>
@@ -541,7 +582,7 @@ export default function ModelInfo() {
 															style={{
 																overflow: "hidden",
 																textOverflow: "ellipsis",
-																width: "50px",
+													
 															}}
 															className="name mt-1 ml-1"
 														>
@@ -552,6 +593,7 @@ export default function ModelInfo() {
 															onClick={() => {
 																dispatch({
 																	type: CHANGE_TASK_MODAL_API_SAGA,
+																	auth: taskDetailModal?.userReporter?.userId,
 																	actionType: REMAVE_USER_ASSIGN,
 																	userId: user.id,
 																});
@@ -575,7 +617,8 @@ export default function ModelInfo() {
 											<div className="col-6 mt-2 mb-2">
 												<Select
 													showSearch
-													className="custom-select"
+											
+													
 													options={projectDetail.members
 														?.filter((mem) => {
 															let index = taskDetailModal.assigness?.findIndex(
@@ -612,6 +655,7 @@ export default function ModelInfo() {
 
 														dispatch({
 															type: CHANGE_TASK_MODAL_API_SAGA,
+															auth: taskDetailModal?.userReporter?.userId,
 															actionType: CHANGE_ASSIGNESS,
 															userSelected,
 														});
@@ -625,7 +669,7 @@ export default function ModelInfo() {
 
 										{/* map select prioryti */}
 										<select
-											className="form-control"
+											className="custom-select"
 											name="priorityId"
 											value={taskDetailModal.priorityId}
 											onChange={handleChanges}
@@ -645,11 +689,11 @@ export default function ModelInfo() {
 										{renderTimeTracking()}
 									</div>
 									<div className="time-tracking">
-										<h6>Original Estimate</h6>
+										<h6>Original Estimate(h):</h6>
 										<input
-											className="form-control "
+											className="custom-select"
 											name="timeTrackingSpent"
-											
+											value={Number(taskDetailModal?.originalEstimate)}
 											// onChange={(e) => {
 											// 	handleChanges(e);
 											// }}
@@ -662,11 +706,20 @@ export default function ModelInfo() {
 										Update at: {moment(taskDetailModal?.updatedAt).fromNow()}
 									</div>
 									<div style={{ color: "#929398" }}>
-										Day done: { moment(taskDetailModal?.createdAt).add(taskDetailModal?.originalEstimate, 'hours').format('MMMM Do YYYY, h:mm:ss a') }
+										Day done:{" "}
+										{moment(taskDetailModal?.createdAt)
+											.add(taskDetailModal?.originalEstimate, "hours")
+											.format("MMMM Do YYYY, h:mm:ss a")}
 									</div>
-								
+
 									<div style={{ color: "#929398" }}>
-									  { Number((moment(taskDetailModal?.createdAt).add(taskDetailModal?.originalEstimate, 'hours').valueOf() - moment().valueOf()) / 3600000).toFixed(0)}
+										{Number(
+											(moment(taskDetailModal?.createdAt)
+												.add(taskDetailModal?.originalEstimate, "hours")
+												.valueOf() -
+												moment().valueOf()) /
+												3600000
+										).toFixed(0)}
 									</div>
 								</div>
 							</div>

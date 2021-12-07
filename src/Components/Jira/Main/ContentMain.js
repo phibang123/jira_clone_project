@@ -4,9 +4,16 @@ import {
 	BugOutlined,
 	FileTextOutlined,
 	MinusOutlined,
+	PaperClipOutlined,
+	SwapOutlined,
 	VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
-import { CHANGE_TASK_MODAL_API, GET_TASK_DETAIL_SAGA, UPDATE_TASK_STATUS_REDUCER_TEXT, UPDATE_TASK_STATUS_SAGA_TEXT } from "../../../Redux/Constants/constants";
+import {
+	CHANGE_TASK_MODAL_API,
+	GET_TASK_DETAIL_SAGA,
+	UPDATE_TASK_STATUS_REDUCER_TEXT,
+	UPDATE_TASK_STATUS_SAGA_TEXT,
+} from "../../../Redux/Constants/constants";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,34 +23,46 @@ export default function ContentMain(props) {
 	const { projectDetail } = props;
 	//const {projectDetail} = useSelector(state => state.projectReducer)
 	const dispatch = useDispatch();
- 
-	const handleDragEnd = (result) =>
-	{
-		let{projectId,taskId,taskDetail} = JSON.parse(result.draggableId)  //vì ở dướ chỉ sổ ra chuỗi mà mình muốn đưa ra 1 object nên chúng ta phải làm vậy
-		
 
-		let {source,destination} = result
+	const handleDragEnd = (result) => {
+		let { projectId, taskId, taskDetail } = JSON.parse(result.draggableId); //vì ở dướ chỉ sổ ra chuỗi mà mình muốn đưa ra 1 object nên chúng ta phải làm vậy
+
+		let { source, destination } = result;
 		///gọi api cập nhập lại status
-		if (!destination)
-		{
-			return
+		if (!destination) {
+			return;
+		} else if (
+			destination.index === source.index &&
+			destination.droppableId === source.droppableId
+		) {
+			return;
 		}
-		else if (destination.index === source.index && destination.droppableId === source.droppableId)
-		{
-			return 
-		}
+		// if (destination.droppableId === "4") {
+		// 	const actionLeave = {
+		// 		type: "OPEN_MODAL_CONFIRM_TASK",
+		// 		ComponentContentModal: (
+		// 			<FromConfirmTask
+						
+		// 			></FromConfirmTask>
+		// 		),
+		// 		title: "Confirm task done",
+		// 	};
+		// 	dispatch(actionLeave);
+		// } 
+			dispatch({
+				type: UPDATE_TASK_STATUS_SAGA_TEXT,
+				actionType: CHANGE_TASK_MODAL_API,
+
+				taskUpdateStatus: {
+					taskId: taskId,
+
+					statusId: destination.droppableId,
+					projectId: projectId,
+					statusOld: source.droppableId,
+					taskDetail: taskDetail,
+				},
+			});
 	
-		dispatch({
-			type: UPDATE_TASK_STATUS_SAGA_TEXT,
-			actionType: CHANGE_TASK_MODAL_API,
-			taskUpdateStatus: {
-				"taskId": taskId,
-				"statusId": destination.droppableId,
-				"projectId": projectId,
-				"statusOld": source.droppableId,
-				"taskDetail": taskDetail,
-			}
-		})
 	};
 	const renderCardTaskList = () => {
 		return (
@@ -54,7 +73,6 @@ export default function ContentMain(props) {
 							{(provider) => {
 								return (
 									<div
-							
 										className="card"
 										style={{
 											width: "17rem",
@@ -67,10 +85,10 @@ export default function ContentMain(props) {
 											{taskListDetail.lstTaskDeTail.length})
 										</div>
 										<div
-												ref={provider.innerRef}
-												{...provider.droppableProps}
+											ref={provider.innerRef}
+											{...provider.droppableProps}
 											key={index}
-											style={{height: '100%'}}
+											style={{ height: "100%" }}
 											className="list-group list-group-flush"
 										>
 											{taskListDetail.lstTaskDeTail.map((task, index) => {
@@ -78,7 +96,11 @@ export default function ContentMain(props) {
 													<Draggable
 														key={task.taskId.toString()}
 														index={index}
-														draggableId={JSON.stringify({projectId: task.projectId,taskId: task.taskId,taskDetail: task})}
+														draggableId={JSON.stringify({
+															projectId: task.projectId,
+															taskId: task.taskId,
+															taskDetail: task,
+														})}
 													>
 														{(provider) => {
 															return (
@@ -91,7 +113,7 @@ export default function ContentMain(props) {
 																		dispatch({
 																			type: GET_TASK_DETAIL_SAGA,
 																			taskId: task.taskId,
-																		});													
+																		});
 																	}}
 																	className="list-group-item"
 																	data-toggle="modal"
@@ -102,7 +124,11 @@ export default function ContentMain(props) {
 																	</p>
 																	<div
 																		className="block"
-																		style={{ display: "flex",alignItems:'center',justifyContent: 'space-between;' }}
+																		style={{
+																			display: "flex",
+																			alignItems: "center",
+																			justifyContent: "space-between",
+																		}}
 																	>
 																		<div className="block-left d-flex">
 																			<span>
@@ -117,7 +143,12 @@ export default function ContentMain(props) {
 																					/>
 																				) : task.priorityTask.priority ===
 																				  "Medium" ? (
-																					<MinusOutlined />
+																					<SwapOutlined
+																						style={{
+																							fontSize: "16px",
+																							margin: "3px",
+																						}}
+																					/>
 																				) : task.priorityTask.priority ===
 																				  "Low" ? (
 																					<ArrowDownOutlined
@@ -142,7 +173,7 @@ export default function ContentMain(props) {
 																			</span>
 																			<span>
 																				{task.taskTypeDetail.taskType ===
-																				"bug" ? (
+																				"BUG" ? (
 																					<BugOutlined
 																						style={{
 																							color: "blue",
@@ -150,7 +181,8 @@ export default function ContentMain(props) {
 																							margin: "3px",
 																						}}
 																					/>
-																				) : (
+																				) : task.taskTypeDetail.taskType ===
+																				  "TASK" ? (
 																					<FileTextOutlined
 																						style={{
 																							color: "#146870",
@@ -158,7 +190,27 @@ export default function ContentMain(props) {
 																							margin: "3px",
 																						}}
 																					/>
+																				) : (
+																					<PaperClipOutlined
+																						style={{
+																							color: "#6aba3c",
+																							fontSize: "16px",
+																							margin: "3px",
+																						}}
+																					/>
 																				)}
+																			</span>
+																			<span>
+																				<img
+																					style={{
+																						margin: "3px",
+																						width: "20px",
+																						height: "20px",
+																						borderRadius: "50%",
+																					}}
+																					alt={task?.userReporter?.avatar}
+																					src={task?.userReporter?.avatar}
+																				></img>
 																			</span>
 																			{/* <i className="fa fa-bookmark" />
 												<i className="fa fa-arrow-up" /> */}
@@ -166,13 +218,20 @@ export default function ContentMain(props) {
 																		<div className="block-right">
 																			<div
 																				className="avatar-group"
-																				style={{ display: "flex",flexWrap: 'wrap',justifyContent:'end' }}
+																				style={{
+																					display: "flex",
+																					flexWrap: "wrap",
+																					justifyContent: "end",
+																				}}
 																			>
 																				{task.assigness?.map((mem, index) => {
 																					return (
 																						<div key={index} className="avatar">
 																							<img
-																								style={{width: '30px',height: '30px'}}
+																								style={{
+																									width: "30px",
+																									height: "30px",
+																								}}
 																								src={mem.avatar}
 																								alt={mem.avatar}
 																							/>
@@ -192,7 +251,6 @@ export default function ContentMain(props) {
 											{/* <li className="list-group-item">Vestibulum at eros</li> */}
 											{provider.placeholder}
 										</div>
-									
 									</div>
 								);
 							}}

@@ -52,6 +52,7 @@ export function* rootSaga() {
 		userSaga.theoDoiEditUserSaga(),
 		userSaga.theoDoiLogOutSaga(),
 		projectSaga.theoDoiGetListProjectIssuesSaga(),
-		projectSaga.theoDoiPostUserLeaveProject()
+		projectSaga.theoDoiPostUserLeaveProject(),
+		taskSaga.theoDoiUpdateTaskStatusDoneSaga()
     ]);
 }
