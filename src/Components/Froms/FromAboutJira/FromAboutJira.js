@@ -24,8 +24,7 @@ export default function FromAboutJira()
 	const dispatch = useDispatch()
   useEffect(() => {
 		dispatch({
-			type: "SET_NONE",
-			
+			type: "SET_NONE",		
 		});
 	}, []);
 	return (

@@ -136,7 +136,7 @@ export default function ProjectIssues() {
 								<Popover
 									key={index}
 									placement="top"
-									title="members"
+									title="Members"
 									content={() => {
 										return (
 											<table className="table">
@@ -398,7 +398,7 @@ export default function ProjectIssues() {
 								<Popover
 									key={index}
 									placement="top"
-									title="members"
+									title="Members"
 									content={() => {
 										return (
 											<table className="table">
@@ -484,7 +484,7 @@ export default function ProjectIssues() {
 	];
 	return (
 		<div className="container mt-5">
-			<h3>Project Issues: {projectList?.length}</h3>
+			<h3> { projectList?.length === 0 ? "You don't have project, please create project" : "Project Issues: " + projectList?.length}</h3>
 			<Space style={{ marginBottom: 16 }}>
 				<h6
 					style={{
@@ -507,7 +507,7 @@ export default function ProjectIssues() {
 			/>
 
 			<Space style={{ marginBottom: 16 }}>
-				<h3>Project Assignees: {projectAssign?.length}</h3>
+				<h3> {projectAssign?.length === 0 ?  "Not project assignment" : "Project Assignees: " + projectAssign?.length}</h3>
 			</Space>
 			<h6
 				style={{

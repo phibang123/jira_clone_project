@@ -119,7 +119,7 @@ export default function ContentMain(props) {
 																	data-toggle="modal"
 																	data-target="#infoModal"
 																>
-																	<p className="font-wieght-bold">
+																	<p className="font-weight-normal">
 																		{task.taskName}
 																	</p>
 																	<div

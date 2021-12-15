@@ -90,7 +90,7 @@ function FromCreateTask(props) {
 			type: "SET_SUBMIT_CREATE_TASK",
 			submitFunction: handleSubmit,
 			resetForm: resetForm,
-			cancel: ""
+			
 		});
 	}, []);
 

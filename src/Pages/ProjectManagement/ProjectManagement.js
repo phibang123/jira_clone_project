@@ -169,7 +169,7 @@ export default function ProjectManagement() {
 								<Popover
 									key={index}
 									placement="top"
-									title="members"
+									title="Members"
 									content={() => {
 										return (
 											<table className="table">

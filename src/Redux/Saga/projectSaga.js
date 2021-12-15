@@ -186,11 +186,11 @@ function* updateProjectSaga(action) {
 			Notification("success", "Update project is success");
 		}
 	} catch (error) {
-		console.log(error);
+		console.log(error.response);
 		yield put({
 			type: HIDE_LOADING,
 		});
-		Notification("error", error.response?.data.content);
+		Notification("error", "Name Project is exist");
 	}
 	yield put({
 		type: HIDE_LOADING,
