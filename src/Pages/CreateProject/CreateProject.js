@@ -5,7 +5,7 @@ import {
 	CREATE_PROJECT_SAGA,
 	GET_ALL_PROJECT_CATEGORY_SAGA,
 } from "../../Redux/Constants/constants";
-import React, { useRef } from "react";
+import React, { memo, useRef } from "react";
 import { setNestedObjectValues, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,7 +14,7 @@ import { useEffect } from "react";
 
 const { Option } = Select;
 
-export default function CreateProject() {
+function CreateProject() {
 	const editorRef = useRef(null);
 
 	const { arrProjectCategory } = useSelector(
@@ -58,6 +58,7 @@ export default function CreateProject() {
 				type: CREATE_PROJECT_SAGA,
 				newProject: values,
 			});
+		 
 		},
 	});
 
@@ -137,6 +138,9 @@ export default function CreateProject() {
 					</Button>
 				</form>
 			</div>
-		</div>
+		</div>	
 	);
 }
+
+
+export default memo(CreateProject)

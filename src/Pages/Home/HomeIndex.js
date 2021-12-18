@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { a, useTrail } from "@react-spring/web";
 
 import { NavLink } from "react-router-dom";
@@ -24,7 +24,7 @@ const Trail = ({ open, children }) => {
 		</div>
 	);
 };
-export default function HomeIndex() {
+ function HomeIndex() {
 	const [open, set] = useState(true);
 	return (
 		<div  className={StyleHome.masthead}>
@@ -58,3 +58,4 @@ export default function HomeIndex() {
 		</div>
 	);
 }
+export default memo(HomeIndex)

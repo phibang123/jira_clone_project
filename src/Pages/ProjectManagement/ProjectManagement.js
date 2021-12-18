@@ -9,7 +9,7 @@ import {
 import { AutoComplete, Avatar, Button, Popover, Space, Table, Tag } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Popconfirm, message } from "antd";
-import React, { useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import FromEditProject from "../../Components/Froms/FromEditProject/FromEditProject";
@@ -19,7 +19,7 @@ import ReactHtmlParser from "react-html-parser";
 import { UserAddOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-export default function ProjectManagement() {
+function ProjectManagement() {
 	//lấy dử liệu từ reducer về
 	const { projectList } = useSelector((state) => state.projectManageReducer);
 	const { userSearch } = useSelector((state) => state.userReducer);
@@ -309,3 +309,6 @@ export default function ProjectManagement() {
 		</div>
 	);
 }
+
+
+export default memo(ProjectManagement)

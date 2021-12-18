@@ -1,14 +1,14 @@
 import * as Yup from "yup";
 
+import React, { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { EDIT_USER_API_SAGA } from "../../Redux/Constants/constants";
 import { Formik } from "formik";
 import ProfileCss from "./Profile.module.css";
-import React from "react";
 import { useState } from "react";
 
-export default function ProfileUser(props) {
+function ProfileUser(props) {
 	const { userLogin } = useSelector((state) => state.userReducer);
 	const dispatch = useDispatch();
 	//console.log(userLogin)
@@ -235,3 +235,6 @@ export default function ProfileUser(props) {
 		</>
 	);
 }
+
+
+export default memo(ProfileUser)

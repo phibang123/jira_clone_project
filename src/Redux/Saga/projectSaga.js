@@ -4,6 +4,7 @@ import {
 	DELETE_PROJECT_SAGA,
 	GET_ALL_PROJECT_CATEGORY,
 	GET_ALL_PROJECT_CATEGORY_SAGA,
+	GET_ALL_TASK_API_SAGA,
 	GET_LIST_PROJECT,
 	GET_LIST_PROJECT_ISSUES,
 	GET_LIST_PROJECT_SAGA,
@@ -47,7 +48,7 @@ function* createProjectSaga(action) {
 		);
 
 		if (status === STATUS_CODE.SUCCESS) {
-			//history.push("/projectmanagement");
+			history.push("/projectmyissues");
 			Notification("success", "Add project is success");
 			yield put({
 				type: GET_LIST_PROJECT_SAGA,
@@ -64,6 +65,7 @@ function* createProjectSaga(action) {
 			type: HIDE_LOADING,
 		});
 		Notification("error", err.response?.data.content);
+		
 		//Notification("error", "Add project is fail!");
 	}
 	yield put({
@@ -305,7 +307,7 @@ function* removeUserProject(action) {
 			});
 		}
 	} catch (error) {
-		Notification("warning", "Remove user from Project failt!");
+		Notification("error", error.response?.data.content);
 	}
 }
 
@@ -357,7 +359,10 @@ function* getProjectDetailNoLoading(action) {
 		const { data, status } = yield call(() =>
 			projectService.getProjectDetail(action.projectId)
 		);
-
+		yield put({
+			type: GET_ALL_TASK_API_SAGA,
+			projectId: action.projectId
+		})
 		//lấy dử liệu thành công đưa dử liệu lên reducer
 		yield put({
 			type: GET_PROJECT_DETAIL_API,

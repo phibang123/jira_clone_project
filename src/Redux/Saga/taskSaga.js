@@ -4,6 +4,8 @@ import {
 	CHANGE_TASK_MODAL_API_SAGA,
 	CREATE_TASK_SAGA,
 	DELETE_TASK_API_SAGA,
+	GET_ALL_TASK_API,
+	GET_ALL_TASK_API_SAGA,
 	GET_PROJECT_DETAIL_API,
 	GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
 	GET_TASK_DETAIL,
@@ -124,7 +126,11 @@ function* updateTaskStatusSaga(action) {
 		yield put({
 			type: GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
 			projectId: action.taskUpdateStatus.projectId,
-		});
+		})
+		yield put({
+			type: GET_ALL_TASK_API_SAGA,
+			projectId: action.taskUpdateStatus.projectId
+		})
 		yield put({
 			type: GET_TASK_DETAIL_SAGA,
 			taskId: action.taskUpdateStatus.taskId,
@@ -152,6 +158,10 @@ export function* UpdateTaskStatusDoneSaga(action)
 			projectId: action.taskUpdateStatus.projectId,
 		});
 		yield put({
+			type: GET_ALL_TASK_API_SAGA,
+			projectId: action.taskUpdateStatus.projectId
+		})
+		yield put({
 			type: GET_TASK_DETAIL_SAGA,
 			taskId: action.taskUpdateStatus.taskId,
 		});
@@ -167,12 +177,17 @@ export function* theoDoiUpdateTaskStatusDoneSaga() {
 	yield takeLatest(UPDATE_TASK_STATUS_SAGA_DONE_TEXT, UpdateTaskStatusDoneSaga);
 }
 
+
+
 //thay đổi task dưa lên api
 function* updateTaskSaga(action) {}
 
 export function* theoDoiUpdateTaskSaga() {
 	yield takeLatest(UPDATE_TASK_SAGA, updateTaskSaga);
 }
+
+
+
 
 //thay đổi task dưa lên reducer
 function* handleChangPostApi(action) {
@@ -248,11 +263,16 @@ function* handleChangPostApi(action) {
 		const { data, status } = yield call(() =>
 			TaskService.updateTask(taskUpdateApi)
 		);
+		console.log(action)
 		if (status === STATUS_CODE.SUCCESS) {
 			yield put({
 				type: GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
 				projectId: taskUpdateApi.projectId,
 			});
+			yield put({
+				type: GET_ALL_TASK_API_SAGA,
+				projectId: taskUpdateApi.projectId
+			})
 			yield put({
 				type: GET_TASK_DETAIL_SAGA,
 				taskId: taskUpdateApi.taskId,
@@ -260,6 +280,7 @@ function* handleChangPostApi(action) {
 		}
 	} catch (err) {
 		console.log(err.response?.data.statusCode);
+		console.log(err)
 		if (err.response?.data.statusCode == STATUS_CODE.AUTHORIZATION) {
 			Notification("error", "You not authorized ");
 		} else {
@@ -274,7 +295,7 @@ export function* theoDoiHandleChangPostApi() {
 function* deleteTaskSaga(action) {
 	try {
 		console.log(123);
-		const { data, status } = yield call(() =>
+		yield call(() =>
 			TaskService.deleteTask(action.taskId)
 		);
 
@@ -282,6 +303,11 @@ function* deleteTaskSaga(action) {
 			type: GET_PROJECT_DETAIL_API_SAGA,
 			projectId: action.projectId,
 		});
+		yield put({
+			type: GET_ALL_TASK_API_SAGA,
+			projectId: action.projectId
+		})
+		yield delay(1000)
 		Notification("success", "Delete Task successly");
 	} catch (err) {
 		if (err.response?.data) {
@@ -292,4 +318,27 @@ function* deleteTaskSaga(action) {
 
 export function* theoDoiDeleteTaskSaga() {
 	yield takeLatest(DELETE_TASK_API_SAGA, deleteTaskSaga);
+}
+
+
+
+
+function* getAllTaskSaga(action) {
+	try {
+	
+	  const { data, status } =	yield call(() =>
+			TaskService.getAllTask(action.projectId)
+		);
+		yield put({
+			type: GET_ALL_TASK_API,
+			TaskAllProject: data.content,
+		});
+	
+	} catch (err) {
+     console.log(err)
+	}
+}
+
+export function* theoDoiGetAllTaskSaga() {
+	yield takeLatest(GET_ALL_TASK_API_SAGA, getAllTaskSaga);
 }

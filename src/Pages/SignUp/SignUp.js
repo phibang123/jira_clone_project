@@ -9,8 +9,8 @@ import {
 	UserOutlined,
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
+import React, { memo } from "react";
 
-import React from "react";
 import { createFromIconfontCN } from "@ant-design/icons";
 import { history } from "../../Utils/history";
 import { signup_action } from "../../Redux/Actions/userAction";
@@ -20,7 +20,7 @@ import { useFormik } from "formik";
 const IconFont = createFromIconfontCN({
 	scriptUrl: "//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js",
 });
-export default function SignUp(props) {
+ function SignUp(props) {
 	const dispatch = useDispatch();
 
 	const formik = useFormik({
@@ -173,3 +173,6 @@ export default function SignUp(props) {
 		</div>
 	);
 }
+
+
+export default memo(SignUp);

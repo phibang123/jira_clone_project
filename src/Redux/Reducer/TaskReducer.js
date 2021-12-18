@@ -1,4 +1,4 @@
-import { CHANGE_ASSIGNESS, CHANGE_TASK_MODAL_API, CHANGE_TASK_MODAL_API_SAGA, GET_TASK_DETAIL, REMAVE_USER_ASSIGN } from "../Constants/constants"
+import { CHANGE_ASSIGNESS, CHANGE_TASK_MODAL_API, CHANGE_TASK_MODAL_API_SAGA, GET_ALL_TASK_API, GET_TASK_DETAIL, REMAVE_USER_ASSIGN } from "../Constants/constants"
 
 const initialState = {
    taskDetailModal: {
@@ -29,7 +29,8 @@ const initialState = {
       "priorityId": 1,
       "projectId": 1290
  
-  }
+  },
+  getAllTask: []
 }
 
 export const TaskReducer = (state = initialState, action) => {
@@ -60,7 +61,9 @@ export const TaskReducer = (state = initialState, action) => {
       state.taskDetailModal.assigness = [...state.taskDetailModal.assigness.filter(us => us.id !== action.userId)]
       return {...state}
       }
-
+    case GET_ALL_TASK_API: {
+      return {...state, getAllTask: action.TaskAllProject}
+    }
   default:
     return state
   }

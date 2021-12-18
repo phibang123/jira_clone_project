@@ -45,7 +45,7 @@ function* deleteCommentSaga(action) {
 
   try
   {
-    console.log(action)
+   
     let { data, status } = yield call(() => CommentService.deleteComment(action.id))
    
     yield put({

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 
 import { AntDesignOutlined } from "@ant-design/icons";
 import angular from "../../../Assets/Img/icons/angularjs.png";
@@ -19,7 +19,7 @@ import udemi from "../../../Assets/Img/icons/udemy.png";
 import { useDispatch } from "react-redux";
 import youtube from "../../../Assets/Img/icons/youtube.png";
 
-export default function FromAboutJira()
+function FromAboutJira()
 {
 	const dispatch = useDispatch()
   useEffect(() => {
@@ -228,3 +228,4 @@ export default function FromAboutJira()
 		</div>
 	);
 }
+export default memo(FromAboutJira)

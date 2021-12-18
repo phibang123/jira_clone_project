@@ -170,3 +170,9 @@ export const REMAVE_USER_ASSIGN = 'REMAVE_USER_ASSIGN'
 //-//-Chang remove user
 export const UPDATE_TASK_SAGA = 'UPDATE_TASK_SAGA'
 ////////////
+
+
+//-----------------------cHANGE tASK Task-----------------------------------------------
+//-//-Saga reducer
+export const GET_ALL_TASK_API_SAGA = 'GET_ALL_TASK_API_SAGA'
+export const GET_ALL_TASK_API = 'GET_ALL_TASK_API'

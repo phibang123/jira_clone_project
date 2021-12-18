@@ -3,9 +3,9 @@ import * as Yup from 'yup'
 import { Button, Input } from "antd";
 import { FacebookOutlined, LockOutlined, TwitterOutlined, UserOutlined } from "@ant-design/icons";
 import { Form, useFormik, withFormik } from "formik";
+import React, { memo } from "react";
 import { connect, useDispatch } from 'react-redux';
 
-import React from "react";
 import { USER_SIGNIN_SAGA_API } from '../../Redux/Constants/constants';
 import { createFromIconfontCN } from '@ant-design/icons';
 import {history} from '../../Utils/history'
@@ -15,7 +15,7 @@ import { useState } from "react";
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
 });
-export default function Login(props)
+ function Login(props)
 {
     const dispatch = useDispatch();
 
@@ -86,3 +86,6 @@ export default function Login(props)
 		</form>
 	);
 }
+
+
+export default memo(Login)

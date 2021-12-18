@@ -548,7 +548,7 @@ export default function ModelInfo() {
 									</div>
 									<div className="reportor mb-3">
 										<h6>REPORTER</h6>
-										<div style={{ display: "flex" }} className="item">
+										<div style={{display: "flex" , background: `${userLogin.id === taskDetailModal?.userReporter?.userId ? "rgb(220 109 125)" : "#e9eaf0"}` }} className="item" >
 											<div className="avatar">
 												 <img src={taskDetailModal?.userReporter?.avatar} alt={taskDetailModal?.userReporter?.userId} /> 
 											</div>
@@ -572,11 +572,11 @@ export default function ModelInfo() {
 												return (
 													<div
 														key={index}
-														style={{ display: "flex" }}
 														className="item"
+														style={{display: "flex" , background: `${userLogin.id === user.id ? "rgb(114 216 107)" : "#e9eaf0"}` }}
 													>
-														<div className="avatar">
-															<img src={user.avatar} alt={user.avatar} />
+														<div className="avatar" >
+															<img  src={user.avatar} alt={user.avatar} />
 														</div>
 														<p
 															style={{

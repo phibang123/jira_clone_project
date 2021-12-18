@@ -9,6 +9,11 @@ class taskService extends baseService {
   {
     return this.post(`/Task/createTask`,taskObject)
   }
+
+   getAllTask = (projectId) =>
+  {
+    return this.get(`/Task/getAllTask/project=${projectId}`)
+  }
   getTaskDetail = (taskId) =>
   {
     return this.get(`/Task/getTaskDetail/taskId=${taskId}`)

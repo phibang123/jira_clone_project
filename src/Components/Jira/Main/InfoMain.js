@@ -1,27 +1,33 @@
 import {
+	GET_ALL_TASK_API_SAGA,
 	GET_PROJECT_DETAIL_API_SAGA,
 	GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
 	GET_TASK_DETAIL_SAGA,
 } from "../../../Redux/Constants/constants";
+import { Input, Select } from "antd";
+import React, { memo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { DownCircleOutlined } from "@ant-design/icons";
+import FromChart from "../../Froms/FromChart/FromChart";
 import { GET_ALL_COMMENT_SAGA } from "../../../Redux/Constants/comment";
-import React from "react";
 import ReactHtmlParser from "react-html-parser";
-import { Select } from "antd";
 import { TreeSelect } from "antd";
 import { useState } from "react";
 
 const { TreeNode } = TreeSelect;
 
-export default function InfoMain(props) {
+ function InfoMain(props) {
 	const { id } = useSelector((state) => state.userReducer.userLogin);
-
+ 
 	const dispatch = useDispatch();
-	const { projectDetail, TaskMyIssues, projectId } = props;
+	const { projectDetail, TaskMyIssues, projectId } = props; 
+	useCallback(projectDetail, [projectDetail]);
+ 
 	const classMyTask =
 		TaskMyIssues === true ? "btn-warning" : "btn-outline-warning";
+	
+
 
 	const renderAvatar = () => {
 		return projectDetail.members?.map((user, index) => {
@@ -54,6 +60,7 @@ export default function InfoMain(props) {
 			</section>
 			<div className="info" style={{ display: "flex" }}>
 				<div className="search-block">
+					{/* <Input></Input> */}
 					<TreeSelect
 						showSearch
 						style={{ width: "200px" }}
@@ -97,19 +104,6 @@ export default function InfoMain(props) {
 								</>
 							);
 						})}
-
-						{/* <TreeNode value="parent 1" title="parent 1">
-							  <TreeNode value="parent 1-0" title="parent 1-0">
-								<TreeNode value="leaf1" title="leaf1" />
-								<TreeNode value="leaf2" title="leaf2" />
-							</TreeNode>
-							<TreeNode value="parent 1-1" title="parent 1-1">
-								<TreeNode
-									value="leaf3"
-									title={<b style={{ color: "#08c" }}>leaf3</b>}
-								/>
-							</TreeNode>
-						</TreeNode> */}
 					</TreeSelect>
 				</div>
 
@@ -121,16 +115,18 @@ export default function InfoMain(props) {
 					onClick={() => {
 						TaskMyIssues
 							? dispatch({
-									type: GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
-									projectId,
-							  })
+								type: GET_PROJECT_DETAIL_API_SAGA_NOLOADING,
+								projectId,
+							})
+				
+							
 							: dispatch({
 									type: "TASK_MY_ISSUES",
 									myId: id,
 							  });
 					}}
 				>
-					{TaskMyIssues ?	 "Get All Task" : "Only My Issues " }
+					{TaskMyIssues ? "Get All Task" : "Only My Issues "}
 				</button>
 				<button
 					className="btn btn-dark ml-3"
@@ -138,12 +134,37 @@ export default function InfoMain(props) {
 						dispatch({
 							type: GET_PROJECT_DETAIL_API_SAGA,
 							projectId,
-						});
+						})
+						dispatch({
+							type: GET_ALL_TASK_API_SAGA,
+							projectId,
+						})
 					}}
 				>
 					Reload Project
+				</button>
+
+				<button
+					className="btn btn-dark ml-3"
+					onClick={() => {
+						dispatch({
+							type: "OPEN_MODAL_CHART_JIRA",
+							callBackSubmit: () => {
+								dispatch({ type: "CLOSE_MODAL" });
+							},
+							ComponentContentModal: (
+								<FromChart projectDetail={projectDetail}  allTask={props.getAllTask}></FromChart>
+							),
+							title: "Chart",
+						});
+					}}
+				>
+					statistical
 				</button>
 			</div>
 		</div>
 	);
 }
+
+
+export default memo(InfoMain)

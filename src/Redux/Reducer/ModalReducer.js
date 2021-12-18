@@ -55,7 +55,11 @@ export const ModalReducer = (state = initialState, action) => {
       return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal,cancel: ()=>{}, title: action.title,callBackSubmit: action.callBackSubmit  };
       
     }
+    case 'OPEN_MODAL_CHART_JIRA': {
+    
+      return { ...state, visible: true, ComponentContentModal: action.ComponentContentModal,cancel: ()=>{}, title: action.title,callBackSubmit: action.callBackSubmit  };
       
+    }
     case 'SET_NONE': {
       
       return {...state,callBackSubmit:  ()=>{},cancel: ()=>{} ,width: 900}

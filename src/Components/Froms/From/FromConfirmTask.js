@@ -1,6 +1,6 @@
+import { GET_ALL_TASK_API_SAGA, GET_PROJECT_DETAIL_API_SAGA } from "../../../Redux/Constants/constants";
 import React, { useEffect } from "react";
 
-import { GET_PROJECT_DETAIL_API_SAGA } from "../../../Redux/Constants/constants";
 import { UPDATE_TASK_STATUS_SAGA_DONE_TEXT } from "../../../Redux/Constants/taskType";
 import { useDispatch } from "react-redux";
 
@@ -19,6 +19,10 @@ export default function FromConfirmTask(props) {
 			cancel: () => {
 				dispatch({
 					type: GET_PROJECT_DETAIL_API_SAGA,
+					projectId: props?.task?.projectId,
+				})
+				dispatch({
+					type: GET_ALL_TASK_API_SAGA,
 					projectId: props?.task?.projectId,
 				});
 			},
