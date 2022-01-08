@@ -46,7 +46,7 @@ import { GET_ALL_STATUS_API_SAGA } from "../../../Redux/Constants/status";
 import ReactHtmlParser from "react-html-parser";
 import { Select } from "antd";
 import { USER_LOGIN } from "../../../Utils/constants/settingSystem";
-import moment from "moment-timezone";
+import moment from "moment";
 import newTask from "../../../Assets/Img/taskType/task.png";
 import { useFormik } from "formik";
 
