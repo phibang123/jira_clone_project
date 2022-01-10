@@ -143,7 +143,7 @@ export default function ModelInfo() {
 				{visibleEditor ? (
 					<div className="m-2">
 						<Editor
-							apiKey="yxpqqmnqzrl7wgziqhdogk4zkczzwllqhbsnkx9msyqopftl"
+			
 							// onChange={handleChange}
 							// onBlur={handleBlur}
 							name="description"

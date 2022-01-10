@@ -5,12 +5,12 @@ import {
 	CREATE_PROJECT_SAGA,
 	GET_ALL_PROJECT_CATEGORY_SAGA,
 } from "../../Redux/Constants/constants";
-import React, { memo, useRef } from "react";
-import { setNestedObjectValues, useFormik } from "formik";
+import React, { memo, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Editor } from "@tinymce/tinymce-react";
 import { useEffect } from "react";
+import { useFormik } from "formik";
 
 const { Option } = Select;
 
@@ -23,19 +23,10 @@ function CreateProject() {
 
 	const dispatch = useDispatch();
 	useEffect(() => {
-		//Gọi api để lấy dử liệu từ thẻ select
 		dispatch({
 			type: GET_ALL_PROJECT_CATEGORY_SAGA,
 		});
 	}, []);
-
-	// const log = (setFieldValue) => {
-	// 	if (editorRef.current)
-	// 	{
-	// 		setFieldValue('description',editorRef.current.getContent())
-	// 		console.log(editorRef.current.getContent());
-	// 	}
-	// };
 
 	const formik = useFormik({
 		enableReinitialize: true,
@@ -58,7 +49,6 @@ function CreateProject() {
 				type: CREATE_PROJECT_SAGA,
 				newProject: values,
 			});
-		 
 		},
 	});
 
@@ -89,7 +79,7 @@ function CreateProject() {
 					<div className="form-group">
 						<p>Description</p>
 						<Editor
-							apiKey="yxpqqmnqzrl7wgziqhdogk4zkczzwllqhbsnkx9msyqopftl"
+				
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							name="description"
@@ -98,7 +88,7 @@ function CreateProject() {
 							init={{
 								height: 300,
 								selector: "textarea",
-							
+
 								plugins:
 									"a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
 								toolbar:
@@ -109,9 +99,9 @@ function CreateProject() {
 							}}
 							onEditorChange={hadnleEditorChange}
 						/>
-					
+						
 					</div>
-			
+
 					<div className="form-group">
 						<p>Project Category</p>
 						<select
@@ -119,7 +109,6 @@ function CreateProject() {
 							className="form-control"
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
-
 							style={{ width: "100%" }}
 							name="categoryId"
 						>
@@ -133,14 +122,21 @@ function CreateProject() {
 						</select>
 					</div>
 
-					<Button style={{ backgroundColor:"#87AAAA" ,border: "none", borderRadius: "5px" }}htmlType="submit" type="primary">
+					<Button
+						style={{
+							backgroundColor: "#87AAAA",
+							border: "none",
+							borderRadius: "5px",
+						}}
+						htmlType="submit"
+						type="primary"
+					>
 						Create Project
 					</Button>
 				</form>
 			</div>
-		</div>	
+		</div>
 	);
 }
 
-
-export default memo(CreateProject)
+export default memo(CreateProject);
